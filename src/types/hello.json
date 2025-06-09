@@ -1,0 +1,543 @@
+{
+  "status": 200,
+  "data": {
+    "anime": {
+      "info": {
+        "id": "steinsgate-3",
+        "anilistId": 9253,
+        "malId": 9253,
+        "name": "Steins;Gate",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/6835ff30fa46da5612e3adc81f51724e.jpg",
+        "description": "The self-proclaimed mad scientist Rintarou Okabe rents out a room in a rickety old building in Akihabara, where he indulges himself in his hobby of inventing prospective \"future gadgets\" with fellow lab members: Mayuri Shiina, his air-headed childhood friend, and Hashida Itaru, a perverted hacker nicknamed \"Daru.\" The three pass the time by tinkering with their most promising contraption yet, a machine dubbed the \"Phone Microwave,\" which performs the strange function of morphing bananas into piles of green gel.\n\nThough miraculous in itself, the phenomenon doesn't provide anything concrete in Okabe's search for a scientific breakthrough; that is, until the lab members are spurred into action by a string of mysterious happenings before stumbling upon an unexpected success—the Phone Microwave can send emails to the past, altering the flow of history.\n\nAdapted from the critically acclaimed visual novel by 5pb. and Nitroplus, Steins;Gate takes Okabe through the depths of scientific theory and practicality. Forced across the diverging threads of past and present, Okabe must shoulder the burdens that come with holding the key to the realm of time.",
+        "stats": {
+          "rating": "PG-13",
+          "quality": "HD",
+          "episodes": {
+            "sub": 24,
+            "dub": 24
+          },
+          "type": "TV",
+          "duration": "24m"
+        },
+        "promotionalVideos": [
+          {
+            "title": "PV March 2011 version",
+            "source": "https://www.youtube.com/embed/27OZc-ku6is",
+            "thumbnail": "https://i.ytimg.com/vi/27OZc-ku6is/hqdefault.jpg"
+          },
+          {
+            "title": "PV English dub version",
+            "source": "https://www.youtube.com/embed/gaOvEIkeyzU",
+            "thumbnail": "https://i.ytimg.com/vi/gaOvEIkeyzU/hqdefault.jpg"
+          },
+          {
+            "title": "PV Complete Box version",
+            "source": "https://www.youtube.com/embed/9ECs4YVIo00",
+            "thumbnail": "https://i.ytimg.com/vi/9ECs4YVIo00/hqdefault.jpg"
+          },
+          {
+            "title": "PV Comiket 79 version",
+            "source": "https://www.youtube.com/embed/3ngiZjmnPgc",
+            "thumbnail": "https://i.ytimg.com/vi/3ngiZjmnPgc/hqdefault.jpg"
+          }
+        ],
+        "charactersVoiceActors": [
+          {
+            "character": {
+              "id": "itaru-hashida-959",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/ebbed4b97cb78a51c701820742fa63e9.jpg",
+              "name": "Hashida, Itaru",
+              "cast": "Main"
+            },
+            "voiceActor": {
+              "id": "tomokazu-seki-101",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/b30017b6da7c11931379c4c2be2577a3.jpg",
+              "name": "Seki, Tomokazu",
+              "cast": "Japanese"
+            }
+          },
+          {
+            "character": {
+              "id": "kurisu-makise-14",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/c22279ed57f1aee4bfbd6e8bb2d31481.jpg",
+              "name": "Makise, Kurisu",
+              "cast": "Main"
+            },
+            "voiceActor": {
+              "id": "trina-nishimura-593",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/86bd08b1b4a0e3f7e6a1439374823fa5.jpg",
+              "name": "Nishimura, Trina",
+              "cast": "English"
+            }
+          },
+          {
+            "character": {
+              "id": "rintarou-okabe-8",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/97ad81ff88f5769bdf50d989a421bb04.jpg",
+              "name": "Okabe, Rintarou",
+              "cast": "Main"
+            },
+            "voiceActor": {
+              "id": "mamoru-miyano-3",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/1e2a746d4a2e61a55c2ffa90ccb18c60.jpg",
+              "name": "Miyano, Mamoru",
+              "cast": "Japanese"
+            }
+          },
+          {
+            "character": {
+              "id": "mayuri-shiina-151",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/ec2bfc992c73354fbaf8a9c77f53fb69.jpg",
+              "name": "Shiina, Mayuri",
+              "cast": "Main"
+            },
+            "voiceActor": {
+              "id": "kana-hanazawa-1",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/62af5e41fec00ab73933f9a474c241c6.jpg",
+              "name": "Hanazawa, Kana",
+              "cast": "Japanese"
+            }
+          },
+          {
+            "character": {
+              "id": "yukitaka-akiha-124841",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/79f64095d1247c500a43906cc79d47f0.jpg",
+              "name": "Akiha, Yukitaka",
+              "cast": "Supporting"
+            },
+            "voiceActor": {
+              "id": "eric-vale-430",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/6897798d3435cd7128577e09adfe1a3f.jpg",
+              "name": "Vale, Eric",
+              "cast": "English"
+            }
+          },
+          {
+            "character": {
+              "id": "rumiho-akiha-1582",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/ab75ad60bc25fcbd4897d5b65fe68348.jpg",
+              "name": "Akiha, Rumiho",
+              "cast": "Supporting"
+            },
+            "voiceActor": {
+              "id": "haruko-momoi-662",
+              "poster": "https://cdn.noitatnemucod.net/thumbnail/100x100/100/97c874da43e5eea1c8f78801a15fef36.jpg",
+              "name": "Momoi, Haruko",
+              "cast": "Japanese"
+            }
+          }
+        ]
+      },
+      "moreInfo": {
+        "japanese": "STEINS;GATE",
+        "aired": "Apr 6, 2011 to Sep 14, 2011",
+        "premiered": "Spring 2011",
+        "duration": "24m",
+        "status": "Finished Airing",
+        "malscore": "9.09",
+        "genres": [
+          "Drama",
+          "Sci-Fi",
+          "Psychological",
+          "Thriller",
+          "Isekai"
+        ],
+        "studios": "White Fox",
+        "producers": [
+          "Frontier Works",
+          "Media Factory",
+          "Movic",
+          "AT-X",
+          "Kadokawa Pictures Japan",
+          "Nitroplus",
+          "White Fox",
+          "Funimation"
+        ]
+      }
+    },
+    "seasons": [],
+    "mostPopularAnimes": [
+      {
+        "id": "one-piece-100",
+        "name": "One Piece",
+        "jname": "One Piece",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/bcd84731a3eda4f4a306250769675065.jpg",
+        "episodes": {
+          "sub": 1132,
+          "dub": 1122
+        },
+        "type": "TV"
+      },
+      {
+        "id": "naruto-shippuden-355",
+        "name": "Naruto: Shippuden",
+        "jname": "Naruto: Shippuuden",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/9cbcf87f54194742e7686119089478f8.jpg",
+        "episodes": {
+          "sub": 500,
+          "dub": 500
+        },
+        "type": "TV"
+      },
+      {
+        "id": "bleach-806",
+        "name": "Bleach",
+        "jname": "Bleach",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/bd5ae1d387a59c5abcf5e1a6a616728c.jpg",
+        "episodes": {
+          "sub": 366,
+          "dub": 366
+        },
+        "type": "TV"
+      },
+      {
+        "id": "solo-leveling-season-2-arise-from-the-shadow-19413",
+        "name": "Solo Leveling Season 2: Arise from the Shadow",
+        "jname": "Ore dake Level Up na Ken Season 2: Arise from the Shadow",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/65f92e6e315a931ef872da4b312442b8.jpg",
+        "episodes": {
+          "sub": 13,
+          "dub": 13
+        },
+        "type": "TV"
+      },
+      {
+        "id": "black-clover-2404",
+        "name": "Black Clover",
+        "jname": "Black Clover",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/f58b0204c20ae3310f65ae7b8cb9987e.jpg",
+        "episodes": {
+          "sub": 170,
+          "dub": 170
+        },
+        "type": "TV"
+      },
+      {
+        "id": "jujutsu-kaisen-2nd-season-18413",
+        "name": "Jujutsu Kaisen 2nd Season",
+        "jname": "Jujutsu Kaisen 2nd Season",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/b51f863b05f30576cf9d85fa9b911bb5.png",
+        "episodes": {
+          "sub": 23,
+          "dub": 23
+        },
+        "type": "TV"
+      },
+      {
+        "id": "boruto-naruto-next-generations-8143",
+        "name": "Boruto: Naruto Next Generations",
+        "jname": "Boruto: Naruto Next Generations",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/32c83e2ad4a43229996356840db3982c.jpg",
+        "episodes": {
+          "sub": 293,
+          "dub": 293
+        },
+        "type": "TV"
+      },
+      {
+        "id": "naruto-677",
+        "name": "Naruto",
+        "jname": "Naruto",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/5db400c33f7494bc8ae96f9e634958d0.jpg",
+        "episodes": {
+          "sub": 220,
+          "dub": 220
+        },
+        "type": "TV"
+      },
+      {
+        "id": "demon-slayer-kimetsu-no-yaiba-swordsmith-village-arc-18056",
+        "name": "Demon Slayer: Kimetsu no Yaiba Swordsmith Village Arc",
+        "jname": "Kimetsu no Yaiba: Katanakaji no Sato-hen",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/db2f3ce7b9cab7fdc160b005bffb899a.png",
+        "episodes": {
+          "sub": 11,
+          "dub": 11
+        },
+        "type": "TV"
+      },
+      {
+        "id": "jujutsu-kaisen-tv-534",
+        "name": "Jujutsu Kaisen (TV)",
+        "jname": "Jujutsu Kaisen (TV)",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/82402f796b7d84d7071ab1e03ff7747a.jpg",
+        "episodes": {
+          "sub": 24,
+          "dub": 24
+        },
+        "type": "TV"
+      }
+    ],
+    "relatedAnimes": [
+      {
+        "id": "steinsgate-egoistic-poriomania-172",
+        "name": "Steins;Gate: Egoistic Poriomania",
+        "jname": "Steins;Gate: Oukoubakko no Poriomania",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/b064bb424f0991f53f650f2dea4155fd.jpg",
+        "episodes": {
+          "sub": 1,
+          "dub": 1
+        },
+        "type": "Special"
+      },
+      {
+        "id": "steinsgate-kyoukaimenjou-no-missing-link-divide-by-zero-240",
+        "name": "Steins;Gate: Kyoukaimenjou no Missing Link - Divide By Zero",
+        "jname": "Steins;Gate: Kyoukaimenjou no Missing Link - Divide By Zero",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/28f672599958bfcc823a93b024696d47.jpg",
+        "episodes": {
+          "sub": 1,
+          "dub": 1
+        },
+        "type": "Special"
+      },
+      {
+        "id": "steinsgate-soumei-eichi-no-cognitive-computing-1850",
+        "name": "Steins;Gate: Soumei Eichi no Cognitive Computing",
+        "jname": "Steins;Gate: Soumei Eichi no Cognitive Computing",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/507b4a334919d1f9f15cc6ee318a8546.jpg",
+        "episodes": {
+          "sub": 4,
+          "dub": null
+        },
+        "type": "ONA"
+      }
+    ],
+    "recommendedAnimes": [
+      {
+        "id": "gauche-the-cellist-3890",
+        "name": "Gauche the Cellist",
+        "jname": "Cello Hiki no Gauche (1982)",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/5103eeed1aca09bf667c0b2e42cc5759.jpg",
+        "duration": "61m",
+        "type": "Movie",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": null
+        }
+      },
+      {
+        "id": "crayon-shin-chan-movie-03-unkokusais-ambition-3892",
+        "name": "Crayon Shin-chan Movie 03: Unkokusai's Ambition",
+        "jname": "Crayon Shin-chan Movie 03: Unkokusai no Yabou",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/d78a0afacf2e50ca95acbf16105abaf9.jpg",
+        "duration": "96m",
+        "type": "Movie",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": null
+        }
+      },
+      {
+        "id": "dragon-ball-z-super-android-13-3896",
+        "name": "Dragon Ball Z: Super Android 13!",
+        "jname": "Dragon Ball Z Movie 07: Kyokugen Battle!! Sandai Super Saiyajin",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/9d86d8fdff6282a65d10913a3a4a9b2a.jpg",
+        "duration": "45m",
+        "type": "Movie",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": 1
+        }
+      },
+      {
+        "id": "futakoi-alternative-3899",
+        "name": "Futakoi Alternative",
+        "jname": "Futakoi Alternative",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/aede8e63cf41731c6e9eeab166fec12c.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": 13,
+          "dub": null
+        }
+      },
+      {
+        "id": "mirage-of-blaze-rebels-of-the-river-edge-3904",
+        "name": "Mirage of Blaze: Rebels of the River Edge",
+        "jname": "Honoo no Mirage: Minagiwa no Hangyakusha",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/060262fcef6eec00dad59791cdec4a4b.jpg",
+        "duration": "30m",
+        "type": "OVA",
+        "rating": "18+",
+        "episodes": {
+          "sub": 3,
+          "dub": 3
+        }
+      },
+      {
+        "id": "is-pure-3905",
+        "name": "I''s Pure",
+        "jname": "I''s Pure",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/9fdb883d3b5b61b94cfa5a028ba13537.jpg",
+        "duration": "27m",
+        "type": "OVA",
+        "rating": "18+",
+        "episodes": {
+          "sub": 6,
+          "dub": 6
+        }
+      },
+      {
+        "id": "armored-trooper-votoms-alone-again-3926",
+        "name": "Armored Trooper Votoms: Alone Again",
+        "jname": "Soukou Kihei Votoms: Koei Futatabi",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/baa7866a4d0fccaae022530b1287f2c4.jpg",
+        "duration": "49m",
+        "type": "OVA",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": null
+        }
+      },
+      {
+        "id": "tenchi-muyou-ryououki-2nd-season-special-3929",
+        "name": "Tenchi Muyou! Ryououki 2nd Season - Special",
+        "jname": "Tenchi Muyou! Ryououki 2nd Season Picture Drama",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/2705a9063dc51f08e656e08a9ee672d9.jpg",
+        "duration": "7m",
+        "type": "Special",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": 1
+        }
+      },
+      {
+        "id": "buddha-2-the-endless-journey-3932",
+        "name": "Buddha 2: The Endless Journey",
+        "jname": "Tezuka Osamu no Buddha: Owarinaki Tabi",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/bb3b667c1258ff68b8906e52c2b934c3.jpg",
+        "duration": "85m",
+        "type": "Movie",
+        "rating": null,
+        "episodes": {
+          "sub": 1,
+          "dub": null
+        }
+      },
+      {
+        "id": "zetman-3951",
+        "name": "Zetman",
+        "jname": "Zetman",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/0aa69ff04dbf8fabc062c7180ad1a1e4.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": "18+",
+        "episodes": {
+          "sub": 13,
+          "dub": 13
+        }
+      },
+      {
+        "id": "katte-ni-kaizou-3910",
+        "name": "Katte ni Kaizou",
+        "jname": "Katte ni Kaizou",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/c0981e9e836544ee01bb6fa1db8f52be.jpg",
+        "duration": "23m",
+        "type": "OVA",
+        "rating": "18+",
+        "episodes": {
+          "sub": 6,
+          "dub": null
+        }
+      },
+      {
+        "id": "rocket-girls-3922",
+        "name": "Rocket Girls",
+        "jname": "Rocket Girls",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/c0959531c91145c99fb299ccc10d8a98.jpg",
+        "duration": "23m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": 12,
+          "dub": null
+        }
+      },
+      {
+        "id": "no-guns-life-3937",
+        "name": "No Guns Life",
+        "jname": "No Guns Life",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/ca67850fb059f619a4fb928bc46d307b.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": 12,
+          "dub": 12
+        }
+      },
+      {
+        "id": "battle-athletes-victory-3954",
+        "name": "Battle Athletes Victory",
+        "jname": "Battle Athletess Daiundoukai (TV)",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/57c0506ec81101e02bcd03a2419a8396.jpg",
+        "duration": "22m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": 26,
+          "dub": 26
+        }
+      },
+      {
+        "id": "phoenix-karma-chapter-3965",
+        "name": "Phoenix: Karma Chapter",
+        "jname": "Hi no Tori: Houou-hen",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/989f2633473f5267df2fa95de9a8ff40.jpg",
+        "duration": "60m",
+        "type": "Movie",
+        "rating": "18+",
+        "episodes": {
+          "sub": 1,
+          "dub": null
+        }
+      },
+      {
+        "id": "kinnikuman-ii-sei-ultimate-muscle-3970",
+        "name": "Kinnikuman II Sei: Ultimate Muscle",
+        "jname": "Kinnikuman II Sei: Ultimate Muscle",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/fb2a14ed582cef804e82368cd6c90f60.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": null,
+          "dub": 13
+        }
+      },
+      {
+        "id": "kancolle-kantai-collection-3968",
+        "name": "KanColle: Kantai Collection",
+        "jname": "Kantai Collection: KanColle",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/96e33265c9e7d7eaced8dcb9f77e57a3.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": 12,
+          "dub": 12
+        }
+      },
+      {
+        "id": "ultimate-muscle-3969",
+        "name": "Ultimate Muscle",
+        "jname": "Kinnikuman II Sei",
+        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/09785ec0cc783ecda0899fd2a12a40b6.jpg",
+        "duration": "24m",
+        "type": "TV",
+        "rating": null,
+        "episodes": {
+          "sub": null,
+          "dub": 51
+        }
+      }
+    ]
+  }
+}
