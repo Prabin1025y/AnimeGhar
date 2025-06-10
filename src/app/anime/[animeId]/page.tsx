@@ -1,23 +1,21 @@
-// "use client"
-
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   Calendar,
   Clock,
   Star,
-  ChevronDown,
-  ChevronUp,
   Play,
   Heart,
   Share2,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { AnimeDetailsDataType } from "@/types";
 import AnimeCard from "@/components/AnimeCard";
 import Description from "./_components/Description";
+import RelatedAnime from "./_components/RelatedAnime";
 
 const fetchData = async (animeId: string) => {
   try {
@@ -25,6 +23,15 @@ const fetchData = async (animeId: string) => {
       `http://localhost:4000/api/v2/hianime/anime/${animeId}`
     );
     const data = await response.json();
+
+    //remove any duplicated related animes
+    const uniqueRelatedAnimes = Array.from(
+      new Map(
+        data.data.relatedAnimes.map((item: any) => [item.id, item])
+      ).values()
+    );
+    data.data.relatedAnimes = uniqueRelatedAnimes;
+
     return data.data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -35,18 +42,13 @@ const fetchData = async (animeId: string) => {
 export default async function MovieDetailsPage({
   params,
 }: {
-  params: Promise<{ animeId: string }>;
+  params: { animeId: string };
 }) {
-  // const {animeId} = useParams<{animeId: string}>()
-  // const [isDescriptionOpen, setIsDescriptionOpen] = useState(true)
-  // const [isLoading, setIsLoading] = useState(true)
-
-  const { animeId } = await params;
+  const { animeId } = params;
   const data: AnimeDetailsDataType = await fetchData(animeId);
-  // console.log(data);
 
   return (
-    <div className="min-h-screen bg-background mt-16">
+    <div className="min-h-screen dark:bg-slate-950 mt-16">
       <div className="relative">
         <div className="absolute inset-0">
           <Image
@@ -55,7 +57,7 @@ export default async function MovieDetailsPage({
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background dark:to-slate-950" />
         </div>
 
         <div className="relative max-w-7xl container mx-auto py-8">
@@ -66,8 +68,8 @@ export default async function MovieDetailsPage({
                 <Image
                   src={data.anime.info.poster || "/placeholder.svg"}
                   alt={data.anime.info.name}
-                  width={500}
-                  height={800}
+                  width={300}
+                  height={400}
                   className="rounded-lg shadow-2xl aspect-[2/3] object-cover"
                 />
               </div>
@@ -176,14 +178,6 @@ export default async function MovieDetailsPage({
                     variant="outline"
                     className="border-white text-white hover:bg-white hover:text-cyan-900"
                   >
-                    <Heart className="h-5 w-5 mr-2" />
-                    Add to List
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-cyan-900"
-                  >
                     <Share2 className="h-5 w-5 mr-2" />
                     Share
                   </Button>
@@ -195,34 +189,17 @@ export default async function MovieDetailsPage({
       </div>
 
       {/* Related Animes */}
-      <section className="max-w-7xl container mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
-          Related Animes
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {data.relatedAnimes.map((anime) => (
-            // <MovieCard key={anime.id} movie={anime} />
-            <AnimeCard
-              animeId={anime.id}
-              animePoster={anime.poster}
-              animeName={anime.name}
-              animeType={anime.type}
-              animeEpisodes={anime.episodes}
-            />
-          ))}
-        </div>
-      </section>
-
-      <Separator className="bg-cyan-200/30 dark:bg-cyan-800/30" />
+      <RelatedAnime relatedAnimes={data.relatedAnimes} />
 
       {/* Most Popular Movies */}
-      <section className="max-w-7xl container mx-auto">
+      <section className="max-w-7xl container mx-auto mt-6">
         <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
           Most Popular Movies
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {data.mostPopularAnimes.map((anime) => (
             <AnimeCard
+              key={anime.id}
               animeId={anime.id}
               animePoster={anime.poster}
               animeName={anime.name}
@@ -233,16 +210,15 @@ export default async function MovieDetailsPage({
         </div>
       </section>
 
-      <Separator className="bg-cyan-200/30 dark:bg-cyan-800/30" />
-
       {/* Recommended Movies */}
-      <section className="max-w-7xl container mx-auto">
+      <section className="max-w-7xl container mx-auto mt-6">
         <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
           You Might Also Like
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {data.recommendedAnimes.map((anime) => (
             <AnimeCard
+              key={anime.id}
               animeId={anime.id}
               animePoster={anime.poster}
               animeName={anime.name}
