@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Calendar,
   Clock,
@@ -44,7 +43,7 @@ export default async function MovieDetailsPage({
 }: {
   params: { animeId: string };
 }) {
-  const { animeId } = params;
+  const { animeId } = await params;
   const data: AnimeDetailsDataType = await fetchData(animeId);
 
   return (
