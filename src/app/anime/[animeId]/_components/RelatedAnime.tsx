@@ -5,16 +5,17 @@ import { AnimeDetailsDataType } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 
-const RelatedAnime = ({relatedAnimes}: {relatedAnimes: AnimeDetailsDataType['relatedAnimes']}) => {
+const RelatedAnime = ({relatedAnimes, className="", gridClasses=""}: {relatedAnimes: AnimeDetailsDataType['relatedAnimes'], className?: string, gridClasses?: string}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const needsSeeMore = relatedAnimes.length > 12;
     const displayedAnimes = isExpanded ? relatedAnimes : relatedAnimes.slice(0, 12);
   return (
-    <section className="max-w-7xl container mx-auto mt-6">
+    <section className={`max-w-7xl container mx-auto mt-6 ${className}`}>
       <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
         Related Animes
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"> */}
+      <div className={`grid ${gridClasses ? gridClasses : "grid-cols-2 md:grid-cols-4 lg:grid-cols-6"} gap-4`}>
         {displayedAnimes.map((anime) => (
           <AnimeCard
             key={anime.id}

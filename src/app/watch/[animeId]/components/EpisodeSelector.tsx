@@ -1,0 +1,113 @@
+'use client';
+import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { EpisodeType } from "../page";
+
+interface EpisodeSelectorProps {
+    className?: string;
+    animeId: string;
+}
+
+const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
+    className = "",
+    animeId
+}) => {
+    const [episodeRange, setEpisodeRange] = useState<{
+        start: number;
+        end: number;
+    }>({ start: 0, end: 100 });
+    const [episodes, setEpisodes] = useState<EpisodeType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchData = async () => {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/anime/${animeId}/episodes`
+            );
+            const result = await response.json();
+            setEpisodes(result.data.episodes);
+            setIsLoading(false);
+        }
+        fetchData();
+        
+    }, []);
+
+
+    // const currentSeasonEpisodes = data.episodes[currentSeason] || [];
+    const totalEpisodes = episodes.length;
+    // Calculate episode ranges for dropdown
+    const rangeSize = 100;
+    const episodeRanges = Array.from(
+        { length: Math.ceil(totalEpisodes / rangeSize) },
+        (_, i) => {
+            const start = i * rangeSize;
+            const end = Math.min(totalEpisodes, start + rangeSize);
+            return { start, end };
+        }
+    );
+
+    const displayedEpisodes = episodes.slice(
+        episodeRange.start,
+        episodeRange.end
+    );
+
+    const handleRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const idx = Number(e.target.value);
+        setEpisodeRange(episodeRanges[idx]);
+        // setCurrentEpisode(episodeRanges[idx].start + 1);
+    };
+    return (
+        <div className={`${className} bg-gray-900 rounded-lg p-4 h-fit`}>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-white font-semibold text-lg">Episodes</h2>
+                <div className="text-sm text-gray-400">{totalEpisodes} episodes</div>
+            </div>
+            {/* Episode Range Dropdown */}
+            <div className="mb-4">
+                <select
+                    value={episodeRanges.findIndex(
+                        (r) => r.start === episodeRange.start && r.end === episodeRange.end
+                    )}
+                    onChange={handleRangeChange}
+                    className="w-full bg-gray-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-blue-500 focus:outline-none"
+                >
+                    {episodeRanges.map((range, idx) => (
+                        <option key={idx} value={idx}>
+                            {range.start + 1}-{range.end}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            {/* Episode Grid */}
+            <div className="grid grid-cols-5 gap-2 overflow-y-auto">
+                {displayedEpisodes.map((episode) => (
+                    // <button
+                    //   key={episode.episodeId}
+                    //   onClick={() => setCurrentEpisode(episode.number)}
+                    //   className={`rounded-sm text-sm font-medium transition-colors border relative ${currentEpisode === episode.number
+                    //     ? "bg-blue-600 border-blue-500 text-white"
+                    //     : false
+                    //       ? "bg-green-600 border-green-500 text-white"
+                    //       : "bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-600"
+                    //     }`}
+                    //   type="button"
+                    // >
+                    <Link
+                        key={episode.episodeId}
+                        href={`/watch/${episode.episodeId}`}
+                        className={`w-[60px] h-10 p-0 backdrop-blur-sm border  transition-all duration-200 rounded-md flex items-center justify-center text-sm ${`${animeId}?ep=${searchParams.get("ep")}` === episode.episodeId ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-white/20 dark:bg-gray-800/20 border-white/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
+                    >
+                        {episode.number}
+                    </Link>
+
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default EpisodeSelector;

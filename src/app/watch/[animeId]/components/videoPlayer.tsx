@@ -18,6 +18,7 @@ interface VideoPlayerProps {
     label: string
     language: string
   }>
+  className?: string
 }
 
 export default function VideoPlayer({
@@ -27,6 +28,7 @@ export default function VideoPlayer({
   outroStart = 0,
   autoSkip = true,
   subtitles = [],
+  className = "",
 }: VideoPlayerProps) {
   const playerRef = useRef<ReactPlayer>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -239,7 +241,7 @@ export default function VideoPlayer({
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-video bg-black rounded-lg overflow-hidden group cursor-pointer"
+      className={`relative w-full aspect-video bg-black rounded-lg overflow-hidden group cursor-pointer ${className}`}
       onMouseMove={showControlsTemporarily}
       onMouseLeave={() => isPlaying && setShowControls(false)}
       onClick={togglePlay}
@@ -247,7 +249,7 @@ export default function VideoPlayer({
       {/* ReactPlayer */}
       <ReactPlayer
         ref={playerRef}
-        url={src}
+        url={`${process.env.NEXT_PUBLIC_PROXY_URL}https://ec.netmagcdn.com:2228/hls-playback/d8e56d406f04d29b74b4e03042fca324d71f0cd196c65f1fcb9c6d27377df7bd17b6ce13536ee8f21bbfe92902b58f637bf972b8708d2e71584983981cdfc9cb9a04eff785733555b4ada2c589e6f4be945594357514993de60b5a330372d24385de9113a8f18e54036d92a1d4af66986238cd930e5628561efc03d97f10fc7cee8c0d50f5e040f230f82e936ce02661ea3fe707e5ecf3204a0bfbc614539310ef11ed59239f180f0303735084d6bd73/master.m3u8`}
         width="100%"
         height="100%"
         playing={isPlaying}

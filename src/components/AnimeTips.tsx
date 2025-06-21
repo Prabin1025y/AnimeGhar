@@ -23,6 +23,7 @@ import Image from "next/image";
 import { getStatusColor } from "@/utilities";
 import { AnimeTipsDataType } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 // interface AnimeTipsProps {
 //   animeName: string;
@@ -212,12 +213,15 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
       </CardContent>
 
       <CardFooter className="mt-2">
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white font-medium transition-colors duration-200 flex items-center gap-2">
-          <Play className="w-4 h-4" />
-          Watch Now
+
+        <Button asChild className="w-full bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white font-medium transition-colors duration-200 flex items-center gap-2">
+          <Link href={`/watch/${animeid}`}>
+            <Play className="w-4 h-4" />
+            Watch Now
+          </Link>
         </Button>
       </CardFooter>
-    </Card>
+    </Card >
   );
 };
 

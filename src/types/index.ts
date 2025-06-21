@@ -244,3 +244,33 @@ export interface AnimeDetailsDataType {
         isCurrent: boolean
     }[]
 }
+
+export type EpisodeSourceType = {
+
+    headers: {
+      Referer: string
+    },
+    tracks: [
+      {
+        url: string,
+        lang: string
+      }
+    ],
+    intro: {
+      start: number,
+      end: number
+    },
+    outro: {
+      start: number,
+      end: number
+    },
+    sources: [
+      {
+        url: string,
+        isM3U8: boolean,
+        type: string
+      }
+    ],
+    anilistID: 9253,
+    malID: 9253
+}
