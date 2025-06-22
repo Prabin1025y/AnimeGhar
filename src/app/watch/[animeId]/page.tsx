@@ -70,7 +70,7 @@ const VideoPlayerPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=dub`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=sub`
       );
       const data = await response.json();
       setEpisodeInfo(data.data)
@@ -90,7 +90,7 @@ const VideoPlayerPage: React.FC = () => {
             autoSkip={false}
             title={animeDetail?.anime.info.name || "Anime Video"}
           /> */}
-          <Player url={EpisodeInfo?.sources?.[0]?.url || ""} className="col-span-3 row-span-1"/>
+          <Player url={EpisodeInfo?.sources?.[0]?.url || ""} tracks={EpisodeInfo?.tracks || []} title={animeDetail?.anime.info.name || "Current Anime"} className="col-span-3 row-span-1"/>
           {/* Right Section - Episode Selector */}
           <EpisodeSelector
             animeId={animeId}

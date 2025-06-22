@@ -21,3 +21,51 @@ export const removeDuplicateRelatedAnimes = (animes: AnimeDetailsDataType['relat
   );
   return uniqueRelatedAnimes;
 }
+
+const parseTimeToSeconds = (hours: string, minutes: string, seconds: string, milliseconds: string) => {
+    return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds) + parseInt(milliseconds) / 1000;
+  };
+
+export const parseVTT = (vttContent:string) => {
+    const lines = vttContent.split('\n');
+    console.log(lines)
+    const cues = [];
+    let currentCue = null;
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      // Skip empty lines and WEBVTT header
+      if (!line || line === 'WEBVTT') continue;
+      
+      // Check if line contains timestamp
+      const timeMatch = line.match(/^(\d{2}):(\d{2}):(\d{2})\.(\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})\.(\d{3})$/);
+      
+      if (timeMatch) {
+        // If we have a previous cue, save it
+        if (currentCue) {
+          cues.push(currentCue);
+        }
+        
+        // Create new cue
+        const startTime = parseTimeToSeconds(timeMatch[1], timeMatch[2], timeMatch[3], timeMatch[4]);
+        const endTime = parseTimeToSeconds(timeMatch[5], timeMatch[6], timeMatch[7], timeMatch[8]);
+        
+        currentCue = {
+          start: startTime,
+          end: endTime,
+          text: ''
+        };
+      } else if (currentCue && line) {
+        // Add text to current cue
+        currentCue.text += (currentCue.text ? ' ' : '') + line;
+      }
+    }
+    
+    // Add the last cue
+    if (currentCue) {
+      cues.push(currentCue);
+    }
+    
+    return cues;
+  };
