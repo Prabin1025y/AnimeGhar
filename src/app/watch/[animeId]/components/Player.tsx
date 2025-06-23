@@ -40,7 +40,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
     const [showControls, setShowControls] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [playbackRate, setPlaybackRate] = useState<number>(1);
-    const [selectedLanguage, setSelectedLanguage] = useState(tracks?.filter(t => t.lang === "English")[0]?.lang || tracks?.[0]?.lang || "None");
+    const [selectedLanguage, setSelectedLanguage] = useState(tracks?.filter(t => t.lang == "English")[0] ? "English" : tracks?.[0]?.lang || "None");
     const [subtitleTracks, setSubtitleTracks] = useState<{ [key: string]: { start: number; end: number; text: string }[] }>({});
     const [loadingSubtitles, setLoadingSubtitles] = useState(false);
 
@@ -69,6 +69,132 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
         };
     }, [isPlaying]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Don't trigger shortcuts if user is typing in an input
+            if ((e.target instanceof Element) && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                return;
+            }
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    setIsPlaying(!isPlaying);
+                    break;
+
+                case 'KeyK':
+                    e.preventDefault();
+                    setIsPlaying(!isPlaying);
+                    break;
+
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    // Seek backward 10 seconds
+                    handleSkip('backward');
+                    break;
+
+                case 'ArrowRight':
+                    e.preventDefault();
+                    // Seek forward 10 seconds
+                    handleSkip('forward');
+                    break;
+
+                case 'ArrowUp':
+                    e.preventDefault();
+                    // Volume up
+                    const newVolumeUp = Math.min(1, volume + 0.1);
+                    setVolume(newVolumeUp);
+                    setMuted(false);
+                    break;
+
+                case 'ArrowDown':
+                    e.preventDefault();
+                    // Volume down
+                    const newVolumeDown = Math.max(0, volume - 0.1);
+                    setVolume(newVolumeDown);
+                    break;
+
+                case 'KeyM':
+                    e.preventDefault();
+                    setMuted(!muted);
+                    break;
+
+                case 'KeyF':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+
+                case 'KeyC':
+                    e.preventDefault();
+                    setSelectedLanguage("None");
+                    break;
+
+                case 'Comma':
+                    if (e.shiftKey) {
+                        e.preventDefault();
+                        // Decrease playback speed
+                        const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+                        const currentIndex = speeds.indexOf(playbackRate);
+                        if (currentIndex > 0) {
+                            setPlaybackRate(speeds[currentIndex - 1]);
+                        }
+                    }
+                    break;
+
+                case 'Period':
+                    if (e.shiftKey) {
+                        e.preventDefault();
+                        // Increase playback speed
+                        const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+                        const currentIndex = speeds.indexOf(playbackRate);
+                        if (currentIndex < speeds.length - 1) {
+                            setPlaybackRate(speeds[currentIndex + 1]);
+                        }
+                    }
+                    break;
+
+                case 'Digit0':
+                case 'Digit1':
+                case 'Digit2':
+                case 'Digit3':
+                case 'Digit4':
+                case 'Digit5':
+                case 'Digit6':
+                case 'Digit7':
+                case 'Digit8':
+                case 'Digit9':
+                    e.preventDefault();
+                    // Jump to percentage of video (0-9 = 0%-90%)
+                    const percentage = parseInt(e.code.slice(-1)) / 10;
+                    setPlayed(percentage);
+                    videoPlayer.current?.seekTo(percentage);
+                    break;
+
+                case 'Home':
+                    e.preventDefault();
+                    // Go to beginning
+                    setPlayed(0);
+                    videoPlayer.current?.seekTo(0);
+                    break;
+
+                case 'End':
+                    e.preventDefault();
+                    // Go to end
+                    setPlayed(0.99);
+                    videoPlayer.current?.seekTo(0.99);
+                    break;
+
+                default:
+                    break;
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isPlaying, volume, muted, played, duration, playbackRate, selectedLanguage]);
+
     interface ProgressProps {
         played: number;
         playedSeconds: number;
@@ -81,9 +207,10 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
         // console.log("Coming")
 
         if (selectedLanguage !== "None" && subtitleTracks[selectedLanguage]) {
-            const currentTime = progress.playedSeconds;
+            const timeDelay = 0.2 //to synchronize subtitles with video
+            const currentTime = progress.playedSeconds + timeDelay;
             const subtitle = subtitleTracks[selectedLanguage].find((sub: { start: number; end: number; text: string }) =>
-                currentTime >= sub.start - 1 && currentTime <= sub.end - 1
+                currentTime >= sub.start && currentTime <= sub.end
             );
             // console.log(selectedLanguage)
             // console.log(subtitleTracks[selectedLanguage])
@@ -259,8 +386,8 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
                                     <SelectGroup>
                                         <SelectLabel>Languages</SelectLabel>
                                         <SelectItem key={"None"} value={"None"}>None</SelectItem>
-                                        {tracks?.map((track) => (track.lang !== "thumbnails" &&
-                                            <SelectItem key={track.lang} value={track.lang}>{track.lang}</SelectItem>
+                                        {tracks?.map((track, index) => (track.lang !== "thumbnails" &&
+                                            <SelectItem key={track.lang + index} value={track.lang}>{track.lang}</SelectItem>
                                         ))}
                                     </SelectGroup>
                                 </SelectContent>
@@ -284,9 +411,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
                     </div>
                 </div>
 
-                <div className={`${showControls ? 'opacity-100' : 'opacity-0'} absolute top-0 left-0 right-0 flex flex-col bg-gradient-to-b from-black to-transparent p-4 transition-opacity duration-300 }`}>
+                {/* <div className={`${showControls ? 'opacity-100' : 'opacity-0'} absolute top-0 left-0 right-0 flex flex-col bg-gradient-to-b from-black to-transparent p-4 transition-opacity duration-300 }`}>
                     <p className='text-2xl'>{title}</p>
-                </div>
+                </div> */}
             </div>
         </div>
     )

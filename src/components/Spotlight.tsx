@@ -1,12 +1,12 @@
-import { spotlightAnimes } from '@/mock/spotlight'
 import { Calendar, Captions, ChevronLeft, ChevronRight, Clock, Info, Mic, Play, Star } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { HomeDataType } from '@/types'
+import Link from 'next/link'
 
-const Spotlight = ({spotlightAnimes}:{spotlightAnimes:HomeDataType['spotlightAnimes']}) => {
+const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlightAnimes']}) => {
     // const [currentSlide, setCurrentSlide] = useState(0)
     const [currentSpotlight, setCurrentSpotlight] = useState(0)
     return (
@@ -179,19 +179,25 @@ const Spotlight = ({spotlightAnimes}:{spotlightAnimes:HomeDataType['spotlightAni
                                         }`}
                                 >
                                     <Button
+                                        asChild
                                         size="lg"
-                                        className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
+                                        className="cursor-pointer bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
                                     >
-                                        <Play className="w-5 h-5 mr-2" />
-                                        Watch Now
+                                        <Link href={`/watch/${anime.id}`}>
+                                            <Play className="w-5 h-5 mr-2" />
+                                            Watch Now
+                                        </Link>
                                     </Button>
                                     <Button
+                                        asChild
                                         size="lg"
                                         variant="outline"
-                                        className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-slate-800/30 text-slate-800 hover:bg-slate-800/10 dark:border-white/30 dark:text-white dark:hover:bg-white/10"
+                                        className="cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-slate-800/30 text-slate-800 hover:bg-slate-800/10 dark:border-white/30 dark:text-white dark:hover:bg-white/10"
                                     >
-                                        <Info className="w-5 h-5 mr-2" />
-                                        More Info
+                                        <Link href={`/anime/${anime.id}`}>
+                                            <Info className="w-5 h-5 mr-2" />
+                                            More Info
+                                        </Link>
                                     </Button>
                                 </div>
                             </div>
@@ -202,5 +208,7 @@ const Spotlight = ({spotlightAnimes}:{spotlightAnimes:HomeDataType['spotlightAni
         </section>
     )
 }
+
+
 
 export default Spotlight

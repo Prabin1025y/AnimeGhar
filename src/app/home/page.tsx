@@ -1,6 +1,10 @@
 'use client'
 import AnimeContainer from '@/components/AnimeListingHomePage/AnimeContainer'
 import AnimeLists from '@/components/AnimeLists'
+import AnimeContainerSkeleton from '@/components/Skeleton/AnimeContainerSkeleton'
+import AnimeListsSkeleton from '@/components/Skeleton/AnimeListSkeleton'
+import SpotlightSkeleton from '@/components/Skeleton/SpotlightSkeleton'
+import TrendingAnimeSkeleton from '@/components/Skeleton/TrendingSkeleton'
 import Spotlight from '@/components/Spotlight'
 import TrendingAnime from '@/components/TrendingAnime'
 import { HomeDataType } from '@/types'
@@ -29,7 +33,15 @@ const page = () => {
     }, [])
 
     if (!isMounted)
-        return <div>Loading...</div>
+        return (
+            <>
+                <SpotlightSkeleton />
+                <TrendingAnimeSkeleton />
+                <AnimeListsSkeleton />
+                <AnimeContainerSkeleton/>
+                <AnimeContainerSkeleton />
+            </>
+        )
 
     return (
         <>

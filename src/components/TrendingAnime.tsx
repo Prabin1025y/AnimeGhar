@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { HomeDataType } from '@/types'
+import Link from 'next/link'
 
 interface TrendingAnimeProps {
     animes: HomeDataType['trendingAnimes']
@@ -19,12 +20,12 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
             const itemWidth = 200 + 16 // card width + gap
             const containerWidth = container.clientWidth
             const scrollAmount = containerWidth - itemWidth // Show one less item to indicate more content
-            
+
             const currentScroll = container.scrollLeft
             const maxScroll = container.scrollWidth - container.clientWidth
-            
+
             let targetScroll: number
-            
+
             if (direction === 'left') {
                 targetScroll = Math.max(0, currentScroll - scrollAmount)
             } else {
@@ -44,7 +45,7 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
             <div className=" mx-auto">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
+                    <h2 className="text-3xl font-bold bg-cyan-500 bg-clip-text text-transparent">
                         Trending Now
                     </h2>
                     <div className="flex items-center space-x-4">
@@ -70,7 +71,7 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
                 {/* Anime Scroll Area */}
                 <div className="relative group">
                     {/* Scroll Container */}
-                    <div 
+                    <div
                         ref={scrollContainerRef}
                         className="flex space-x-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -86,7 +87,7 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
                                 <div className="relative aspect-[2/3] rounded-lg overflow-hidden">
                                     {/* Rank Badge */}
                                     <div className="absolute top-2 left-2 z-10">
-                                        <Badge className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-2 py-1 text-sm font-medium">
+                                        <Badge className="bg-cyan-500 text-white px-2 py-1 text-sm font-medium">
                                             #{index + 1}
                                         </Badge>
                                     </div>
@@ -96,15 +97,13 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
                                         src={anime.poster}
                                         alt={anime.name}
                                         fill
-                                        className={`object-cover transition-transform duration-300 ${
-                                            hoveredAnime === anime.id ? 'scale-110' : ''
-                                        }`}
+                                        className={`object-cover transition-transform duration-300 ${hoveredAnime === anime.id ? 'scale-110' : ''
+                                            }`}
                                     />
 
                                     {/* Overlay */}
-                                    <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent transition-opacity duration-300 ${
-                                        hoveredAnime === anime.id ? 'opacity-100' : 'opacity-0'
-                                    }`}>
+                                    <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent transition-opacity duration-300 ${hoveredAnime === anime.id ? 'opacity-100' : 'opacity-0'
+                                        }`}>
                                         <div className="absolute bottom-0 left-0 right-0 p-4">
                                             <h3 className="text-white font-semibold text-lg mb-2 line-clamp-1">
                                                 {anime.name}
@@ -117,12 +116,15 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
                                                 <span>•</span>
                                                 <span>24m</span>
                                             </div>
-                                            <Button 
-                                                className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white"
+                                            <Button
+                                                asChild
+                                                className="w-full cursor-pointer bg-cyan-500 hover:bg-cyan-600 text-white"
                                                 size="sm"
                                             >
-                                                <Play className="w-4 h-4 mr-2" />
-                                                Play Now
+                                                <Link href={`/watch/${anime.id}`}>
+                                                    <Play className="w-4 h-4 mr-2" />
+                                                    Play Now
+                                                </Link>
                                             </Button>
                                         </div>
                                     </div>
@@ -140,5 +142,6 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
         </section>
     )
 }
+
 
 export default TrendingAnime

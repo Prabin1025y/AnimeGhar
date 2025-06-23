@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { EpisodeType } from "../page";
 
@@ -11,7 +11,7 @@ interface EpisodeSelectorProps {
 
 const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
     className = "",
-    animeId
+    animeId,
 }) => {
     const [episodeRange, setEpisodeRange] = useState<{
         start: number;
@@ -21,6 +21,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     useEffect(() => {
         setIsLoading(true);
@@ -30,10 +31,13 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
             );
             const result = await response.json();
             setEpisodes(result.data.episodes);
+            if (!searchParams.get("ep")) {
+                router.push(`/watch/${result.data.episodes[0].episodeId}`);
+            }
             setIsLoading(false);
         }
         fetchData();
-        
+
     }, []);
 
 
@@ -60,6 +64,11 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         setEpisodeRange(episodeRanges[idx]);
         // setCurrentEpisode(episodeRanges[idx].start + 1);
     };
+
+    if (isLoading) {
+        return <EpisodeSelectorSkeleton />;
+    }
+
     return (
         <div className={`${className} bg-gray-900 rounded-lg p-4 h-fit`}>
             <div className="flex items-center justify-between mb-4">
@@ -104,6 +113,26 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                         {episode.number}
                     </Link>
 
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// Skeleton loader for EpisodeSelector
+const EpisodeSelectorSkeleton: React.FC = () => {
+    return (
+        <div className="bg-gray-900 rounded-lg p-4 h-fit animate-pulse">
+            <div className="flex items-center justify-between mb-4">
+                <div className="h-6 w-24 bg-gray-700 rounded" />
+                <div className="h-4 w-16 bg-gray-800 rounded" />
+            </div>
+            <div className="mb-4">
+                <div className="h-10 w-full bg-gray-800 rounded-lg" />
+            </div>
+            <div className="grid grid-cols-5 gap-2">
+                {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className="w-[60px] h-10 bg-gray-800 rounded-md" />
                 ))}
             </div>
         </div>

@@ -5,6 +5,7 @@ import { Captions, Mic } from "lucide-react";
 import Image from "next/image";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import AnimeTips from "../AnimeTips";
+import Link from "next/link";
 
 interface AnimeColumnsProps {
   animeColumns: {
@@ -41,21 +42,23 @@ const AnimeColumns = ({ animeColumns }: AnimeColumnsProps) => {
                   className="flex items-center gap-3 rounded-sm p-1 border bg-slate-800/50 hover:bg-slate-800 transition-all duration-300 cursor-pointer group"
                 >
                   <HoverCard openDelay={200}>
-                    <HoverCardTrigger>
-                      <Image
-                        src={anime.poster}
-                        alt={anime.name}
-                        width={60}
-                        height={80}
-                        className="rounded-sm object-cover h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-                      />
+                    <HoverCardTrigger asChild>
+                      <Link href={`/anime/${anime.id}`}>
+                        <Image
+                          src={anime.poster}
+                          alt={anime.name}
+                          width={60}
+                          height={80}
+                          className="rounded-sm object-cover h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </Link>
                     </HoverCardTrigger>
                     <HoverCardContent className="p-0 bg-transparent border-none">
                       <AnimeTips animeid={anime.id} image={anime.poster} />
                     </HoverCardContent>
                   </HoverCard>
 
-                  <div className="flex-1 min-w-0">
+                  <Link href={`/anime/${anime.id}`} className="flex-1 min-w-0">
                     <h4 className="font-medium text-sm truncate text-slate-900 dark:text-white">
                       {anime.name}
                     </h4>
@@ -72,7 +75,7 @@ const AnimeColumns = ({ animeColumns }: AnimeColumnsProps) => {
                         </Badge>}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

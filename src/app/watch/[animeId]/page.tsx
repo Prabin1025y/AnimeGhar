@@ -1,16 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Play,
-} from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import VideoInfo from "./components/VideoInfo";
 import EpisodeSelector from "./components/EpisodeSelector";
 import RelatedAnime from "@/app/anime/[animeId]/_components/RelatedAnime";
 import { AnimeDetailsDataType, EpisodeSourceType } from "@/types";
 import { removeDuplicateRelatedAnimes } from "@/utilities";
-import VideoPlayer from "./components/videoPlayer";
 import Player from "./components/Player";
+import PlayerSkeleton from "./components/PlayerSkeleton";
 
 export type EpisodeType = {
   title: string;
@@ -36,18 +33,18 @@ export type EpisodeType = {
 
 
 const VideoPlayerPage: React.FC = () => {
-  const [currentEpisode, setCurrentEpisode] = useState<string>("");
   const [isDub, setIsDub] = useState<boolean>(false);
   const [autoSkip, setAutoSkip] = useState<boolean>(true);
   const [animeDetail, setAnimeDetail] = useState<AnimeDetailsDataType | null>(
     null
   );
-  const [loading, setLoading] = useState(true)
+  const [episodesLoading, setEpisodesLoading] = useState(true)
+  const [sourceLoading, setSourceLoading] = useState(true)
   const [EpisodeInfo, setEpisodeInfo] = useState<EpisodeSourceType | null>(null)
 
 
   useEffect(() => {
-    setLoading(true)
+    setEpisodesLoading(true)
     const fetchData = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/anime/${animeId}`
@@ -55,7 +52,7 @@ const VideoPlayerPage: React.FC = () => {
       const result = await response.json();
       setAnimeDetail(result.data);
       console.log(result.data);
-      setLoading(false);
+      setEpisodesLoading(false);
     };
     fetchData();
 
@@ -69,11 +66,17 @@ const VideoPlayerPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSourceLoading(true);
+      if (!animeId || !episodeNumber) {
+        setSourceLoading(false);
+        return;
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=sub`
       );
       const data = await response.json();
-      setEpisodeInfo(data.data)
+      setEpisodeInfo(data.data);
+      setSourceLoading(false);
     };
     fetchData();
   }, [episodeNumber]);
@@ -82,16 +85,15 @@ const VideoPlayerPage: React.FC = () => {
     <div className="min-h-screen bg-gray-950 p-4 pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 auto-rows-auto gap-6">
-          {/* Left Section - Video Player and Info */}
-          {/* <VideoPlayer className="col-span-3 row-span-1" /> */}
-          {/* <VideoPlayer
-            className="col-span-3 row-span-1"
-            src={EpisodeInfo?.sources?.[0]?.url || ""}
-            autoSkip={false}
-            title={animeDetail?.anime.info.name || "Anime Video"}
-          /> */}
-          <Player url={EpisodeInfo?.sources?.[0]?.url || ""} tracks={EpisodeInfo?.tracks || []} title={animeDetail?.anime.info.name || "Current Anime"} className="col-span-3 row-span-1"/>
-          {/* Right Section - Episode Selector */}
+          {!sourceLoading && searchParams.get("ep") ?
+            <Player
+              url={EpisodeInfo?.sources?.[0]?.url || ""}
+              tracks={EpisodeInfo?.tracks || []}
+              className="col-span-3 row-span-1"
+            />
+            :
+            <PlayerSkeleton />
+          }
           <EpisodeSelector
             animeId={animeId}
             className="col-span-1 row-span-2 col-start-3 row-start-2 overflow-y-auto"

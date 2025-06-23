@@ -10,6 +10,7 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import AnimeTips from "../AnimeTips";
+import Link from "next/link";
 
 const londrinaShadow = Londrina_Shadow({
   weight: "400",
@@ -36,36 +37,36 @@ const Top10 = ({
             className="flex items-center gap-3 rounded-sm p-1 bg-slate-800/50 border hover:bg-slate-800 transition-all duration-300 cursor-pointer group"
           >
             <div
-              className={`flex-shrink-0 w-8 h-8 rounded-sm flex items-center justify-center font-bold text-2xl ${
-                londrinaShadow.className
-              } ${
-                anime.rank === 1
+              className={`flex-shrink-0 w-8 h-8 rounded-sm flex items-center justify-center font-bold text-2xl ${londrinaShadow.className
+                } ${anime.rank === 1
                   ? "text-yellow-500"
                   : anime.rank === 2
-                  ? "text-blue-500"
-                  : anime.rank === 3
-                  ? "text-orange-500"
-                  : "text-white"
-              }`}
+                    ? "text-blue-500"
+                    : anime.rank === 3
+                      ? "text-orange-500"
+                      : "text-white"
+                }`}
             >
               {anime.rank}
             </div>
             <HoverCard openDelay={200}>
-              <HoverCardTrigger>
-                <Image
-                  src={anime.poster}
-                  alt={anime.name}
-                  width={60}
-                  height={80}
-                  className="rounded-sm object-cover h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-                />
+              <HoverCardTrigger asChild>
+                <Link href={`/anime/${anime.id}`} >
+                  <Image
+                    src={anime.poster}
+                    alt={anime.name}
+                    width={60}
+                    height={80}
+                    className="rounded-sm object-cover h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                  />
+                </Link>
               </HoverCardTrigger>
               <HoverCardContent className="p-0 bg-transparent border-none">
                 <AnimeTips animeid={anime.id} image={anime.poster} />
               </HoverCardContent>
             </HoverCard>
 
-            <div className="flex-1 min-w-0">
+            <Link href={`/anime/${anime.id}`} className="flex-1 min-w-0">
               <h4 className="font-medium text-sm truncate text-slate-900 dark:text-white">
                 {anime.name}
               </h4>
@@ -81,7 +82,7 @@ const Top10 = ({
                   </Badge>}
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>

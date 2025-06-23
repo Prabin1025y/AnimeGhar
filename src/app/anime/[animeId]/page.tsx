@@ -15,6 +15,7 @@ import { AnimeDetailsDataType } from "@/types";
 import AnimeCard from "@/components/AnimeCard";
 import Description from "./_components/Description";
 import RelatedAnime from "./_components/RelatedAnime";
+import Link from "next/link";
 
 const fetchData = async (animeId: string) => {
   try {
@@ -49,15 +50,15 @@ export default async function MovieDetailsPage({
   return (
     <div className="min-h-screen dark:bg-slate-950 mt-16">
       <div className="relative">
-        <div className="absolute inset-0">
+        {/* <div className="absolute inset-0">
           <Image
             src={data.anime.info.poster || "/placeholder.svg"}
             alt={data.anime.info.name}
             fill
-            className="object-cover"
+            className="object-cover blur-xs grayscale-75 contrast-150 brightness-50"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background dark:to-slate-950" />
-        </div>
+        </div> */}
 
         <div className="relative max-w-7xl container mx-auto py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -164,23 +165,26 @@ export default async function MovieDetailsPage({
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    size="lg"
-                    className="bg-cyan-600 hover:bg-cyan-700 text-white"
-                  >
-                    <Play className="h-5 w-5 mr-2" />
-                    Watch Now
-                  </Button>
-                  <Button
+                {data.anime.info.id &&
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild
+                      size="lg"
+                      className="bg-cyan-600 hover:bg-cyan-700 text-white"
+                    >
+                      <Link href={`/watch/${data.anime.info.id}`}>
+                        <Play className="h-5 w-5 mr-2" />
+                        Watch Now
+                      </Link>
+                    </Button>
+                    {/* <Button
                     size="lg"
                     variant="outline"
                     className="border-white text-white hover:bg-white hover:text-cyan-900"
                   >
                     <Share2 className="h-5 w-5 mr-2" />
                     Share
-                  </Button>
-                </div>
+                  </Button> */}
+                  </div>}
               </div>
             </div>
           </div>

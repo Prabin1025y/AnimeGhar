@@ -3,7 +3,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import Image from "next/image";
 import AnimeTips from "./AnimeTips";
 import { Badge } from "./ui/badge";
-import { Captions, Mic } from "lucide-react";
+import { Calendar, Captions, Mic } from "lucide-react";
 import Link from "next/link";
 
 interface AnimeCardProps {
@@ -15,6 +15,7 @@ interface AnimeCardProps {
     sub: number;
     dub: number;
   };
+  animeDuration?: string;
 }
 
 const AnimeCard = ({
@@ -23,6 +24,7 @@ const AnimeCard = ({
   animeName,
   animeType,
   animeEpisodes,
+  animeDuration = "",
 }: AnimeCardProps) => {
   return (
     <HoverCard openDelay={1000}>
@@ -53,17 +55,25 @@ const AnimeCard = ({
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>{animeType}</span>
                 <div className="flex gap-[2px]">
-                  <Badge
-                    className={`bg-green-700 text-white px-1 py-1 ${animeEpisodes.dub && "rounded-r-none"
-                      }`}
-                  >
-                    <Captions />
-                    {animeEpisodes.sub}
-                  </Badge>
+                  {animeEpisodes.sub > 0 && (
+                    <Badge
+                      className={`bg-green-700 text-white px-1 py-1 ${animeEpisodes.dub && "rounded-r-none"
+                        }`}
+                    >
+                      <Captions />
+                      {animeEpisodes.sub}
+                    </Badge>
+                  )}
                   {animeEpisodes.dub && (
                     <Badge className="bg-cyan-700 text-white px-1 py-1 rounded-l-none">
                       <Mic />
                       {animeEpisodes.dub}
+                    </Badge>
+                  )}
+                  {!animeEpisodes.sub && !animeEpisodes.dub && (
+                    <Badge className="bg-cyan-700 text-white px-1 py-1">
+                      <Calendar />
+                      {animeDuration}
                     </Badge>
                   )}
                 </div>

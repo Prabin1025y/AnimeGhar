@@ -212,7 +212,7 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
         </div>
       </CardContent>
 
-      <CardFooter className="mt-2">
+      {cardData.status !== "Not yet aired" && <CardFooter className="mt-2">
 
         <Button asChild className="w-full bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white font-medium transition-colors duration-200 flex items-center gap-2">
           <Link href={`/watch/${animeid}`}>
@@ -220,7 +220,7 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
             Watch Now
           </Link>
         </Button>
-      </CardFooter>
+      </CardFooter>}
     </Card >
   );
 };

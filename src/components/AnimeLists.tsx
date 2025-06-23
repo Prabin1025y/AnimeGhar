@@ -1,25 +1,5 @@
 import type React from "react";
-
-import Image from "next/image";
-import {
-  Star,
-  Calendar,
-  Users,
-  Trophy,
-  Play,
-  Captions,
-  Mic,
-} from "lucide-react";
 import { HomeDataType } from "@/types";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "./ui/carousel";
 import AnimeGrid from "./AnimeListingHomePage/AnimeGrid";
 import AnimeColumns from "./AnimeListingHomePage/AnimeColumns";
 import Top10 from "./AnimeListingHomePage/Top10";
@@ -54,7 +34,6 @@ export default function AnimeLists({
     },
   ];
 
-
   return (
     <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
       <div
@@ -72,7 +51,7 @@ export default function AnimeLists({
         <AnimeGrid popularAnimes={popularAnimes} />
 
         {/* Section 2: Anime Collections - 70% width, below featured */}
-       <AnimeColumns animeColumns={animeColumns} />
+        <AnimeColumns animeColumns={animeColumns} />
 
         {/* Section 3: Top 10 Ranked List - 30% width, spans both rows */}
         <Top10 top10animes={top10animes} />

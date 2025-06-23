@@ -18,6 +18,7 @@ import { Play } from "lucide-react";
 import Image from "next/image";
 import { HomeDataType } from "@/types";
 import AnimeTips from "../AnimeTips";
+import AnimeCard from "../AnimeCard";
 
 const AnimeGrid = ({
   popularAnimes,
@@ -34,7 +35,14 @@ const AnimeGrid = ({
           <CarouselContent>
             {popularAnimes.map((anime) => (
               <CarouselItem key={anime.id} className="basis-1/4">
-                <div
+                <AnimeCard 
+                  animeId={anime.id}
+                  animePoster={anime.poster}
+                  animeName={anime.name}
+                  animeType={anime.type}
+                  animeEpisodes={anime.episodes}
+                />
+                {/* <div
                   // key={anime.id}
                   className="group cursor-pointer transition-all duration-300 hover:scale-105"
                 >
@@ -53,7 +61,7 @@ const AnimeGrid = ({
                         <HoverCardContent className="p-0 bg-transparent border-none">
                           <AnimeTips animeid={anime.id} image={anime.poster} />
                         </HoverCardContent>
-                      </HoverCard>
+                      </HoverCard> */}
 
                       {/* <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
                         <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -66,7 +74,7 @@ const AnimeGrid = ({
                           </Button>
                         </div>
                       </div> */}
-                    </div>
+                    {/* </div>
                     <div className="p-4">
                       <h4 className="font-semibold text-sm truncate mb-2 text-slate-900 dark:text-white">
                         {anime.name}
@@ -86,7 +94,7 @@ const AnimeGrid = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </CarouselItem>
             ))}
           </CarouselContent>

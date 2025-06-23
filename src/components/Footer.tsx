@@ -14,6 +14,7 @@ import {
   Hash,
   Star,
   Zap,
+  Play,
 } from "lucide-react"
 
 export default function Footer() {
@@ -60,125 +61,65 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-white/10 dark:bg-gray-900/10 backdrop-blur-md border-t border-white/20 dark:border-gray-700/20 mt-16">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Logo and Description */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+    <footer className="bg-gray-900 text-white py-12 mt-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="col-span-2">
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                <Play className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">AnimeStream</h3>
-            </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-              Your ultimate destination for streaming anime content. Discover thousands of anime series and movies from
-              around the world.
+              <span className="text-xl font-bold">AnimeStream</span>
+            </div>
+            <p className="text-gray-400 mb-4">
+              Your gateway to the ultimate anime streaming experience. Discover, watch, and fall in love with anime.
             </p>
-            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-              <MapPin className="w-4 h-4" />
-              <span>Global Service</span>
-            </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-200 flex items-center gap-1 group"
-                  >
-                    {link.label}
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Support</h4>
-            <ul className="space-y-2">
-              {supportLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-200 flex items-center gap-1 group"
-                  >
-                    {link.label}
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact & Social */}
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connect</h4>
-            <div className="space-y-3 mb-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                <Mail className="w-4 h-4" />
-                <span>support@animestream.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                <Phone className="w-4 h-4" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 transition-all duration-200"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4" />
+            <h3 className="font-semibold mb-4">Platform</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Browse Anime
                 </a>
-              ))}
-            </div>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  New Releases
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Top Rated
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-4">Support</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Community
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <Separator className="bg-white/20 dark:bg-gray-700/20 mb-8" />
-
-        {/* Alphabet Navigation */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Browse by Letter</h4>
-          <div className="flex flex-wrap gap-2">
-            {alphabets.map((letter) => (
-              <Link
-                key={letter}
-                href={`/browse?letter=${letter}`}
-                className="w-10 h-10 p-0 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200 rounded-md flex items-center justify-center text-sm"
-              >
-                {letter}
-              </Link>
-            ))}
-            {additionalButtons.map((btn, index) => (
-              <Link
-                key={index}
-                href={`/browse?filter=${btn.description.toLowerCase()}`}
-                className="w-10 h-10 p-0 bg-cyan-100/50 dark:bg-cyan-900/30 backdrop-blur-sm border border-cyan-300/50 dark:border-cyan-700/50 hover:bg-cyan-200/50 dark:hover:bg-cyan-800/30 text-cyan-700 dark:text-cyan-300 hover:text-cyan-800 dark:hover:text-cyan-200 transition-all duration-200 rounded-md flex items-center justify-center text-sm"
-                title={btn.description}
-              >
-                {btn.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <Separator className="bg-white/20 dark:bg-gray-700/20 mb-6" />
-
-        {/* Disclaimer */}
+        <Separator className="my-8 bg-gray-800" />
         <div className="py-2">
           <h5 className="text-sm font-semibold text-orange-800 dark:text-orange-300 mb-2">⚠️ Important Disclaimer</h5>
           <p className="text-xs text-orange-700 dark:text-orange-400 leading-relaxed">
@@ -189,23 +130,20 @@ export default function Footer() {
             Users access content at their own risk and discretion.
           </p>
         </div>
+        <Separator className="my-8 bg-gray-800" />
 
-        {/* Legal Links and Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex flex-wrap gap-4">
-            {legalLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className="text-xs text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-right">
-            <p>© {currentYear} Prabin Acharya. All rights reserved.</p>
-            <p className="mt-1">Made with ❤️ for anime lovers worldwide</p>
+        <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400">
+          <p>&copy; 2025 AnimeStream. All rights reserved.</p>
+          <div className="flex space-x-6 mt-4 sm:mt-0">
+            <a href="#" className="hover:text-white transition-colors">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              Terms
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              DMCA
+            </a>
           </div>
         </div>
       </div>
