@@ -248,29 +248,37 @@ export interface AnimeDetailsDataType {
 export type EpisodeSourceType = {
 
     headers: {
-      Referer: string
+        Referer: string
     },
     tracks: [
-      {
-        url: string,
-        lang: string
-      }
+        {
+            url: string,
+            lang: string
+        }
     ],
     intro: {
-      start: number,
-      end: number
+        start: number,
+        end: number
     },
     outro: {
-      start: number,
-      end: number
+        start: number,
+        end: number
     },
     sources: [
-      {
-        url: string,
-        isM3U8: boolean,
-        type: string
-      }
+        {
+            url: string,
+            isM3U8: boolean,
+            type: string
+        }
     ],
     anilistID: 9253,
     malID: 9253
+}
+
+export type SearchSuggestionType = {
+    id: string,
+    name: string,
+    poster: string,
+    jname: string,
+    moreInfo: string[]
 }
