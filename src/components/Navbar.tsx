@@ -9,7 +9,7 @@ import SearchInput from './Search';
 const Navbar = () => {
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 bg-cyan-50dark:bg-gray-900/90 backdrop-blur-md shadow-lg`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -26,7 +26,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <SearchInput />
             <DarkModeSwitch />
-            <a
+            {/* <a
               href="#about"
               className="text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
             >
@@ -38,7 +38,7 @@ const Navbar = () => {
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
             >
               <Link href="/home">Watch</Link>
-            </Button>
+            </Button> */}
           </div>
 
         </div>

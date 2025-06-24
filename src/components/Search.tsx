@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react'
 import { Input } from './ui/input'
-import { Search } from 'lucide-react'
+import { ArrowRight, Search } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from './ui/popover';
 import Image from 'next/image';
 import { SearchSuggestionType } from '@/types';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -14,10 +15,11 @@ const SearchInput = () => {
     const [suggestions, setSuggestions] = useState<SearchSuggestionType[]>([])
     // const [isFocused, setIsFocused] = useState(false)
     const searchRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
-            if (searchTerm.trim() !== "" ) {
+            if (searchTerm.trim() !== "") {
                 setIsPopoverOpen(true);
                 // Simulate fetching search results
                 const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/search/suggestion?q=${searchTerm}`);
@@ -40,13 +42,31 @@ const SearchInput = () => {
     const onOpenChange = (open: boolean) => {
         // setIsPopoverOpen(open);
     }
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsPopoverOpen(false);
+        setSearchTerm("");
+        router.push(`/search/${searchTerm}`);
+    }
+
+    const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        setTimeout(() => {
+            if (!searchRef.current?.value) {
+                setIsPopoverOpen(false);
+            }
+        }, 100);
+    }
     return (
         <div>
-            <Popover open={isPopoverOpen && suggestions.length > 0} onOpenChange={onOpenChange}>
+            <Popover open={isPopoverOpen && suggestions.length > 0 && searchTerm.trim() !== ""} onOpenChange={onOpenChange}>
                 {/* <PopoverTrigger asChild> */}
-                <PopoverAnchor className='relative flex items-center'>
-                    <Input onFocus={()=>setIsPopoverOpen(true)} onBlur={()=>setIsPopoverOpen(false)} ref={searchRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 peer focus-visible:ring-0 focus-visible:border-cyan-500' />
-                    <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 peer-focus:bg-slate-100 dark:peer-focus:bg-slate-800" />
+                <PopoverAnchor asChild className='relative flex items-center'>
+                    <form onSubmit={handleOnSubmit}>
+                        <Input onFocus={() => setIsPopoverOpen(true)} onBlur={handleOnBlur} ref={searchRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-xs peer focus-visible:ring-0 focus-visible:border-cyan-500' />
+                        <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 peer-focus:bg-slate-100 dark:peer-focus:bg-slate-800" />
+                        <Button asChild className={`absolute right-0 h-full hover:bg-cyan-600 rounded-l-none bg-cyan-500 transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}><Link href={`/search/${searchTerm}`}><ArrowRight /></Link></Button>
+                    </form>
                 </PopoverAnchor>
                 {/* </PopoverTrigger> */}
                 <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()} className="w-80 p-1 bg-[#061e2e] border-cyan-600">

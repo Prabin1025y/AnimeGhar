@@ -282,3 +282,47 @@ export type SearchSuggestionType = {
     jname: string,
     moreInfo: string[]
 }
+
+export type SearchFiltersType = {
+    genres?: string,
+    type?: string,
+    sort?: string,
+    season?: string,
+    language?: string,
+    status?: string,
+    rated?: string,
+    start_date?: string,
+    score?: string
+}
+
+export type SearchResultType = {
+    animes: {
+        id: string,
+        name: string,
+        jname: string,
+        poster: string,
+        duration: string,
+        type: string,
+        rating: string,
+        episodes: {
+            sub: number,
+            dub: number
+        }
+    }[],
+    mostPopularAnimes: {
+        id: string,
+        name: string,
+        jname: string,
+        poster: string,
+        episodes: {
+            sub: number,
+            dub: number
+        },
+        type: string
+    }[],
+    searchQuery: string,
+    searchFilters: SearchFiltersType,
+    totalPages: number,
+    hasNextPage: boolean,
+    currentPage: number
+}

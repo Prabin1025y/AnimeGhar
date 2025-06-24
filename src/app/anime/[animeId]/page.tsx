@@ -16,6 +16,7 @@ import AnimeCard from "@/components/AnimeCard";
 import Description from "./_components/Description";
 import RelatedAnime from "./_components/RelatedAnime";
 import Link from "next/link";
+import SeasonCard from "@/app/watch/[animeId]/components/SeasonCard";
 
 const fetchData = async (animeId: string) => {
   try {
@@ -186,51 +187,58 @@ export default async function MovieDetailsPage({
                   </Button> */}
                   </div>}
               </div>
+              <div className="row-start-2 col-start-1 flex flex-wrap col-span-4 gap-3 mt-2">
+                {data?.seasons.map((season) => (
+                  <Link key={season.id} href={`/watch/${season.id}`}>
+                    <SeasonCard poster={season.poster} name={season.title} isCurrent={season.isCurrent} />
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Related Animes */}
-      <RelatedAnime relatedAnimes={data.relatedAnimes} />
+      {/* Related Animes */ }
+  <RelatedAnime relatedAnimes={data.relatedAnimes} />
 
-      {/* Most Popular Movies */}
-      <section className="max-w-7xl container mx-auto mt-6">
-        <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
-          Most Popular Movies
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {data.mostPopularAnimes.map((anime) => (
-            <AnimeCard
-              key={anime.id}
-              animeId={anime.id}
-              animePoster={anime.poster}
-              animeName={anime.name}
-              animeType={anime.type}
-              animeEpisodes={anime.episodes}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Recommended Movies */}
-      <section className="max-w-7xl container mx-auto mt-6">
-        <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
-          You Might Also Like
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {data.recommendedAnimes.map((anime) => (
-            <AnimeCard
-              key={anime.id}
-              animeId={anime.id}
-              animePoster={anime.poster}
-              animeName={anime.name}
-              animeType={anime.type}
-              animeEpisodes={anime.episodes}
-            />
-          ))}
-        </div>
-      </section>
+  {/* Most Popular Movies */ }
+  <section className="max-w-7xl container mx-auto mt-6">
+    <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
+      Most Popular Movies
+    </h2>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {data.mostPopularAnimes.map((anime) => (
+        <AnimeCard
+          key={anime.id}
+          animeId={anime.id}
+          animePoster={anime.poster}
+          animeName={anime.name}
+          animeType={anime.type}
+          animeEpisodes={anime.episodes}
+        />
+      ))}
     </div>
+  </section>
+
+  {/* Recommended Movies */ }
+  <section className="max-w-7xl container mx-auto mt-6">
+    <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
+      You Might Also Like
+    </h2>
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {data.recommendedAnimes.map((anime) => (
+        <AnimeCard
+          key={anime.id}
+          animeId={anime.id}
+          animePoster={anime.poster}
+          animeName={anime.name}
+          animeType={anime.type}
+          animeEpisodes={anime.episodes}
+        />
+      ))}
+    </div>
+  </section>
+    </div >
   );
 }
