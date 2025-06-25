@@ -23,9 +23,10 @@ type PlayerProps = {
         lang: string;
     }[];
     title?: string;
+    isDub: boolean;
 }
 
-const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) => {
+const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title, isDub }) => {
     const search_params = useSearchParams()
     const episodeId = search_params.get("ep") || "";
     const videoPlayer = useRef<ReactPlayer>(null)
@@ -40,7 +41,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title }) =
     const [showControls, setShowControls] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [playbackRate, setPlaybackRate] = useState<number>(1);
-    const [selectedLanguage, setSelectedLanguage] = useState(tracks?.filter(t => t.lang == "English")[0] ? "English" : tracks?.[0]?.lang || "None");
+    const [selectedLanguage, setSelectedLanguage] = useState(isDub ? "None" : (tracks?.filter(t => t.lang == "English")[0] ? "English" : tracks?.[0]?.lang || "None"));
     const [subtitleTracks, setSubtitleTracks] = useState<{ [key: string]: { start: number; end: number; text: string }[] }>({});
     const [loadingSubtitles, setLoadingSubtitles] = useState(false);
 

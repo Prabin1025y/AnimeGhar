@@ -35,7 +35,7 @@ export default function AnimeLists({
   ];
 
   return (
-    <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+    <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 relative">
       <div
         className="max-w-7xl mx-auto grid gap-8"
         style={{

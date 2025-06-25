@@ -70,10 +70,10 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
     }
 
     return (
-        <div className={`${className} bg-gray-900 rounded-lg p-4 h-fit`}>
+        <div className={`${className} bg-white dark:bg-gray-900 rounded-lg p-4 h-fit`}>
             <div className="flex items-center justify-between mb-4">
-                <h2 className="text-white font-semibold text-lg">Episodes</h2>
-                <div className="text-sm text-gray-400">{totalEpisodes} episodes</div>
+                <h2 className="text-primary font-semibold text-lg">Episodes</h2>
+                <div className="text-sm text-gray-700 dark:text-gray-400">{totalEpisodes} episodes</div>
             </div>
             {/* Episode Range Dropdown */}
             <div className="mb-4">
@@ -82,7 +82,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                         (r) => r.start === episodeRange.start && r.end === episodeRange.end
                     )}
                     onChange={handleRangeChange}
-                    className="w-full bg-gray-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-blue-500 focus:outline-none"
+                    className="w-full dark:bg-gray-800 text-primary rounded-lg px-3 py-2 border dark:border-gray-700 focus:border-blue-500 focus:outline-none"
                 >
                     {episodeRanges.map((range, idx) => (
                         <option key={idx} value={idx}>
@@ -94,21 +94,10 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
             {/* Episode Grid */}
             <div className="grid grid-cols-5 gap-2 overflow-y-auto">
                 {displayedEpisodes.map((episode) => (
-                    // <button
-                    //   key={episode.episodeId}
-                    //   onClick={() => setCurrentEpisode(episode.number)}
-                    //   className={`rounded-sm text-sm font-medium transition-colors border relative ${currentEpisode === episode.number
-                    //     ? "bg-blue-600 border-blue-500 text-white"
-                    //     : false
-                    //       ? "bg-green-600 border-green-500 text-white"
-                    //       : "bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-600"
-                    //     }`}
-                    //   type="button"
-                    // >
                     <Link
                         key={episode.episodeId}
                         href={`/watch/${episode.episodeId}`}
-                        className={`w-[60px] h-10 p-0 backdrop-blur-sm border  transition-all duration-200 rounded-md flex items-center justify-center text-sm ${`${animeId}?ep=${searchParams.get("ep")}` === episode.episodeId ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-white/20 dark:bg-gray-800/20 border-white/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
+                        className={`w-[60px] h-10 p-0 backdrop-blur-sm border  transition-all duration-200 rounded-md flex items-center justify-center text-sm ${`${animeId}?ep=${searchParams.get("ep")}` === episode.episodeId ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-gray-600/20 dark:bg-gray-800/20 border-gray-600/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-900 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
                     >
                         {episode.number}
                     </Link>

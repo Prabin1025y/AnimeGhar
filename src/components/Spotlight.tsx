@@ -34,7 +34,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                         />
                         <div
                             className="absolute inset-0 transition-colors duration-300 dark:bg-gradient-to-r dark:from-slate-950 dark:via-slate-950/70 dark:to-transparent
-                                bg-gradient-to-r from-white/90 via-white/60 to-transparent"
+                                bg-gradient-to-r from-cyan-50 via-cyan-50/60 to-transparent"
                         />
                         <div
                             className="absolute inset-0 transition-colors duration-300 bg-gradient-to-t from-slate-100 via-transparent to-transparent dark:from-slate-950 dark:via-transparent dark:to-transparent"
@@ -49,7 +49,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                     variant="outline"
                     size="icon"
                     onClick={() => setCurrentSpotlight((prev) => (prev - 1 + spotlightAnimes.length) % spotlightAnimes.length)}
-                    className="transition-all duration-300 hover:scale-110 border-slate-800/30 text-slate-800 hover:bg-slate-800/10 hover:border-slate-800/50 dark:border-white/30 dark:text-white dark:hover:bg-white/10 dark:hover:border-white/50"
+                    className="transition-all duration-300 hover:scale-110 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 hover:border-cyan-500/50 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10 dark:hover:border-cyan-400/50"
                 >
                     <ChevronLeft className="w-5 h-5" />
                 </Button>
@@ -59,7 +59,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                     variant="outline"
                     size="icon"
                     onClick={() => setCurrentSpotlight((prev) => (prev + 1) % spotlightAnimes.length)}
-                    className="transition-all duration-300 hover:scale-110 border-slate-800/30 text-slate-800 hover:bg-slate-800/10 hover:border-slate-800/50 dark:border-white/30 dark:text-white dark:hover:bg-white/10 dark:hover:border-white/50"
+                    className="transition-all duration-300 hover:scale-110 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 hover:border-cyan-500/50 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10 dark:hover:border-cyan-400/50"
                 >
                     <ChevronRight className="w-5 h-5" />
                 </Button>
@@ -72,12 +72,12 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                         key={index}
                         onClick={() => setCurrentSpotlight(index)}
                         className={`relative transition-all duration-500 ${index === currentSpotlight
-                            ? "w-8 h-3 bg-cyan-500 rounded-full"
-                            : "w-3 h-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-full hover:scale-125 dark:bg-white/30 dark:hover:bg-white/50"
+                            ? "w-8 h-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
+                            : "w-3 h-3 bg-cyan-500/30 hover:bg-cyan-500/50 rounded-full hover:scale-125 dark:bg-cyan-400/30 dark:hover:bg-cyan-400/50"
                             }`}
                     >
                         {index === currentSpotlight && (
-                            <div className="absolute inset-0 bg-cyan-400 rounded-full animate-pulse" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse" />
                         )}
                     </button>
                 ))}
@@ -108,7 +108,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                             className="rounded-xl shadow-2xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:shadow-cyan-500/25"
                                         />
                                         <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                                        <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm -z-10" />
+                                        <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm -z-10" />
                                     </div>
                                 </div>
                             </div>
@@ -122,11 +122,11 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                             : "opacity-0"
                                             }`}
                                     >
-                                        <Badge className="bg-cyan-500 text-white px-3 py-1 animate-pulse">#{anime.rank}</Badge>
+                                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-3 py-1 animate-pulse">#{anime.rank}</Badge>
                                     </div>
 
                                     <h1
-                                        className={`text-5xl font-bold leading-tight transition-all duration-700 delay-200 text-slate-900 dark:text-white ${index === currentSpotlight
+                                        className={`text-5xl font-bold leading-tight transition-all duration-700 delay-200 text-primary ${index === currentSpotlight
                                             ? "opacity-100"
                                             : "opacity-0"
                                             }`}
@@ -135,7 +135,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                     </h1>
 
                                     <div
-                                        className={`flex items-center space-x-6 transition-all duration-700 delay-300 text-slate-600 dark:text-white/70 ${index === currentSpotlight
+                                        className={`flex items-center space-x-6 transition-all duration-700 delay-300 text-gray-600 dark:text-gray-300 ${index === currentSpotlight
                                             ? "opacity-100"
                                             : "opacity-0"
                                             }`}
@@ -164,7 +164,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                 </div>
 
                                 <p
-                                    className={`text-lg text-justify leading-relaxed transition-all duration-700 delay-500 text-slate-700 dark:text-white/80 line-clamp-3 ${index === currentSpotlight
+                                    className={`text-lg text-justify leading-relaxed transition-all duration-700 delay-500 text-gray-700 dark:text-gray-300 line-clamp-3 ${index === currentSpotlight
                                         ? "opacity-100"
                                         : "opacity-0"
                                         }`}
@@ -181,7 +181,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                     <Button
                                         asChild
                                         size="lg"
-                                        className="cursor-pointer bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
+                                        className="cursor-pointer bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
                                     >
                                         <Link href={`/watch/${anime.id}`}>
                                             <Play className="w-5 h-5 mr-2" />
@@ -192,7 +192,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                         asChild
                                         size="lg"
                                         variant="outline"
-                                        className="cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-slate-800/30 text-slate-800 hover:bg-slate-800/10 dark:border-white/30 dark:text-white dark:hover:bg-white/10"
+                                        className="cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
                                     >
                                         <Link href={`/anime/${anime.id}`}>
                                             <Info className="w-5 h-5 mr-2" />

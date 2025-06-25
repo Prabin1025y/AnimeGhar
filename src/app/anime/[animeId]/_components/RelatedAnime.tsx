@@ -11,7 +11,7 @@ const RelatedAnime = ({relatedAnimes, className="", gridClasses=""}: {relatedAni
     const displayedAnimes = isExpanded ? relatedAnimes : relatedAnimes.slice(0, 12);
   return (
     <section className={`max-w-7xl container mx-auto mt-6 ${className}`}>
-      <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
+      <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
         Related Animes
       </h2>
       {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"> */}

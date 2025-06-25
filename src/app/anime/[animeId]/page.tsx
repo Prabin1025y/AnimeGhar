@@ -77,7 +77,7 @@ export default async function MovieDetailsPage({
             </div>
 
             {/* Movie Info */}
-            <div className="lg:col-span-2 text-white space-y-6">
+            <div className="lg:col-span-2 text-primary space-y-6">
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold mb-2">
                   {data.anime.info.name}
@@ -104,7 +104,7 @@ export default async function MovieDetailsPage({
                     <Badge
                       key={genre}
                       variant="secondary"
-                      className="bg-cyan-600/80 text-white hover:bg-cyan-500/80"
+                      className="text-white bg-cyan-500 hover:bg-cyan-500/80"
                     >
                       {genre}
                     </Badge>
@@ -118,29 +118,29 @@ export default async function MovieDetailsPage({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-cyan-300">
+                      <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent ">
                         Studios:
                       </span>
-                      <span className="text-white/90">
+                      <span className="text-primary/90">
                         {data.anime.moreInfo.studios || "N/A"}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-cyan-300">
+                      <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent ">
                         Episodes:
                       </span>
-                      <span className="text-white/90">{22}</span>
+                      <span className="text-primary/90">{data.anime.info.stats.episodes.sub || "N/A"}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-cyan-300">Status:</span>
-                      <span className="text-white/90">
+                      <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent ">Status:</span>
+                      <span className="text-primary/90">
                         {data.anime.moreInfo.status || "N/A"}
                       </span>
                     </div>
                   </div>
                   <div className="space-y-3">
                     <div className="flex items-start gap-2">
-                      <span className="font-medium text-cyan-300">
+                      <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent ">
                         Characters:
                       </span>
                       <span className="text-white/90 text-sm">
@@ -153,7 +153,7 @@ export default async function MovieDetailsPage({
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-cyan-300">
+                      <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent ">
                         Japanese Name:
                       </span>
                       <Badge
@@ -170,7 +170,7 @@ export default async function MovieDetailsPage({
                   <div className="flex flex-wrap gap-3">
                     <Button asChild
                       size="lg"
-                      className="bg-cyan-600 hover:bg-cyan-700 text-white"
+                      className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:bg-cyan-700 text-white"
                     >
                       <Link href={`/watch/${data.anime.info.id}`}>
                         <Play className="h-5 w-5 mr-2" />
@@ -204,7 +204,7 @@ export default async function MovieDetailsPage({
 
   {/* Most Popular Movies */ }
   <section className="max-w-7xl container mx-auto mt-6">
-    <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
+    <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
       Most Popular Movies
     </h2>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -222,8 +222,8 @@ export default async function MovieDetailsPage({
   </section>
 
   {/* Recommended Movies */ }
-  <section className="max-w-7xl container mx-auto mt-6">
-    <h2 className="text-2xl font-bold mb-6 text-cyan-900 dark:text-cyan-100">
+  <section className="max-w-7xl container mx-auto mt-6 mb-4">
+    <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
       You Might Also Like
     </h2>
     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">

@@ -52,9 +52,9 @@ const SearchInput = () => {
 
     const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setTimeout(() => {
-            if (!searchRef.current?.value) {
+            // if (!searchRef.current?.value) {
                 setIsPopoverOpen(false);
-            }
+            // }
         }, 100);
     }
     return (
@@ -64,19 +64,19 @@ const SearchInput = () => {
                 <PopoverAnchor asChild className='relative flex items-center'>
                     <form onSubmit={handleOnSubmit}>
                         <Input onFocus={() => setIsPopoverOpen(true)} onBlur={handleOnBlur} ref={searchRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-xs peer focus-visible:ring-0 focus-visible:border-cyan-500' />
-                        <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 peer-focus:bg-slate-100 dark:peer-focus:bg-slate-800" />
+                        <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 " />
                         <Button asChild className={`absolute right-0 h-full hover:bg-cyan-600 rounded-l-none bg-cyan-500 transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}><Link href={`/search/${searchTerm}`}><ArrowRight /></Link></Button>
                     </form>
                 </PopoverAnchor>
                 {/* </PopoverTrigger> */}
-                <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()} className="w-80 p-1 bg-[#061e2e] border-cyan-600">
+                <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()} className="w-80 p-1 bg-cyan-50 dark:bg-[#061e2e] border-cyan-600">
                     <div className="grid gap-2">
                         {suggestions.map((suggestion, index) => (
-                            <Link href={`/anime/${suggestion.id}`} key={suggestion.id + index} className='w-full h-16 hover:bg-cyan-200/10 cursor-pointer rounded-md flex items-center gap-2'>
-                                <Image src={suggestion.poster} alt={suggestion.name} width={40} height={60} className='bg-blue-500 object-cover' />
+                            <Link href={`/anime/${suggestion.id}`} key={suggestion.id + index} className='w-full h-16 hover:bg-cyan-100 cursor-pointer rounded-md flex items-center gap-2'>
+                                <Image src={suggestion.poster} alt={suggestion.name} width={40} height={60} className='bg-gray-500 object-cover' />
                                 <div>
                                     <p className='font-semibold line-clamp-1'>{suggestion.name}</p>
-                                    <div className='flex items-center gap-2 text-sm text-slate-400'>
+                                    <div className='flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400'>
                                         <span>{suggestion.moreInfo[0]}</span><span>{suggestion.moreInfo[1]}</span><span>{suggestion.moreInfo[2]}</span>
                                     </div>
                                 </div>

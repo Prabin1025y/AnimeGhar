@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-slate-950`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-gray-950 dark:via-slate-950 dark:to-gray-900`}
       >
         <ThemeProvider
           attribute="class"
@@ -38,6 +39,7 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <Toaster richColors position="top-center" />
           <Footer />
         </ThemeProvider>
       </body>

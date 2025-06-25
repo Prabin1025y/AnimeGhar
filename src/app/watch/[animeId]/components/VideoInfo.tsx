@@ -51,7 +51,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
     animeDetail === null ? (
       <VideoInfoSkeleton />
     ) : (
-      <div className={`${className} bg-gray-900 rounded-lg p-6 grid gap-6 grid-cols-4 grid-rows-[auto auto] items-start`}>
+      <div className={`${className} bg-white dark:bg-gray-900 rounded-lg p-6 grid gap-6 grid-cols-4 grid-rows-[auto auto] items-start`}>
         {/* Poster */}
         {animeDetail?.anime.info.poster && (
           <div className="row-start-1 col-start-1 col-span-1 w-32 md:w-40 lg:w-48 aspect-[2/3] overflow-hidden">
@@ -66,10 +66,10 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
         <div className="row-start-1 col-start-2 col-span-3 space-y-4">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-bold text-primary mb-2">
                 {animeDetail?.anime.info.name}
               </h1>
-              <div className="flex items-center space-x-4 text-sm text-gray-400 mb-4">
+              <div className="flex items-center space-x-4 text-sm text-gray-800 dark:text-gray-100 mb-4">
                 <div className="flex items-center space-x-1">
                   <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   <span>{animeDetail?.anime.moreInfo.malscore}</span>
@@ -89,14 +89,14 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
               </div>
             </div>
           </div>
-          <p className="text-gray-300 leading-relaxed line-clamp-3">
+          <p className="text-gray-800 dark:text-gray-100 leading-relaxed line-clamp-3">
             {animeDetail?.anime.info.description}
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
             {animeDetail?.anime.moreInfo.genres.map((genre) => (
               <span
                 key={genre}
-                className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full"
+                className="px-3 py-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-sm rounded-full"
               >
                 {genre}
               </span>
@@ -104,13 +104,13 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
           </div>
           <div className="flex items-center space-x-6 pt-4 border-t border-gray-700">
             <div className="flex items-center space-x-3">
-              <label className="text-white font-medium">Audio:</label>
-              <div className="flex bg-gray-800 rounded-lg p-1">
+              <label className="text-primary font-medium">Audio:</label>
+              <div className="flex bg-cyan-700/20 dark:bg-gray-800 rounded-lg p-1">
                 <button
                   onClick={() => setIsDub(false)}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${!isDub
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-400 hover:text-white"
+                      ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-white"
+                      : "text-gray-800 dark:text-gray-400"
                     }`}
                   type="button"
                 >
@@ -119,8 +119,8 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
                 <button
                   onClick={() => setIsDub(true)}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${isDub
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-400 hover:text-white"
+                      ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-white"
+                      : "text-gray-800 dark:text-gray-400"
                     }`}
                   type="button"
                 >
@@ -138,13 +138,13 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
                     className="sr-only"
                   />
                   <div
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${autoSkip ? "bg-blue-600 border-blue-600" : "border-gray-400"
+                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${autoSkip ? "bg-gradient-to-r from-cyan-400 to-blue-500 border-blue-600" : "border-gray-400"
                       }`}
                   >
-                    {autoSkip && <Check className="w-3 h-3 text-white" />}
+                    {autoSkip && <Check className="w-3 h-3 text-primary" />}
                   </div>
                 </div>
-                <span className="text-white font-medium flex items-center space-x-1">
+                <span className="text-primary font-medium flex items-center space-x-1">
                   <SkipForward className="w-4 h-4" />
                   <span>Auto Skip Intro</span>
                 </span>

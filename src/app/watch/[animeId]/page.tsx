@@ -8,6 +8,7 @@ import { AnimeDetailsDataType, EpisodeSourceType } from "@/types";
 import { removeDuplicateRelatedAnimes } from "@/utilities";
 import Player from "./components/Player";
 import PlayerSkeleton from "./components/PlayerSkeleton";
+import { toast } from "sonner";
 
 export type EpisodeType = {
   title: string;
@@ -72,17 +73,21 @@ const VideoPlayerPage: React.FC = () => {
         return;
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=sub`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}` // Adjust the URL as needed
       );
       const data = await response.json();
+      if(!response.ok && data.message == "getAnimeEpisodeSources: Couldn't find server. Try another server") {
+        setIsDub(false);
+        toast.error("Dub is not available for this episode. Switching to sub.");
+      }
       setEpisodeInfo(data.data);
       setSourceLoading(false);
     };
     fetchData();
-  }, [episodeNumber]);
+  }, [episodeNumber, isDub, animeId, searchParams]);
 
   return (
-    <div className="min-h-screen bg-gray-950 p-4 pt-24">
+    <div className="min-h-screen p-4 pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 auto-rows-auto gap-6">
           {!sourceLoading && searchParams.get("ep") ?
@@ -90,10 +95,12 @@ const VideoPlayerPage: React.FC = () => {
               url={EpisodeInfo?.sources?.[0]?.url || ""}
               tracks={EpisodeInfo?.tracks || []}
               className="col-span-3 row-span-1"
+              isDub = {isDub}
             />
             :
             <PlayerSkeleton />
           }
+          
           <EpisodeSelector
             animeId={animeId}
             className="col-span-1 row-span-2 col-start-3 row-start-2 overflow-y-auto"

@@ -34,7 +34,7 @@ const Top10 = ({
         {top10animes["today"].map((anime) => (
           <div
             key={anime.id}
-            className="flex items-center gap-3 rounded-sm p-1 bg-slate-800/50 border hover:bg-slate-800 transition-all duration-300 cursor-pointer group"
+            className="flex items-center gap-3 rounded-sm p-1 bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
           >
             <div
               className={`flex-shrink-0 w-8 h-8 rounded-sm flex items-center justify-center font-bold text-2xl ${londrinaShadow.className

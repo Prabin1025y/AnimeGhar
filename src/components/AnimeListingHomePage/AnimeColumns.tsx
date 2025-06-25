@@ -39,7 +39,7 @@ const AnimeColumns = ({ animeColumns }: AnimeColumnsProps) => {
               {column.animes.map((anime) => (
                 <div
                   key={anime.id}
-                  className="flex items-center gap-3 rounded-sm p-1 border bg-slate-800/50 hover:bg-slate-800 transition-all duration-300 cursor-pointer group"
+                  className="flex items-center gap-3 rounded-sm p-1 border bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
                 >
                   <HoverCard openDelay={200}>
                     <HoverCardTrigger asChild>

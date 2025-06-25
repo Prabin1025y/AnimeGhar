@@ -92,7 +92,7 @@ const page = () => {
           {searchResult && searchResult.mostPopularAnimes.length > 0 && searchResult.mostPopularAnimes.map((anime, index) => (
             <div
               key={anime.id + index}
-              className="flex items-center gap-3 rounded-sm p-1 bg-slate-800/50 border hover:bg-slate-800 transition-all duration-300 cursor-pointer group"
+              className="flex items-center gap-3 rounded-sm p-1 bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
             >
               <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>

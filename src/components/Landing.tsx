@@ -9,6 +9,7 @@ import { Play, Star, Tv, Download, Menu, X, ArrowRight, Globe, Smartphone, Searc
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const features = [
     {
@@ -33,8 +34,15 @@ const features = [
     },
 ]
 
+
 export default function Landing() {
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchTerm, setSearchTerm] = useState("")
+    const router = useRouter();
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        router.push(`/search/${searchTerm}`)
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
@@ -88,22 +96,14 @@ export default function Landing() {
 
                             {/* Search Bar */}
                             <div className="mt-12 max-w-2xl mx-auto">
-                                <div className="relative">
-                                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                    <Input
-                                        type="text"
-                                        placeholder="Search for anime, movies, or genres..."
-                                        value={searchQuery}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                                        className="pl-12 pr-4 py-4 text-lg border-2 border-cyan-200 dark:border-cyan-700 focus:border-cyan-400 dark:focus:border-cyan-500 rounded-xl bg-white/80 dark:bg-gray-800/80 dark:text-gray-100 text-gray-900 backdrop-blur-sm"
-                                    />
-                                    <Button
-                                        size="sm"
-                                        className="absolute right-0 rounded-lg top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-                                    >
-                                        Search
-                                    </Button>
-                                </div>
+                                <form onSubmit={handleOnSubmit}>
+                                    <div className='relative flex items-center'>
+                                        <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-full peer focus-visible:ring-0 focus-visible:border-cyan-500' />
+                                        <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400" />
+                                        <Button asChild className={`absolute right-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-l-none  transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}><Link href={`/search/${searchTerm}`}><ArrowRight /></Link></Button>
+
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
