@@ -52,7 +52,7 @@ export default function Landing() {
                         {/* Content */}
                         <div>
                             <Badge variant="secondary" className="mb-4bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200 hover:bg-cyan-200 dark:hover:bg-cyan-800">
-                                🎌 Nepal&apos;s #1 Anime Streaming Platform
+                                🎌 Your Own Anime Streaming Platform
                             </Badge>
 
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-600 via-blue-600 to-teal-600 bg-clip-text text-transparent leading-tight">
