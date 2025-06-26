@@ -47,7 +47,7 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
       try {
         setisLoading(true);
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/qtip/${animeid}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/qtip/${animeid}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
         );
         const data = await response.json();
         setcardData(data.data.anime);

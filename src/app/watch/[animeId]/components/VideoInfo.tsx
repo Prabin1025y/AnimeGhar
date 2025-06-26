@@ -32,7 +32,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
     setLoading(true)
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
       );
       const result = await response.json();
       setAnimeDetail(result.data);

@@ -20,7 +20,7 @@ const SearchInput = () => {
         const fetchData = async () => {
             if (searchTerm.trim() !== "") {
                 setIsPopoverOpen(true);
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/suggestion?q=${searchTerm}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/suggestion?q=${searchTerm}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
                 const data = await response.json();
                 setSuggestions(data.data.suggestions);
             } else {

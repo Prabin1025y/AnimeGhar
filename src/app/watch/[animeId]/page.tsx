@@ -37,7 +37,7 @@ const VideoPlayerPage: React.FC = () => {
     // setEpisodesLoading(true)
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
       );
       const result = await response.json();
       setAnimeDetail(result.data);
@@ -58,7 +58,8 @@ const VideoPlayerPage: React.FC = () => {
         return;
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}` // Adjust the URL as needed
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
+        {headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}} // Adjust the URL as needed
       );
 
       if (!response.ok) {

@@ -17,7 +17,7 @@ const HomePage = () => {
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/home`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/home`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
                 const data = await response.json()
 
                 if (data.data)

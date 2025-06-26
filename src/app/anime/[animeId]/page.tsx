@@ -18,7 +18,7 @@ import { Metadata } from "next";
 const fetchData = async (animeId: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
     );
     const data = await response.json();
 

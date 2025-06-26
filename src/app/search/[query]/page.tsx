@@ -30,7 +30,7 @@ const SearchPage = () => {
     }
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${query}&page=${page}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${query}&page=${page}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
         const data = await response.json();
         setSearchResult(data.data);
       } catch (error) {

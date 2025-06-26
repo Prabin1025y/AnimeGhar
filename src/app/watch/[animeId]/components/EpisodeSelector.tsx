@@ -27,7 +27,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         setIsLoading(true);
         const fetchData = async () => {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}/episodes`
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}/episodes`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
             );
             const result = await response.json();
             setEpisodes(result.data.episodes);
