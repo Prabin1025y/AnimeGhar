@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Play, Star, Tv, Download, Menu, X, ArrowRight, Globe, Smartphone, Search } from "lucide-react"
+import { Play,  Tv, Download,  ArrowRight, Globe, Smartphone, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import Link from "next/link"
@@ -53,7 +52,7 @@ export default function Landing() {
                         {/* Content */}
                         <div>
                             <Badge variant="secondary" className="mb-4bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200 hover:bg-cyan-200 dark:hover:bg-cyan-800">
-                                🎌 Nepal's #1 Anime Streaming Platform
+                                🎌 Nepal&apos;s #1 Anime Streaming Platform
                             </Badge>
 
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-600 via-blue-600 to-teal-600 bg-clip-text text-transparent leading-tight">

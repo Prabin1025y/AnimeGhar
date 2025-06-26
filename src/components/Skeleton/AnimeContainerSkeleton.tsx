@@ -1,5 +1,5 @@
 // Skeleton loader for AnimeContainer
-const AnimeContainerSkeleton: React.FC<{ title?: string }> = ({ title }) => {
+const AnimeContainerSkeleton: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto py-6 animate-pulse">
       <div className="h-10 w-64 bg-gray-300 dark:bg-gray-700 rounded mb-6" />

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import {
   Calendar,
   Captions,
-  Clock,
   Globe,
   Mic,
   Play,
@@ -48,7 +47,7 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
       try {
         setisLoading(true);
         const response = await fetch(
-          `http://localhost:4000/api/v2/hianime/qtip/${animeid}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/qtip/${animeid}`
         );
         const data = await response.json();
         setcardData(data.data.anime);
@@ -60,7 +59,7 @@ const AnimeTips = ({ animeid, image }: { animeid: string; image: string }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [animeid]);
 
   if (isLoading)
     return (

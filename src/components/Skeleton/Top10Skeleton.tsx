@@ -1,6 +1,5 @@
 import React from "react";
 import { Skeleton } from "../ui/skeleton";
-import { Trophy } from "lucide-react";
 
 const Top10Skeleton = () => {
   return (

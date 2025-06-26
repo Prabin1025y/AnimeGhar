@@ -13,7 +13,7 @@ import Link from 'next/link'
 import { useParams, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const SearchPage = () => {
   const { query } = useParams<{ query: string }>();
   const searchParams = useSearchParams();
   const page = searchParams.get('page') || '1';
@@ -30,7 +30,7 @@ const page = () => {
     }
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/search?q=${query}&page=${page}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${query}&page=${page}`);
         const data = await response.json();
         setSearchResult(data.data);
       } catch (error) {
@@ -171,4 +171,4 @@ const page = () => {
   )
 }
 
-export default page
+export default SearchPage;

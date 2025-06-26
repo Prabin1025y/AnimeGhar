@@ -15,23 +15,7 @@ export type EpisodeType = {
   episodeId: string;
   number: number;
   isFiller: boolean;
-}
-
-// const VideoPlayer: React.FC<{ className?: string }> = ({ className = "" }) => {
-//   return (
-//     <div className={`w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center ${className}`}>
-//       <div className="text-white text-center">
-//         <Play className="w-16 h-16 mx-auto mb-4 opacity-70" />
-//         <p className="text-xl">Video Player Component</p>
-//         <p className="text-sm opacity-70 mt-2">
-//           Implement your video player here
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-
+};
 
 const VideoPlayerPage: React.FC = () => {
   const [isDub, setIsDub] = useState<boolean>(false);
@@ -39,31 +23,32 @@ const VideoPlayerPage: React.FC = () => {
   const [animeDetail, setAnimeDetail] = useState<AnimeDetailsDataType | null>(
     null
   );
-  const [episodesLoading, setEpisodesLoading] = useState(true)
+  // const [episodesLoading, setEpisodesLoading] = useState(true)
   const [sourceLoading, setSourceLoading] = useState(true)
   const [EpisodeInfo, setEpisodeInfo] = useState<EpisodeSourceType | null>(null)
 
-
-  useEffect(() => {
-    setEpisodesLoading(true)
-    const fetchData = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/anime/${animeId}`
-      );
-      const result = await response.json();
-      setAnimeDetail(result.data);
-      console.log(result.data);
-      setEpisodesLoading(false);
-    };
-    fetchData();
-
-  }, []);
 
   const params = useParams<{ animeId: string }>();
   const animeId = params.animeId;
   const searchParams = useSearchParams();
   const episodeNumber = searchParams.get("ep");
-  console.log(episodeNumber)
+
+  useEffect(() => {
+    // setEpisodesLoading(true)
+    const fetchData = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
+      );
+      const result = await response.json();
+      setAnimeDetail(result.data);
+      // setEpisodesLoading(false);
+    };
+    fetchData();
+
+  }, [animeId]);
+
+
+  // console.log(episodeNumber)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,10 +58,10 @@ const VideoPlayerPage: React.FC = () => {
         return;
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}` // Adjust the URL as needed
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}` // Adjust the URL as needed
       );
       const data = await response.json();
-      if(!response.ok && data.message == "getAnimeEpisodeSources: Couldn't find server. Try another server") {
+      if (!response.ok && data.message == "getAnimeEpisodeSources: Couldn't find server. Try another server") {
         setIsDub(false);
         toast.error("Dub is not available for this episode. Switching to sub.");
       }
@@ -95,12 +80,12 @@ const VideoPlayerPage: React.FC = () => {
               url={EpisodeInfo?.sources?.[0]?.url || ""}
               tracks={EpisodeInfo?.tracks || []}
               className="col-span-3 row-span-1"
-              isDub = {isDub}
+              isDub={isDub}
             />
             :
             <PlayerSkeleton />
           }
-          
+
           <EpisodeSelector
             animeId={animeId}
             className="col-span-1 row-span-2 col-start-3 row-start-2 overflow-y-auto"

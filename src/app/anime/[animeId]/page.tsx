@@ -6,10 +6,6 @@ import {
   Clock,
   Star,
   Play,
-  Heart,
-  Share2,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react";
 import { AnimeDetailsDataType } from "@/types";
 import AnimeCard from "@/components/AnimeCard";
@@ -17,18 +13,19 @@ import Description from "./_components/Description";
 import RelatedAnime from "./_components/RelatedAnime";
 import Link from "next/link";
 import SeasonCard from "@/app/watch/[animeId]/components/SeasonCard";
+import { Metadata } from "next";
 
 const fetchData = async (animeId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:4000/api/v2/hianime/anime/${animeId}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
     );
     const data = await response.json();
 
     //remove any duplicated related animes
     const uniqueRelatedAnimes = Array.from(
       new Map(
-        data.data.relatedAnimes.map((item: any) => [item.id, item])
+        data.data.relatedAnimes.map((item: AnimeDetailsDataType['recommendedAnimes'][number]) => [item.id, item])
       ).values()
     );
     data.data.relatedAnimes = uniqueRelatedAnimes;
@@ -39,6 +36,20 @@ const fetchData = async (animeId: string) => {
     return null;
   }
 };
+
+export async function generateMetadata(
+  { params }: { params: { animeId: string } }
+): Promise<Metadata> {
+  // read route params
+  const { animeId } = await params
+ 
+  const data = await fetchData(animeId);
+ 
+  return {
+    title: `${data.anime.info.name} | AnimeGhar` || "AnimeGhar - Watch Anime Online",
+    description: `Watch ${data.anime.info.name} episodes online for free without any ads and distractions.` || "Watch your favorite anime episodes online for free without any ads and distractions.",
+  }
+}
 
 export default async function MovieDetailsPage({
   params,

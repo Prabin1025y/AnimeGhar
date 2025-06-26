@@ -10,16 +10,15 @@ import TrendingAnime from '@/components/TrendingAnime'
 import { HomeDataType } from '@/types'
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const HomePage = () => {
     const [isMounted, setIsMounted] = useState(false)
     const [homeData, setHomeData] = useState<HomeDataType>({} as HomeDataType)
 
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/v2/hianime/home`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/home`);
                 const data = await response.json()
-                console.log(data)
 
                 if (data.data)
                     setHomeData(data.data);
@@ -54,4 +53,4 @@ const page = () => {
     )
 }
 
-export default page
+export default HomePage

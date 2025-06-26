@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Badge } from "../ui/badge";
-import { Captions, Mic } from "lucide-react";
-import Image from "next/image";
 import { HomeDataType } from "@/types";
-import AnimeTips from "../AnimeTips";
 import AnimeCard from '../AnimeCard';
 
 const AnimeContainer = ({ animes, title }: { animes: HomeDataType["latestEpisodeAnimes"] | HomeDataType["topUpcomingAnimes"], title: string }) => {

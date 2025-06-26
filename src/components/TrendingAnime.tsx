@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Star, Clock, Calendar, ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { Star, ChevronLeft, ChevronRight, Play } from 'lucide-react'
 import Image from 'next/image'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'

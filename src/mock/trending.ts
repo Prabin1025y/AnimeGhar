@@ -1,4 +1,3 @@
-import { HomeDataType } from "@/types";
 
 export const trendingAnimes = [
     {

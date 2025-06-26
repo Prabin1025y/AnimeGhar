@@ -16,7 +16,7 @@ export const getStatusColor = (status: string) => {
 export const removeDuplicateRelatedAnimes = (animes: AnimeDetailsDataType['relatedAnimes']) => {
   const uniqueRelatedAnimes = Array.from(
     new Map(
-      animes.map((item: any) => [item.id, item])
+      animes.map((item: AnimeDetailsDataType['relatedAnimes'][number]) => [item.id, item])
     ).values()
   );
   return uniqueRelatedAnimes;

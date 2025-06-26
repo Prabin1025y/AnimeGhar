@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { EpisodeType } from "../page";
 
@@ -27,7 +27,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         setIsLoading(true);
         const fetchData = async () => {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/anime/${animeId}/episodes`
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}/episodes`
             );
             const result = await response.json();
             setEpisodes(result.data.episodes);
@@ -38,7 +38,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         }
         fetchData();
 
-    }, []);
+    }, [animeId, searchParams, router]);
 
 
     // const currentSeasonEpisodes = data.episodes[currentSeason] || [];

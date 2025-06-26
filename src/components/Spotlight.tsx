@@ -1,4 +1,4 @@
-import { Calendar, Captions, ChevronLeft, ChevronRight, Clock, Info, Mic, Play, Star } from 'lucide-react'
+import { Calendar, Captions, ChevronLeft, ChevronRight, Clock, Info, Mic, Play } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { Button } from './ui/button'

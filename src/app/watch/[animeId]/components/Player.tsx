@@ -1,6 +1,6 @@
 import { Slider } from '@/components/ui/slider'
 import { parseVTT } from '@/utilities'
-import { Captions, Expand, Maximize2, Minimize, Pause, PictureInPicture, Play, Redo2, Settings, Undo2, Volume2, VolumeOff } from 'lucide-react'
+import { Captions, Expand, Minimize, Pause,  Play, Volume2, VolumeOff } from 'lucide-react'
 import { TbRewindBackward10, TbRewindForward10 } from "react-icons/tb";
 import { MdSpeed } from "react-icons/md";
 import {
@@ -14,6 +14,7 @@ import {
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
+// import { Poppins } from 'next/font/google'
 
 type PlayerProps = {
     className?: string;
@@ -26,7 +27,13 @@ type PlayerProps = {
     isDub: boolean;
 }
 
-const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title, isDub }) => {
+// const roboto = Roboto({
+//     subsets: ['latin'],
+//     weight: '600'
+// })
+
+
+const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) => {
     const search_params = useSearchParams()
     const episodeId = search_params.get("ep") || "";
     const videoPlayer = useRef<ReactPlayer>(null)
@@ -51,7 +58,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title, isD
         tracks?.forEach(source => {
             loadSubtitleFile(source.url, source.lang);
         });
-    }, []);
+    }, [tracks]);
 
     useEffect(() => {
         let timeout: NodeJS.Timeout;
@@ -304,10 +311,10 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title, isD
         }
     };
 
-    const getCurrentLanguageName = () => {
-        const source = tracks?.find(s => s.lang === selectedLanguage);
-        return source ? source.lang : 'English';
-    };
+    // const getCurrentLanguageName = () => {
+    //     const source = tracks?.find(s => s.lang === selectedLanguage);
+    //     return source ? source.lang : 'English';
+    // };
 
     return (
         <div className={`w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center ${className}`}>
@@ -331,9 +338,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, title, isD
 
                 {/* Subtitles Overlay */}
                 {selectedLanguage !== "None" && currentSubtitle && (
-                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-black/60  text-white px-4 text-center max-w-3xl w-fit mx-4">
+                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2  text-white px-4 text-center max-w-3xl w-fit mx-4">
                         <p
-                            className="text-outline-black font-bold text-3xl leading-snug whitespace-pre-line"
+                            className={`text-outline-black font-bold text-3xl leading-snug whitespace-pre-line`}
                             dangerouslySetInnerHTML={{ __html: currentSubtitle }}
                         />
                     </div>

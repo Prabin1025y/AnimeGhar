@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Input } from './ui/input'
 import { ArrowRight, Search } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from './ui/popover';
+import { Popover, PopoverContent, PopoverAnchor } from './ui/popover';
 import Image from 'next/image';
 import { SearchSuggestionType } from '@/types';
 import { Button } from './ui/button';
@@ -13,7 +13,6 @@ const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [isPopoverOpen, setIsPopoverOpen] = useState(false)
     const [suggestions, setSuggestions] = useState<SearchSuggestionType[]>([])
-    // const [isFocused, setIsFocused] = useState(false)
     const searchRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
@@ -21,8 +20,7 @@ const SearchInput = () => {
         const fetchData = async () => {
             if (searchTerm.trim() !== "") {
                 setIsPopoverOpen(true);
-                // Simulate fetching search results
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/search/suggestion?q=${searchTerm}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/suggestion?q=${searchTerm}`);
                 const data = await response.json();
                 setSuggestions(data.data.suggestions);
             } else {
@@ -39,7 +37,7 @@ const SearchInput = () => {
     }, [searchTerm])
 
 
-    const onOpenChange = (open: boolean) => {
+    const onOpenChange = () => {
         // setIsPopoverOpen(open);
     }
 
@@ -50,11 +48,9 @@ const SearchInput = () => {
         router.push(`/search/${searchTerm}`);
     }
 
-    const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleOnBlur = () => {
         setTimeout(() => {
-            // if (!searchRef.current?.value) {
                 setIsPopoverOpen(false);
-            // }
         }, 100);
     }
     return (
@@ -85,13 +81,6 @@ const SearchInput = () => {
                     </div>
                 </PopoverContent>
             </Popover>
-            {/* <Popover defaultOpen={true} open={isPopoverOpen} onOpenChange={onOpenChange}>
-                <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 peer focus-visible:ring-0 focus-visible:border-cyan-500' />
-                <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 peer-focus:bg-slate-100 dark:peer-focus:bg-slate-800" />
-                <PopoverContent>
-                    <div className='w-full h-20 bg-red-500'>Search items here</div>
-                </PopoverContent>
-            </Popover> */}
         </div>
     )
 }

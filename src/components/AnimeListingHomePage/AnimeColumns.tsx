@@ -1,5 +1,4 @@
 import React from "react";
-import { HomeDataType } from "@/types";
 import { Badge } from "../ui/badge";
 import { Captions, Mic } from "lucide-react";
 import Image from "next/image";

@@ -1,10 +1,9 @@
 import { AnimeDetailsDataType } from "@/types";
-import { Building2, Calendar, Check, SkipForward, Star, Users } from "lucide-react";
-import Image from "next/image";
+import { Building2, Calendar, Star, Users } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import SeasonCard from "./SeasonCard";
+import Image from "next/image";
 
 interface VideoInfoProps {
   className?: string;
@@ -21,8 +20,8 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
   animeId,
   isDub,
   setIsDub,
-  autoSkip,
-  setAutoSkip,
+  // autoSkip,
+  // setAutoSkip,
 }) => {
   const [animeDetail, setAnimeDetail] = useState<AnimeDetailsDataType | null>(
     null
@@ -33,16 +32,16 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
     setLoading(true)
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v2/hianime/anime/${animeId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`
       );
       const result = await response.json();
       setAnimeDetail(result.data);
-      console.log(result.data);
+      // console.log(result.data);
       setLoading(false);
     };
     fetchData();
 
-  }, []);
+  }, [animeId]);
 
   if (loading)
     return <VideoInfoSkeleton className={className} />;
@@ -55,10 +54,11 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
         {/* Poster */}
         {animeDetail?.anime.info.poster && (
           <div className="row-start-1 col-start-1 col-span-1 w-32 md:w-40 lg:w-48 aspect-[2/3] overflow-hidden">
-            <img
+            <Image
               src={animeDetail.anime.info.poster}
               alt={animeDetail.anime.info.name + " Poster"}
               className="rounded-lg w-full h-full object-cover shadow-lg border border-gray-800"
+              fill
             />
           </div>
         )}
@@ -128,7 +128,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
                 </button>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            {/* <div className="flex items-center space-x-3">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <div className="relative">
                   <input
@@ -149,7 +149,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
                   <span>Auto Skip Intro</span>
                 </span>
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* Seasons - only takes necessary width */}
