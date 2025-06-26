@@ -125,7 +125,7 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">
-                            Why Choose AnimeStream?
+                            Why Choose AnimeGhar?
                         </h2>
                         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                             Experience anime like never before with our premium streaming features designed for true anime

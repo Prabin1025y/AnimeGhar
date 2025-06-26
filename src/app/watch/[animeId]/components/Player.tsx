@@ -1,6 +1,6 @@
 import { Slider } from '@/components/ui/slider'
 import { parseVTT } from '@/utilities'
-import { Captions, Expand, Minimize, Pause,  Play, Volume2, VolumeOff } from 'lucide-react'
+import { Captions, Expand, Minimize, Pause, Play, Volume2, VolumeOff } from 'lucide-react'
 import { TbRewindBackward10, TbRewindForward10 } from "react-icons/tb";
 import { MdSpeed } from "react-icons/md";
 import {
@@ -76,6 +76,115 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
             clearTimeout(timeout);
         };
     }, [isPlaying]);
+
+
+    interface ProgressProps {
+        played: number;
+        playedSeconds: number;
+        loaded: number;
+        loadedSeconds: number;
+    }
+
+    const handleProgress = (progress: ProgressProps) => {
+        setPlayed(progress.played);
+        // console.log("Coming")
+
+        if (selectedLanguage !== "None" && subtitleTracks[selectedLanguage]) {
+            const timeDelay = 0.2 //to synchronize subtitles with video
+            const currentTime = progress.playedSeconds + timeDelay;
+            const subtitle = subtitleTracks[selectedLanguage].find((sub: { start: number; end: number; text: string }) =>
+                currentTime >= sub.start && currentTime <= sub.end
+            );
+            // console.log(selectedLanguage)
+            // console.log(subtitleTracks[selectedLanguage])
+            setCurrentSubtitle(subtitle ? subtitle.text : '');
+        } else {
+            setCurrentSubtitle('');
+        }
+    }
+
+    const handleSkip = (direction: 'forward' | 'backward') => {
+        if (videoPlayer.current) {
+            const skipAmount = direction === 'forward' ? 10 : -10;
+            const newPlayed = Math.min(Math.max(played + skipAmount / duration, 0), 1);
+            setPlayed(newPlayed);
+            videoPlayer.current.seekTo(newPlayed);
+        }
+    };
+
+    const handleSeek = (value: number[]) => {
+        const newPlayed = value[0] / 100;
+        setPlayed(newPlayed);
+        videoPlayer.current?.seekTo(newPlayed);
+    };
+
+    interface FormatTime {
+        (seconds: number): string;
+    }
+
+    const formatTime: FormatTime = (seconds: number): string => {
+        const mins: number = Math.floor(seconds / 60);
+        const secs: number = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const toggleFullscreen = () => {
+        if (!isFullscreen) {
+            // Enter fullscreen
+            if (playerContainerRef.current?.requestFullscreen) {
+                playerContainerRef.current.requestFullscreen();
+                setIsFullscreen(true);
+            }
+        } else {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                setIsFullscreen(false);
+            }
+        }
+    };
+
+    const loadSubtitleFile = async (url: string, languageCode: string) => {
+        try {
+
+            if (languageCode == "thumbnails")
+                return;
+
+            setLoadingSubtitles(true);
+            const response = await fetch(url);
+            const vttContent = await response.text();
+            const parsedSubtitles = parseVTT(vttContent);
+            // console.log(vttContent)
+
+            setSubtitleTracks(prev => ({
+                ...prev,
+                [languageCode]: parsedSubtitles
+            }));
+        } catch (error) {
+            console.error(`Error loading subtitles for ${languageCode}:`, error);
+            // Fallback to demo subtitles if loading fails
+            // if (demoSubtitles[languageCode]) {
+            //     setSubtitleTracks(prev => ({
+            //         ...prev,
+            //         [languageCode]: demoSubtitles[languageCode]
+            //     }));
+            // }
+        } finally {
+            setLoadingSubtitles(false);
+        }
+    };
+
+    const handleLanguageSelect = (value: string) => {
+        setSelectedLanguage(value);
+
+        // Load subtitles if not already loaded
+        if (!subtitleTracks[value]) {
+            const source = tracks?.find(s => s.lang === value);
+            if (source) {
+                loadSubtitleFile(source.url, value);
+            }
+        }
+    };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -201,116 +310,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isPlaying, volume, muted, played, duration, playbackRate, selectedLanguage]);
-
-    interface ProgressProps {
-        played: number;
-        playedSeconds: number;
-        loaded: number;
-        loadedSeconds: number;
-    }
-
-    const handleProgress = (progress: ProgressProps) => {
-        setPlayed(progress.played);
-        // console.log("Coming")
-
-        if (selectedLanguage !== "None" && subtitleTracks[selectedLanguage]) {
-            const timeDelay = 0.2 //to synchronize subtitles with video
-            const currentTime = progress.playedSeconds + timeDelay;
-            const subtitle = subtitleTracks[selectedLanguage].find((sub: { start: number; end: number; text: string }) =>
-                currentTime >= sub.start && currentTime <= sub.end
-            );
-            // console.log(selectedLanguage)
-            // console.log(subtitleTracks[selectedLanguage])
-            setCurrentSubtitle(subtitle ? subtitle.text : '');
-        } else {
-            setCurrentSubtitle('');
-        }
-    }
-
-    const handleSkip = (direction: 'forward' | 'backward') => {
-        if (videoPlayer.current) {
-            const skipAmount = direction === 'forward' ? 10 : -10;
-            const newPlayed = Math.min(Math.max(played + skipAmount / duration, 0), 1);
-            setPlayed(newPlayed);
-            videoPlayer.current.seekTo(newPlayed);
-        }
-    };
-
-    const handleSeek = (value: number[]) => {
-        const newPlayed = value[0] / 100;
-        setPlayed(newPlayed);
-        videoPlayer.current?.seekTo(newPlayed);
-    };
-
-    interface FormatTime {
-        (seconds: number): string;
-    }
-
-    const formatTime: FormatTime = (seconds: number): string => {
-        const mins: number = Math.floor(seconds / 60);
-        const secs: number = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    };
-
-    const toggleFullscreen = () => {
-        if (!isFullscreen) {
-            // Enter fullscreen
-            if (playerContainerRef.current?.requestFullscreen) {
-                playerContainerRef.current.requestFullscreen();
-                setIsFullscreen(true);
-            }
-        } else {
-            // Exit fullscreen
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-                setIsFullscreen(false);
-            }
-        }
-    };
-
-    const loadSubtitleFile = async (url: string, languageCode: string) => {
-        try {
-
-            if (languageCode == "thumbnails")
-                return;
-
-            setLoadingSubtitles(true);
-            const response = await fetch(url);
-            const vttContent = await response.text();
-            const parsedSubtitles = parseVTT(vttContent);
-            // console.log(vttContent)
-
-            setSubtitleTracks(prev => ({
-                ...prev,
-                [languageCode]: parsedSubtitles
-            }));
-        } catch (error) {
-            console.error(`Error loading subtitles for ${languageCode}:`, error);
-            // Fallback to demo subtitles if loading fails
-            // if (demoSubtitles[languageCode]) {
-            //     setSubtitleTracks(prev => ({
-            //         ...prev,
-            //         [languageCode]: demoSubtitles[languageCode]
-            //     }));
-            // }
-        } finally {
-            setLoadingSubtitles(false);
-        }
-    };
-
-    const handleLanguageSelect = (value: string) => {
-        setSelectedLanguage(value);
-
-        // Load subtitles if not already loaded
-        if (!subtitleTracks[value]) {
-            const source = tracks?.find(s => s.lang === value);
-            if (source) {
-                loadSubtitleFile(source.url, value);
-            }
-        }
-    };
-
+    }, [isPlaying, volume, muted, played, duration, playbackRate, selectedLanguage, handleSeek, handleSkip]);
     // const getCurrentLanguageName = () => {
     //     const source = tracks?.find(s => s.lang === selectedLanguage);
     //     return source ? source.lang : 'English';
@@ -319,7 +319,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
     return (
         <div className={`w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center ${className}`}>
             {/* <ReactPlayer key={episodeId} width="100%" height="100%" url={`https://anime-ghar-proxy.vercel.app/m3u8-proxy?url=${url}`} controls /> */}
-            <div ref={playerContainerRef} className="relative w-full h-full aspect-video bg-black">
+            <div ref={playerContainerRef} className={`relative w-full h-full aspect-video bg-black ${(showControls) ? "cursor-auto" : "cursor-none"}`}>
                 <ReactPlayer
                     ref={videoPlayer}
                     playing={isPlaying}
