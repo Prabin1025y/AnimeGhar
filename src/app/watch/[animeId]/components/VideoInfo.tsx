@@ -57,7 +57,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
             <Image
               src={animeDetail.anime.info.poster}
               alt={animeDetail.anime.info.name + " Poster"}
-              className="rounded-lg w-full h-full object-cover shadow-lg border border-gray-800"
+              className="rounded-lg object-cover shadow-lg border border-gray-800"
               fill
             />
           </div>
