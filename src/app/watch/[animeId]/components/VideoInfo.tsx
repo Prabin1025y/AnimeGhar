@@ -53,7 +53,7 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
       <div className={`${className} bg-white dark:bg-gray-900 rounded-lg p-6 grid gap-6 grid-cols-4 grid-rows-[auto auto] items-start`}>
         {/* Poster */}
         {animeDetail?.anime.info.poster && (
-          <div className="row-start-1 col-start-1 col-span-1 w-32 md:w-40 lg:w-48 aspect-[2/3] overflow-hidden">
+          <div className="relative row-start-1 col-start-1 col-span-1 w-32 md:w-40 lg:w-48 aspect-[2/3] overflow-hidden">
             <Image
               src={animeDetail.anime.info.poster}
               alt={animeDetail.anime.info.name + " Poster"}
