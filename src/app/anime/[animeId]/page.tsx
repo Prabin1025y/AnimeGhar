@@ -38,7 +38,7 @@ const fetchData = async (animeId: string) => {
 };
 
 export async function generateMetadata(
-  { params }: { params: { animeId: string } }
+  { params }: { params: Promise<{ animeId: string }>  }
 ): Promise<Metadata> {
   // read route params
   const { animeId } = await params
@@ -54,7 +54,7 @@ export async function generateMetadata(
 export default async function MovieDetailsPage({
   params,
 }: {
-  params: { animeId: string };
+  params: Promise<{ animeId: string }> ;
 }) {
   const { animeId } = await params;
   const data: AnimeDetailsDataType = await fetchData(animeId);
