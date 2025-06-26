@@ -330,7 +330,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     key={episodeId}
                     width="100%"
                     height="100%"
-                    url={`https://anime-ghar-proxy.vercel.app/m3u8-proxy?url=${url}`}
+                    url={`${process.env.NEXT_PUBLIC_PROXY_URL}${url}`}
                 />
 
                 {/* PlayPauseClick */}
