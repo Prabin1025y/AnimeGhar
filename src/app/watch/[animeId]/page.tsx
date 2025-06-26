@@ -62,8 +62,13 @@ const VideoPlayerPage: React.FC = () => {
       );
       const data = await response.json();
       if (!response.ok && data.message == "getAnimeEpisodeSources: Couldn't find server. Try another server") {
+        if(isDub){
         setIsDub(false);
         toast.error("Dub is not available for this episode. Switching to sub.");
+        }else{
+          setIsDub(true);
+          toast.error("Sub is not available for this episode. Please try another episode.");
+        }
       }
       setEpisodeInfo(data.data);
       setSourceLoading(false);
