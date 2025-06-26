@@ -276,7 +276,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                 return;
 
             setLoadingSubtitles(true);
-            const response = await fetch(url,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
+            const response = await fetch(url);
             const vttContent = await response.text();
             const parsedSubtitles = parseVTT(vttContent);
             // console.log(vttContent)
