@@ -60,17 +60,19 @@ const VideoPlayerPage: React.FC = () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}` // Adjust the URL as needed
       );
-      const data = await response.json();
-      if (!response.ok && data.message == "getAnimeEpisodeSources: Couldn't find server. Try another server") {
-        if(isDub){
-        setIsDub(false);
-        toast.error("Dub is not available for this episode. Switching to sub.");
-        }else{
+
+      if (!response.ok) {
+        if (isDub) {
+          setIsDub(false);
+          toast.error("Dub is not available for this episode. Switching to sub.");
+        } else {
           setIsDub(true);
-          toast.error("Sub is not available for this episode. Please try another episode.");
+          toast.error("Sub is not available for this episode. Switching to dub.");
         }
+      } else {
+        const data = await response.json();
+        setEpisodeInfo(data.data);
       }
-      setEpisodeInfo(data.data);
       setSourceLoading(false);
     };
     fetchData();
