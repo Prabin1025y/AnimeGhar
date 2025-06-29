@@ -10,9 +10,9 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
     // const [currentSlide, setCurrentSlide] = useState(0)
     const [currentSpotlight, setCurrentSpotlight] = useState(0)
     return (
-        <section className="relative h-[80vh] overflow-hidden px-10">
+        <section className="relative h-[80vh] overflow-hidden px-2 sm:px-10">
             {/* Background Images with Sliding Effect */}
-            <div className="absolute inset-y-0 inset-x-20">
+            <div className="absolute inset-y-0 inset-x-2 sm:inset-x-20">
                 {spotlightAnimes.map((anime, index) => (
                     <div
                         key={anime.id}
@@ -29,7 +29,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                             src={anime.poster || "/placeholder.svg"}
                             alt={anime.name}
                             fill
-                            className="object-cover"
+                            className="object-cover brightness-75 md:brightness-100 contrast-150 md:contrast-100"
                             priority={index === 0}
                         />
                         <div
@@ -44,7 +44,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
             </div>
 
             {/* Spotlight Navigation */}
-            <div className="absolute top-1/2 left-6 transform -translate-y-1/2 z-20">
+            <div className="absolute bottom-14 sm:bottom-auto sm:top-1/2 right-6 sm:right-auto sm:left-6 transform -translate-y-1/2 z-20">
                 <Button
                     variant="outline"
                     size="icon"
@@ -54,7 +54,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                     <ChevronLeft className="w-5 h-5" />
                 </Button>
             </div>
-            <div className="absolute top-1/2 right-6 transform -translate-y-1/2 z-20">
+            <div className="absolute bottom-0 sm:bottom-auto sm:top-1/2 right-6 transform -translate-y-1/2 z-20">
                 <Button
                     variant="outline"
                     size="icon"
@@ -84,7 +84,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
             </div>
 
             {/* Content Container with Sliding Effect */}
-            <div className="relative z-10 flex items-center h-full max-w-7xl mx-auto px-6 overflow-hidden">
+            <div className="relative z-10 flex items-center h-full max-w-7xl mx-auto sm:px-6 overflow-hidden">
                 <div
                     className="flex transition-transform duration-1000 ease-in-out w-full"
                     style={{ transform: `translateX(-${currentSpotlight * 100}%)` }}
@@ -105,7 +105,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                             alt={anime.name}
                                             width={350}
                                             height={500}
-                                            className="rounded-xl shadow-2xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:shadow-cyan-500/25"
+                                            className="rounded-xl shadow-2xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:shadow-cyan-500/25  "
                                         />
                                         <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                                         <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm -z-10" />
@@ -114,7 +114,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                             </div>
 
                             {/* Content with Staggered Animation */}
-                            <div className="flex-1 space-y-6 max-w-3xl">
+                            <div className="flex-1 space-y-6 max-w-3xl px-6 sm:px-8">
                                 <div className="space-y-4">
                                     <div
                                         className={`flex items-center space-x-3 transition-all duration-700 delay-100 ${index === currentSpotlight
@@ -164,7 +164,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                 </div>
 
                                 <p
-                                    className={`text-lg text-justify leading-relaxed transition-all duration-700 delay-500 text-gray-700 dark:text-gray-300 line-clamp-3 ${index === currentSpotlight
+                                    className={`md:text-lg text-justify leading-relaxed transition-all duration-700 delay-500 text-gray-700 dark:text-gray-300 line-clamp-3 ${index === currentSpotlight
                                         ? "opacity-100"
                                         : "opacity-0"
                                         }`}
@@ -192,7 +192,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                         asChild
                                         size="lg"
                                         variant="outline"
-                                        className="cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
+                                        className="hidden sm:block cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
                                     >
                                         <Link href={`/anime/${anime.id}`}>
                                             <Info className="w-5 h-5 mr-2" />

@@ -24,7 +24,7 @@ interface AnimeColumnsProps {
 
 const AnimeColumns = ({ animeColumns }: AnimeColumnsProps) => {
   return (
-    <div style={{ gridArea: "collections" }} className="space-y-6">
+    <div style={{ gridArea: "collections" }} className="hidden md:block space-y-6">
       <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
         Anime Collections
       </h2>

@@ -41,7 +41,7 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
     }
 
     return (
-        <section className="py-12 max-w-7xl mx-auto">
+        <section className="py-12 max-w-7xl mx-auto px-8">
             <div className=" mx-auto">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
@@ -79,7 +79,7 @@ const TrendingAnime = ({ animes }: TrendingAnimeProps) => {
                         {animes.map((anime, index) => (
                             <div
                                 key={anime.id}
-                                className="relative w-[200px] flex-shrink-0"
+                                className="relative w-[150px] md:w-[200px] flex-shrink-0"
                                 onMouseEnter={() => setHoveredAnime(anime.id)}
                                 onMouseLeave={() => setHoveredAnime(null)}
                             >
