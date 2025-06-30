@@ -82,7 +82,7 @@ const AnimeCard = ({
           </Link>
         </div>
       </div>
-      <HoverCardContent className="p-0 bg-transparent border-none">
+      <HoverCardContent className="hidden md:block p-0 bg-transparent border-none">
         <AnimeTips animeid={animeId} image={animePoster} />
       </HoverCardContent>
     </HoverCard>

@@ -192,7 +192,7 @@ const Spotlight = ({ spotlightAnimes }: { spotlightAnimes: HomeDataType['spotlig
                                         asChild
                                         size="lg"
                                         variant="outline"
-                                        className="hidden sm:block cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
+                                        className="hidden sm:flex cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
                                     >
                                         <Link href={`/anime/${anime.id}`}>
                                             <Info className="w-5 h-5 mr-2" />

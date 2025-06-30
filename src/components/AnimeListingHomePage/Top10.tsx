@@ -44,7 +44,7 @@ const Top10 = ({
                     ? "text-blue-500"
                     : anime.rank === 3
                       ? "text-orange-500"
-                      : "text-white"
+                      : "text-black dark:text-white"
                 }`}
             >
               {anime.rank}

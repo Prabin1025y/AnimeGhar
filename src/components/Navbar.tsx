@@ -16,13 +16,13 @@ const Navbar = () => {
               <Play className="w-5 h-5 text-white" />
             </div> */}
             <Image src="/Logo3.png" alt="Logo" width={32} height={32} />
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="hidden sm:inline text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
               AnimeGhar
             </span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="flex items-center space-x-4 md:space-x-8">
             <SearchInput />
             <Link href={"/about"} className='text-sm text-slate-700 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 '>
               About

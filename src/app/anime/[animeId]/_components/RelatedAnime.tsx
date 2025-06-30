@@ -12,10 +12,10 @@ const RelatedAnime = ({relatedAnimes, className="", gridClasses=""}: {relatedAni
   return (
     <section className={`max-w-7xl container mx-auto mt-6 ${className}`}>
       <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-        Related Animes
+        Recommended
       </h2>
       {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"> */}
-      <div className={`grid ${gridClasses ? gridClasses : "grid-cols-2 md:grid-cols-4 lg:grid-cols-6"} gap-4`}>
+      <div className={`w-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start`}>
         {displayedAnimes.map((anime) => (
           <AnimeCard
             key={anime.id}

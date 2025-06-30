@@ -60,7 +60,7 @@ export default async function MovieDetailsPage({
   const data: AnimeDetailsDataType = await fetchData(animeId);
 
   return (
-    <div className="min-h-screen dark:bg-slate-950 mt-16">
+    <div className="min-h-screen dark:bg-slate-950 mt-16 px-5 sm:px-10 md:px-20">
       <div className="relative">
         {/* <div className="absolute inset-0">
           <Image
@@ -216,9 +216,9 @@ export default async function MovieDetailsPage({
   {/* Most Popular Movies */ }
   <section className="max-w-7xl container mx-auto mt-6">
     <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-      Most Popular Movies
+      Most Popular
     </h2>
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="w-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
       {data.mostPopularAnimes.map((anime) => (
         <AnimeCard
           key={anime.id}
@@ -237,7 +237,7 @@ export default async function MovieDetailsPage({
     <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
       You Might Also Like
     </h2>
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div className="gw-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
       {data.recommendedAnimes.map((anime) => (
         <AnimeCard
           key={anime.id}

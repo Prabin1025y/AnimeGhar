@@ -59,7 +59,7 @@ const SearchInput = () => {
                 {/* <PopoverTrigger asChild> */}
                 <PopoverAnchor asChild className='relative flex items-center'>
                     <form onSubmit={handleOnSubmit}>
-                        <Input onFocus={() => setIsPopoverOpen(true)} onBlur={handleOnBlur} ref={searchRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-xs peer focus-visible:ring-0 focus-visible:border-cyan-500' />
+                        <Input onFocus={() => setIsPopoverOpen(true)} onBlur={handleOnBlur} ref={searchRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-48 md:w-xs peer focus-visible:ring-0 focus-visible:border-cyan-500' />
                         <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400 " />
                         <Button asChild className={`absolute right-0 h-full hover:bg-cyan-600 rounded-l-none bg-cyan-500 transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}><Link href={`/search/${searchTerm}`}><ArrowRight /></Link></Button>
                     </form>
