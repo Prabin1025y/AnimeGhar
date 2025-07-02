@@ -30,7 +30,7 @@ const SearchPage = () => {
     }
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${query}&page=${page}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${query}&page=${page}`, { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } });
         const data = await response.json();
         setSearchResult(data.data);
       } catch (error) {
@@ -72,9 +72,12 @@ const SearchPage = () => {
 
       <div className='max-w-7xl mx-auto px-4 py-8 grid grid-cols-4 gap-5'>
         {/* <p className='py-4 grid-cols-4 text-2xl text-cyan-500 font-semibold'>Search Result for : {query}</p> */}
-        <div className='col-span-3 grid grid-cols-4 gap-3'>
-          {searchResult && searchResult.animes.length == 0 ? <p className='col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>No result found.</p>
-            : <p className='col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>Search Result For: {query.replace("%20", " ")}</p>}
+        {/* {searchResult && searchResult.animes.length == 0 ? <p className=' col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>No result found.</p>
+          : <p className='col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>Search Result For: {query.replace("%20", " ")}</p>} */}
+        {/* <div className='col-span-3 grid grid-cols-4 gap-3'> */}
+        <div className='col-span-4 lg:col-span-3 xl:grid grid-cols-4 flex gap-3 flex-wrap justify-center'>
+          {searchResult && searchResult.animes.length == 0 ? <p className='text-base grow min-w-full col-span-4 py-4 md:text-2xl text-cyan-500 font-semibold'>No result found.</p>
+            : <p className='text-base grow min-w-full col-span-4 py-4 md:text-2xl text-cyan-500 font-semibold'>Search Result For: {query.replace("%20", " ")}</p>}
           {searchResult && searchResult.animes.length > 0 && searchResult.animes.map((anime, index) => (
             <AnimeCard
               key={anime.id + index}
@@ -87,12 +90,12 @@ const SearchPage = () => {
             />
           ))}
         </div>
-        <div className='col-span-1'>
+        <div className='col-span-1 hidden lg:block'>
           <p className='py-4 text-2xl text-cyan-500 font-semibold'>Most Popular Animes</p>
           {searchResult && searchResult.mostPopularAnimes.length > 0 && searchResult.mostPopularAnimes.map((anime, index) => (
             <div
               key={anime.id + index}
-              className="flex items-center gap-3 rounded-sm p-1 bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
+              className="flex items-center gap-3 my-1 rounded-sm p-1 bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
             >
               <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>
