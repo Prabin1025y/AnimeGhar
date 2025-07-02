@@ -9,7 +9,6 @@ import { removeDuplicateRelatedAnimes } from "@/utilities";
 import Player from "./components/Player";
 import PlayerSkeleton from "./components/PlayerSkeleton";
 import { toast } from "sonner";
-import PlayerError from "./components/PlayerError";
 
 export type EpisodeType = {
   title: string;
@@ -51,34 +50,34 @@ const VideoPlayerPage: React.FC = () => {
 
   // console.log(episodeNumber)
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setSourceLoading(true);
-  //     if (!animeId || !episodeNumber) {
-  //       setSourceLoading(false);
-  //       return;
-  //     }
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
-  //       {headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}} // Adjust the URL as needed
-  //     );
+  useEffect(() => {
+    const fetchData = async () => {
+      setSourceLoading(true);
+      if (!animeId || !episodeNumber) {
+        setSourceLoading(false);
+        return;
+      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
+        {headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}} // Adjust the URL as needed
+      );
 
-  //     if (!response.ok) {
-  //       if (isDub) {
-  //         setIsDub(false);
-  //         toast.error("Dub is not available for this episode. Switching to sub.");
-  //       } else {
-  //         setIsDub(true);
-  //         toast.error("Sub is not available for this episode. Switching to dub.");
-  //       }
-  //     } else {
-  //       const data = await response.json();
-  //       setEpisodeInfo(data.data);
-  //     }
-  //     setSourceLoading(false);
-  //   };
-  //   fetchData();
-  // }, [episodeNumber, isDub, animeId, searchParams]);
+      if (!response.ok) {
+        if (isDub) {
+          setIsDub(false);
+          toast.error("Dub is not available for this episode. Switching to sub.");
+        } else {
+          setIsDub(true);
+          toast.error("Sub is not available for this episode. Switching to dub.");
+        }
+      } else {
+        const data = await response.json();
+        setEpisodeInfo(data.data);
+      }
+      setSourceLoading(false);
+    };
+    fetchData();
+  }, [episodeNumber, isDub, animeId, searchParams]);
 
   return (
     <div className="min-h-screen p-4 pt-24">

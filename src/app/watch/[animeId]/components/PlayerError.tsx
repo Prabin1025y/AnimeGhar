@@ -1,6 +1,5 @@
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Loader2, RefreshCw } from 'lucide-react';
+import { AlertTriangle} from 'lucide-react';
 import React from 'react';
 
 const PlayerError: React.FC = () => {
@@ -19,7 +18,7 @@ const PlayerError: React.FC = () => {
                 <CardContent className="space-y-4">
                     <div className="text-center">
                         <p className="text-sm text-gray-500 mb-4">
-                            We're working to resolve this issue. In meantime feel free to explore other anime.
+                            We&apos;re working to resolve this issue. In meantime feel free to explore other anime.
                         </p>
                     </div>
                 </CardContent>

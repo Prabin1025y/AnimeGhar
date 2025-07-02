@@ -5,7 +5,7 @@ import { AnimeDetailsDataType } from "@/types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 
-const RelatedAnime = ({relatedAnimes, className="", gridClasses=""}: {relatedAnimes: AnimeDetailsDataType['relatedAnimes'], className?: string, gridClasses?: string}) => {
+const RelatedAnime = ({relatedAnimes, className=""}: {relatedAnimes: AnimeDetailsDataType['relatedAnimes'], className?: string, gridClasses?: string}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const needsSeeMore = relatedAnimes.length > 12;
     const displayedAnimes = isExpanded ? relatedAnimes : relatedAnimes.slice(0, 12);
