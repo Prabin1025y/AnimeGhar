@@ -84,7 +84,7 @@ const VideoPlayerPage: React.FC = () => {
     <div className="min-h-screen p-4 pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 auto-rows-auto gap-6">
-          {/* {!sourceLoading && searchParams.get("ep") ?
+          {!sourceLoading && searchParams.get("ep") ?
             <Player
               url={EpisodeInfo?.sources?.[0]?.url || ""}
               tracks={EpisodeInfo?.tracks || []}
@@ -93,8 +93,8 @@ const VideoPlayerPage: React.FC = () => {
             />
             :
             <PlayerSkeleton />
-          } */}
-          <PlayerError/>
+          }
+          {/* <PlayerError/> */}
 
           <EpisodeSelector
             animeId={animeId}
