@@ -27,7 +27,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         setIsLoading(true);
         const fetchData = async () => {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}/episodes`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}/episodes`, { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } }
             );
             const result = await response.json();
             setEpisodes(result.data.episodes);
@@ -66,7 +66,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
     };
 
     if (isLoading) {
-        return <EpisodeSelectorSkeleton />;
+        return <EpisodeSelectorSkeleton className={className} />;
     }
 
     return (
@@ -92,16 +92,15 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                 </select>
             </div>
             {/* Episode Grid */}
-            <div className="grid grid-cols-5 gap-2 overflow-y-auto">
+            <div className="flex flex-wrap justify-center-safe gap-2 overflow-y-auto">
                 {displayedEpisodes.map((episode) => (
                     <Link
                         key={episode.episodeId}
                         href={`/watch/${episode.episodeId}`}
-                        className={`w-[60px] h-10 p-0 backdrop-blur-sm border  transition-all duration-200 rounded-md flex items-center justify-center text-sm ${`${animeId}?ep=${searchParams.get("ep")}` === episode.episodeId ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-gray-600/20 dark:bg-gray-800/20 border-gray-600/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-900 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
+                        className={`min-w-[60px] h-10 px-3 backdrop-blur-sm border transition-all duration-200 rounded-md flex items-center justify-center text-sm flex-shrink-0 ${`${animeId}?ep=${searchParams.get("ep")}` === episode.episodeId ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-gray-600/20 dark:bg-gray-800/20 border-gray-600/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-900 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
                     >
                         {episode.number}
                     </Link>
-
                 ))}
             </div>
         </div>
@@ -109,20 +108,20 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
 };
 
 // Skeleton loader for EpisodeSelector
-const EpisodeSelectorSkeleton: React.FC = () => {
+const EpisodeSelectorSkeleton: React.FC<{ className?: string }> = ({ className = "" }) => {
     return (
-        <div className="bg-gray-900 rounded-lg p-4 h-fit animate-pulse">
+        <div className={`${className} bg-white dark:bg-gray-900 rounded-lg p-4 h-fit animate-pulse`}>
             <div className="flex items-center justify-between mb-4">
-                <div className="h-6 w-24 bg-gray-700 rounded" />
-                <div className="h-4 w-16 bg-gray-800 rounded" />
+            <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+            <div className="h-4 w-16 bg-gray-100 dark:bg-gray-800 rounded" />
             </div>
             <div className="mb-4">
-                <div className="h-10 w-full bg-gray-800 rounded-lg" />
+            <div className="h-10 w-full bg-gray-100 dark:bg-gray-800 rounded-lg" />
             </div>
-            <div className="grid grid-cols-5 gap-2">
-                {Array.from({ length: 20 }).map((_, i) => (
-                    <div key={i} className="w-[60px] h-10 bg-gray-800 rounded-md" />
-                ))}
+            <div className="flex flex-wrap justify-center-safe gap-2 overflow-y-auto">
+            {Array.from({ length: 20 }).map((_, i) => (
+                <div key={i} className="min-w-[60px] h-10 px-3 bg-gray-200 dark:bg-gray-800 rounded-md flex items-center justify-center" />
+            ))}
             </div>
         </div>
     );

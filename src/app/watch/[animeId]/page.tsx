@@ -97,10 +97,10 @@ const VideoPlayerPage: React.FC = () => {
 
           <EpisodeSelector
             animeId={animeId}
-            className="col-span-1 row-span-2 col-start-3 row-start-2 overflow-y-auto"
+            className="col-span-3 md:col-span-1 row-span-2 md:col-start-3 md:row-start-2 overflow-y-auto"
           />
           <VideoInfo
-            className="col-span-2 row-span-1 row-start-2"
+            className="col-span-3 md:col-span-2 row-span-1 md:row-start-2"
             animeId={animeId}
             isDub={isDub}
             setIsDub={setIsDub}
@@ -108,7 +108,7 @@ const VideoPlayerPage: React.FC = () => {
             setAutoSkip={setAutoSkip}
           />{
             animeDetail?.relatedAnimes && animeDetail.relatedAnimes.length > 0 &&
-            <RelatedAnime gridClasses="grid-cols-2 md:grid-cols-3 lg:grid-cols-4" className="col-span-2" relatedAnimes={removeDuplicateRelatedAnimes(animeDetail?.relatedAnimes)} />
+            <RelatedAnime gridClasses="grid-cols-2 md:grid-cols-3 lg:grid-cols-4" className="col-span-3 md:col-span-2" relatedAnimes={removeDuplicateRelatedAnimes(animeDetail?.relatedAnimes)} />
           }
 
         </div>

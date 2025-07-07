@@ -14,6 +14,7 @@ import {
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
+import { toast } from 'sonner';
 // import { Poppins } from 'next/font/google'
 
 type PlayerProps = {
@@ -128,18 +129,45 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
-    const toggleFullscreen = () => {
+    // Function to check if the device is iOS
+    // This is used to handle fullscreen and orientation lock issues on iOS devices
+    function isIOS(): boolean {
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    const toggleFullscreen = async () => {
         if (!isFullscreen) {
+            if(isIOS()){
+                toast.error("Please rotate your phone to landscape mode to enter fullscreen.");
+            }
+
             // Enter fullscreen
             if (playerContainerRef.current?.requestFullscreen) {
                 playerContainerRef.current.requestFullscreen();
                 setIsFullscreen(true);
+            }
+
+            try {
+                const orientation = screen.orientation as ScreenOrientation & { lock: (orientation: string) => Promise<void> };
+                if (orientation) {
+                    await orientation.lock("landscape");
+                }
+            } catch (err) {
+                console.warn("Orientation lock failed:", err);
             }
         } else {
             // Exit fullscreen
             if (document.exitFullscreen) {
                 document.exitFullscreen();
                 setIsFullscreen(false);
+            }
+
+            try {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            } catch (err) {
+                console.warn("Orientation unlock failed:", err);
             }
         }
     };
@@ -338,9 +366,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
 
                 {/* Subtitles Overlay */}
                 {selectedLanguage !== "None" && currentSubtitle && (
-                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2  text-white px-4 text-center max-w-3xl w-fit mx-4">
+                    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2  text-white lg:px-4 w-full text-center mx-4">
                         <p
-                            className={`text-outline-black font-bold text-3xl leading-snug whitespace-pre-line`}
+                            className={`text-outline-black font-bold text-xl sm:text-2xl lg:text-3xl leading-snug whitespace-pre-line`}
                             dangerouslySetInnerHTML={{ __html: currentSubtitle }}
                         />
                     </div>
@@ -365,30 +393,30 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                         />
                     </div>
                     <div className='w-full flex justify-between items-center text-white'>
-                        <div className='flex items-center gap-4'>
+                        <div className='flex items-center gap-2 sm:gap-4'>
                             {isPlaying ? <Pause onClick={() => setIsPlaying(false)} className='size-6 cursor-pointer' />
-                                : <Play onClick={() => setIsPlaying(true)} className='size-6 cursor-pointer' />}
+                                : <Play onClick={() => setIsPlaying(true)} className='size-4 sm:size-6 cursor-pointer' />}
 
                             {muted || volume == 0 ?
-                                <VolumeOff onClick={() => setMuted(!muted)} className='size-6 cursor-pointer' />
-                                : <Volume2 onClick={() => setMuted(!muted)} className='size-6 cursor-pointer' />}
+                                <VolumeOff onClick={() => setMuted(!muted)} className='size-4 sm:size-6 cursor-pointer' />
+                                : <Volume2 onClick={() => setMuted(!muted)} className='size-4 sm:size-6 cursor-pointer' />}
                             <Slider
                                 colorClass='bg-yellow-600/70'
-                                className='h-4 w-20'
+                                className='h-4 w-12 sm:w-20'
                                 defaultValue={[0.8]}
                                 value={muted ? [0] : [volume]}
                                 onValueChange={(v) => { setMuted(false); setVolume(v[0]) }}
                                 max={1}
                                 step={0.1}
                             />
-                            <span>{formatTime(played * duration)} / {formatTime(duration)}</span>
+                            <span className='text-xs sm:text-base'>{formatTime(played * duration)} / {formatTime(duration)}</span>
                         </div>
-                        <div className='flex items-center gap-4'>
-                            <TbRewindBackward10 onClick={() => handleSkip("backward")} className='cursor-pointer' size={24} />
-                            <TbRewindForward10 onClick={() => handleSkip("forward")} className='cursor-pointer' size={24} />
+                        <div className='flex items-center gap-2 sm:gap-4'>
+                            <TbRewindBackward10 onClick={() => handleSkip("backward")} className='cursor-pointer size-4 sm:size-6' size={24} />
+                            <TbRewindForward10 onClick={() => handleSkip("forward")} className='cursor-pointer size-4 sm:size-6' size={24} />
                             {(tracks?.filter(t => t.lang !== "thumbnails") ?? []).length > 0 && <Select onValueChange={handleLanguageSelect} value={selectedLanguage}>
-                                <SelectTrigger className="w-[180px]">
-                                    <Captions className='cursor-pointer text-white size-6' size={24} />
+                                <SelectTrigger className="w-[130px] sm:w-[180px]">
+                                    <Captions className='cursor-pointer text-white size-4 sm:size-6' size={24} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -401,8 +429,8 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                                 </SelectContent>
                             </Select>}
                             <Select onValueChange={(value) => setPlaybackRate(parseFloat(value))} value={playbackRate.toString()}>
-                                <SelectTrigger className="w-[180px]">
-                                    <MdSpeed className='cursor-pointer text-white size-6' size={24} />
+                                <SelectTrigger className="w-[130px] sm:w-[180px]">
+                                    <MdSpeed className='cursor-pointer text-white size-4 sm:size-6' size={24} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -414,7 +442,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                                 </SelectContent>
                             </Select>
                             {/* <PictureInPicture className='cursor-pointer' size={24} /> */}
-                            {isFullscreen ? <Minimize onClick={toggleFullscreen} className='cursor-pointer' size={24} /> : <Expand onClick={toggleFullscreen} className='cursor-pointer' size={24} />}
+                            {isFullscreen ? <Minimize onClick={toggleFullscreen} className='cursor-pointer size-4 sm:size-6' size={24} /> : <Expand onClick={toggleFullscreen} className='cursor-pointer size-4 sm:size-6' size={24} />}
                         </div>
                     </div>
                 </div>
