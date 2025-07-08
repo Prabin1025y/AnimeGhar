@@ -15,7 +15,6 @@ import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { toast } from 'sonner';
-import PlayerSkeleton from './PlayerSkeleton';
 // import { Poppins } from 'next/font/google'
 
 type PlayerProps = {
