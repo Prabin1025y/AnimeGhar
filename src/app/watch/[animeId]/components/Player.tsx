@@ -1,6 +1,6 @@
 import { Slider } from '@/components/ui/slider'
 import { parseVTT } from '@/utilities'
-import { Captions, Expand, Minimize, Pause, Play, Volume2, VolumeOff } from 'lucide-react'
+import { Captions, Expand, Loader2, Minimize, Pause, Play, Volume2, VolumeOff } from 'lucide-react'
 import { TbRewindBackward10, TbRewindForward10 } from "react-icons/tb";
 import { MdSpeed } from "react-icons/md";
 import {
@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { toast } from 'sonner';
+import PlayerSkeleton from './PlayerSkeleton';
 // import { Poppins } from 'next/font/google'
 
 type PlayerProps = {
@@ -53,12 +54,17 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
     const [subtitleTracks, setSubtitleTracks] = useState<{ [key: string]: { start: number; end: number; text: string }[] }>({});
     const [loadingSubtitles, setLoadingSubtitles] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(true);
+
+
     // console.log(url, tracks)
 
     useEffect(() => {
         tracks?.forEach(source => {
             loadSubtitleFile(source.url, source.lang);
         });
+
+
     }, [tracks]);
 
     useEffect(() => {
@@ -137,7 +143,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
 
     const toggleFullscreen = async () => {
         if (!isFullscreen) {
-            if(isIOS()){
+            if (isIOS()) {
                 toast.error("Please rotate your phone to landscape mode to enter fullscreen.");
             }
 
@@ -348,6 +354,13 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         <div className={`w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center ${className}`}>
             {/* <ReactPlayer key={episodeId} width="100%" height="100%" url={`https://anime-ghar-proxy.vercel.app/m3u8-proxy?url=${url}`} controls /> */}
             <div ref={playerContainerRef} className={`relative w-full h-full aspect-video bg-black ${(showControls) ? "cursor-auto" : "cursor-none"}`}>
+
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <Loader2 className="w-16 h-16 text-gray-500 animate-spin" />
+                    </div>
+                )}
+
                 <ReactPlayer
                     ref={videoPlayer}
                     playing={isPlaying}
@@ -359,6 +372,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     width="100%"
                     height="100%"
                     url={`${process.env.NEXT_PUBLIC_PROXY_URL}${url}`}
+                    onReady={()=>setIsLoading(false)}
+                    onBuffer={() => setIsLoading(true)}
+                    onBufferEnd={() => setIsLoading(false)}
                 />
 
                 {/* PlayPauseClick */}
