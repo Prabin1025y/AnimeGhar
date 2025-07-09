@@ -67,7 +67,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
             setShowControls(true);
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-            if (isPlaying) setShowControls(false);
+                if (isPlaying) setShowControls(false);
             }, 3000);
         };
 
@@ -193,14 +193,17 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
             const response = await fetch(url);
             const vttContent = await response.text();
             if (!response.ok || !vttContent) {
-                process.env.NODE_ENV === 'development' && console.warn(`Failed to load subtitles for ${languageCode} from ${url}`);
+                if (process.env.NODE_ENV === 'development')
+                    console.warn(`Failed to load subtitles for ${languageCode} from ${url}`);
                 return;
             }
 
             //parse the vtt content to individual lines with start and end times
             const parsedSubtitles = parseVTT(vttContent);
             if (!parsedSubtitles || parsedSubtitles.length === 0) {
-                process.env.NODE_ENV === 'development' && console.warn(`No valid subtitles found for ${languageCode} in ${url}`);
+                if (process.env.NODE_ENV === 'development') {
+                    console.warn(`No valid subtitles found for ${languageCode} in ${url}`);
+                }
                 return;
             }
 
