@@ -15,7 +15,6 @@ import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { toast } from 'sonner';
-// import { Poppins } from 'next/font/google'
 
 type PlayerProps = {
     className?: string;
@@ -28,57 +27,59 @@ type PlayerProps = {
     isDub: boolean;
 }
 
-// const roboto = Roboto({
-//     subsets: ['latin'],
-//     weight: '600'
-// })
-
-
 const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) => {
     const search_params = useSearchParams()
     const episodeId = search_params.get("ep") || "";
+
     const videoPlayer = useRef<ReactPlayer>(null)
     const playerContainerRef = useRef<HTMLDivElement>(null);
 
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [volume, setVolume] = useState(0.8);
-    const [muted, setMuted] = useState(false);
-    const [played, setPlayed] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [currentSubtitle, setCurrentSubtitle] = useState('');
-    const [showControls, setShowControls] = useState(true);
-    const [isFullscreen, setIsFullscreen] = useState(false);
-    const [playbackRate, setPlaybackRate] = useState<number>(1);
-    const [selectedLanguage, setSelectedLanguage] = useState(isDub ? "None" : (tracks?.filter(t => t.lang == "English")[0] ? "English" : tracks?.[0]?.lang || "None"));
-    const [subtitleTracks, setSubtitleTracks] = useState<{ [key: string]: { start: number; end: number; text: string }[] }>({});
-    const [loadingSubtitles, setLoadingSubtitles] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false); // is video playing?
+    const [volume, setVolume] = useState(0.8); // volume level from 0 to 1
+    const [muted, setMuted] = useState(false); // is video muted?
+    const [played, setPlayed] = useState(0); // played fraction from 0 to 1
+    const [duration, setDuration] = useState(0); // video duration in seconds
+    const [currentSubtitle, setCurrentSubtitle] = useState(''); // current line subtitle text to display
+    const [showControls, setShowControls] = useState(true); // show/hide video controls 
+    const [isFullscreen, setIsFullscreen] = useState(false); // is video in fullscreen mode?
+    const [playbackRate, setPlaybackRate] = useState<number>(1); // playback speed of the video
+    const [selectedLanguage, setSelectedLanguage] = useState(isDub ? "None" : (tracks?.filter(t => t.lang == "English")[0] ? "English" : tracks?.[0]?.lang || "None")); // selected subtitle language, default to English if available, otherwise first track or None
+    const [subtitleTracks, setSubtitleTracks] = useState<{ [key: string]: { start: number; end: number; text: string }[] }>({}); // store subtitle tracks by language code
+    const [isLoading, setIsLoading] = useState(true); // is video loading?
 
-    const [isLoading, setIsLoading] = useState(true);
-
-
-    // console.log(url, tracks)
 
     useEffect(() => {
         tracks?.forEach(source => {
             loadSubtitleFile(source.url, source.lang);
         });
-
-
     }, [tracks]);
 
     useEffect(() => {
+        // Show/hide video controls on mouse or touch movement (desktop & mobile)
+        // On desktop: listen for mousemove
+        // On mobile: listen for touchstart/touchmove
+        // Controls auto-hide after 3s of inactivity while playing
+
         let timeout: NodeJS.Timeout;
-        const handleMouseMove = () => {
+
+        // Handler to show controls and reset hide timer
+        const showAndAutoHideControls = () => {
             setShowControls(true);
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-                if (isPlaying) setShowControls(false);
+            if (isPlaying) setShowControls(false);
             }, 3000);
         };
 
-        document.addEventListener('mousemove', handleMouseMove);
+        // Attach both mouse and touch listeners for cross-device support
+        document.addEventListener('mousemove', showAndAutoHideControls);
+        document.addEventListener('touchstart', showAndAutoHideControls);
+        document.addEventListener('touchmove', showAndAutoHideControls);
+
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mousemove', showAndAutoHideControls);
+            document.removeEventListener('touchstart', showAndAutoHideControls);
+            document.removeEventListener('touchmove', showAndAutoHideControls);
             clearTimeout(timeout);
         };
     }, [isPlaying]);
@@ -95,20 +96,22 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         setPlayed(progress.played);
         // console.log("Coming")
 
+        // Update current subtitle line based on the current time
         if (selectedLanguage !== "None" && subtitleTracks[selectedLanguage]) {
             const timeDelay = 0.2 //to synchronize subtitles with video
             const currentTime = progress.playedSeconds + timeDelay;
+
+            //todo: need adjustment, this brings only one line, not effective for multiple lines
             const subtitle = subtitleTracks[selectedLanguage].find((sub: { start: number; end: number; text: string }) =>
                 currentTime >= sub.start && currentTime <= sub.end
             );
-            // console.log(selectedLanguage)
-            // console.log(subtitleTracks[selectedLanguage])
             setCurrentSubtitle(subtitle ? subtitle.text : '');
         } else {
             setCurrentSubtitle('');
         }
     }
 
+    //todo: need adjustment, right now it is working in fractions not in seconds
     const handleSkip = (direction: 'forward' | 'backward') => {
         if (videoPlayer.current) {
             const skipAmount = direction === 'forward' ? 10 : -10;
@@ -118,17 +121,16 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         }
     };
 
+    // Handle seeking through the slider
     const handleSeek = (value: number[]) => {
+        //convert to fraction value
         const newPlayed = value[0] / 100;
         setPlayed(newPlayed);
         videoPlayer.current?.seekTo(newPlayed);
     };
 
-    interface FormatTime {
-        (seconds: number): string;
-    }
-
-    const formatTime: FormatTime = (seconds: number): string => {
+    //format time for showing track time
+    const formatTime = (seconds: number): string => {
         const mins: number = Math.floor(seconds / 60);
         const secs: number = Math.floor(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -152,6 +154,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                 setIsFullscreen(true);
             }
 
+            //try auto rotating screen to landscape mode in mobile devices
             try {
                 const orientation = screen.orientation as ScreenOrientation & { lock: (orientation: string) => Promise<void> };
                 if (orientation) {
@@ -167,6 +170,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                 setIsFullscreen(false);
             }
 
+            //try auto unlocking screen orientation in mobile devices
             try {
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
@@ -177,36 +181,40 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         }
     };
 
+    //fetch subtitle from url, parse it and set it to the state
     const loadSubtitleFile = async (url: string, languageCode: string) => {
         try {
-
+            // Ignore the thumbnails track. It is for displaying timestamp images, not subtitles.
             if (languageCode == "thumbnails")
                 return;
 
-            setLoadingSubtitles(true);
+            // setLoadingSubtitles(true);
+            //fetch data from subtitle url 
             const response = await fetch(url);
             const vttContent = await response.text();
-            const parsedSubtitles = parseVTT(vttContent);
-            // console.log(vttContent)
+            if (!response.ok || !vttContent) {
+                process.env.NODE_ENV === 'development' && console.warn(`Failed to load subtitles for ${languageCode} from ${url}`);
+                return;
+            }
 
+            //parse the vtt content to individual lines with start and end times
+            const parsedSubtitles = parseVTT(vttContent);
+            if (!parsedSubtitles || parsedSubtitles.length === 0) {
+                process.env.NODE_ENV === 'development' && console.warn(`No valid subtitles found for ${languageCode} in ${url}`);
+                return;
+            }
+
+            //set the subtitles to the state
             setSubtitleTracks(prev => ({
                 ...prev,
                 [languageCode]: parsedSubtitles
             }));
         } catch (error) {
             console.error(`Error loading subtitles for ${languageCode}:`, error);
-            // Fallback to demo subtitles if loading fails
-            // if (demoSubtitles[languageCode]) {
-            //     setSubtitleTracks(prev => ({
-            //         ...prev,
-            //         [languageCode]: demoSubtitles[languageCode]
-            //     }));
-            // }
-        } finally {
-            setLoadingSubtitles(false);
         }
     };
 
+    // Handle language selection through the Select component
     const handleLanguageSelect = (value: string) => {
         setSelectedLanguage(value);
 
@@ -219,6 +227,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
         }
     };
 
+    // Handle keydown events for keyboard shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             // Don't trigger shortcuts if user is typing in an input
@@ -274,10 +283,10 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     toggleFullscreen();
                     break;
 
-                case 'KeyC':
-                    e.preventDefault();
-                    setSelectedLanguage("None");
-                    break;
+                // case 'KeyC':
+                //     e.preventDefault();
+                //     setSelectedLanguage("None");
+                //     break;
 
                 case 'Comma':
                     if (e.shiftKey) {
@@ -327,6 +336,10 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     videoPlayer.current?.seekTo(0);
                     break;
 
+                case 'Escape':
+                    setIsFullscreen(false);
+                    break;
+
                 case 'End':
                     e.preventDefault();
                     // Go to end
@@ -344,14 +357,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [isPlaying, volume, muted, played, duration, playbackRate, selectedLanguage, handleSeek, handleSkip]);
-    // const getCurrentLanguageName = () => {
-    //     const source = tracks?.find(s => s.lang === selectedLanguage);
-    //     return source ? source.lang : 'English';
-    // };
 
     return (
         <div className={`w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center ${className}`}>
-            {/* <ReactPlayer key={episodeId} width="100%" height="100%" url={`https://anime-ghar-proxy.vercel.app/m3u8-proxy?url=${url}`} controls /> */}
             <div ref={playerContainerRef} className={`relative w-full h-full aspect-video bg-black ${(showControls) ? "cursor-auto" : "cursor-none"}`}>
 
                 {isLoading && (
@@ -360,6 +368,7 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     </div>
                 )}
 
+                {/* Actual Video Player */}
                 <ReactPlayer
                     ref={videoPlayer}
                     playing={isPlaying}
@@ -371,12 +380,12 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     width="100%"
                     height="100%"
                     url={`${process.env.NEXT_PUBLIC_PROXY_URL}${url}`}
-                    onReady={()=>setIsLoading(false)}
+                    onReady={() => setIsLoading(false)}
                     onBuffer={() => setIsLoading(true)}
                     onBufferEnd={() => setIsLoading(false)}
                 />
 
-                {/* PlayPauseClick */}
+                {/* PlayPauseClick Sensor */}
                 <div onClick={() => setIsPlaying(!isPlaying)} className={`absolute bg-transparent left-0 top-10 w-full min-h-[80%] }`} />
 
                 {/* Subtitles Overlay */}
@@ -389,14 +398,9 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                     </div>
                 )}
 
-                {/* Loading Subtitles Indicator */}
-                {loadingSubtitles && (
-                    <div className="absolute top-4 right-4 bg-black bg-opacity-70 text-white px-3 py-2 rounded text-sm">
-                        Loading subtitles...
-                    </div>
-                )}
-
+                {/* Video Controls */}
                 <div className={`${showControls ? 'opacity-100' : 'opacity-0'} absolute bottom-0 left-0 right-0 flex flex-col bg-gradient-to-t from-black to-transparent p-4 transition-opacity duration-300`}>
+                    {/* Slider for duration of video */}
                     <div className="mb-4">
                         <Slider
                             colorClass='bg-cyan-600/70'
@@ -407,14 +411,20 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                             onValueChange={handleSeek}
                         />
                     </div>
+
+                    {/* Control buttons */}
                     <div className='w-full flex justify-between items-center text-white'>
                         <div className='flex items-center gap-2 sm:gap-4'>
                             {isPlaying ? <Pause onClick={() => setIsPlaying(false)} className='size-6 cursor-pointer' />
-                                : <Play onClick={() => setIsPlaying(true)} className='size-4 sm:size-6 cursor-pointer' />}
+                                : <Play onClick={() => setIsPlaying(true)} className='size-4 sm:size-6 cursor-pointer' />
+                            }
 
                             {muted || volume == 0 ?
                                 <VolumeOff onClick={() => setMuted(!muted)} className='size-4 sm:size-6 cursor-pointer' />
-                                : <Volume2 onClick={() => setMuted(!muted)} className='size-4 sm:size-6 cursor-pointer' />}
+                                : <Volume2 onClick={() => setMuted(!muted)} className='size-4 sm:size-6 cursor-pointer' />
+                            }
+
+                            {/* Volume slider */}
                             <Slider
                                 colorClass='bg-yellow-600/70'
                                 className='h-4 w-12 sm:w-20'
@@ -429,6 +439,8 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                         <div className='flex items-center gap-2 sm:gap-4'>
                             <TbRewindBackward10 onClick={() => handleSkip("backward")} className='cursor-pointer size-4 sm:size-6' size={24} />
                             <TbRewindForward10 onClick={() => handleSkip("forward")} className='cursor-pointer size-4 sm:size-6' size={24} />
+
+                            {/* Subtitle selection dropdown */}
                             {(tracks?.filter(t => t.lang !== "thumbnails") ?? []).length > 0 && <Select onValueChange={handleLanguageSelect} value={selectedLanguage}>
                                 <SelectTrigger className="w-[130px] sm:w-[180px]">
                                     <Captions className='cursor-pointer text-white size-4 sm:size-6' size={24} />
@@ -442,7 +454,10 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                                         ))}
                                     </SelectGroup>
                                 </SelectContent>
-                            </Select>}
+                            </Select>
+                            }
+
+                            {/* Playback speed selection dropdown */}
                             <Select onValueChange={(value) => setPlaybackRate(parseFloat(value))} value={playbackRate.toString()}>
                                 <SelectTrigger className="w-[130px] sm:w-[180px]">
                                     <MdSpeed className='cursor-pointer text-white size-4 sm:size-6' size={24} />
@@ -456,15 +471,15 @@ const Player: React.FC<PlayerProps> = ({ className = "", url, tracks, isDub }) =
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
+
+
                             {/* <PictureInPicture className='cursor-pointer' size={24} /> */}
                             {isFullscreen ? <Minimize onClick={toggleFullscreen} className='cursor-pointer size-4 sm:size-6' size={24} /> : <Expand onClick={toggleFullscreen} className='cursor-pointer size-4 sm:size-6' size={24} />}
                         </div>
                     </div>
                 </div>
+                {/*Video control ends*/}
 
-                {/* <div className={`${showControls ? 'opacity-100' : 'opacity-0'} absolute top-0 left-0 right-0 flex flex-col bg-gradient-to-b from-black to-transparent p-4 transition-opacity duration-300 }`}>
-                    <p className='text-2xl'>{title}</p>
-                </div> */}
             </div>
         </div>
     )
