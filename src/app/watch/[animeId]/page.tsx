@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import VideoInfo from "./components/VideoInfo";
 import EpisodeSelector from "./components/EpisodeSelector";
 import RelatedAnime from "@/app/anime/[animeId]/_components/RelatedAnime";
-import { AnimeDetailsDataType, EpisodeSourceType } from "@/types";
+import { AnimeDetailsDataType } from "@/types";
 import { removeDuplicateRelatedAnimes } from "@/utilities";
-import ReactBitPlayer from "react-bit-player";
-// import Player from "./components/Player";
-import PlayerSkeleton from "./components/PlayerSkeleton";
+// import ReactBitPlayer from "react-bit-player";
+// // import Player from "./components/Player";
+// import PlayerSkeleton from "./components/PlayerSkeleton";
 import { toast } from "sonner";
-import PlayerError from "./components/PlayerError";
+import PlayerSkeleton from "./components/PlayerSkeleton";
+// import PlayerError from "./components/PlayerError";
 
 export type EpisodeType = {
   title: string;
@@ -20,22 +21,24 @@ export type EpisodeType = {
 };
 
 const VideoPlayerPage: React.FC = () => {
-  const [isDub, setIsDub] = useState<boolean>(false);
-  const [autoSkip, setAutoSkip] = useState<boolean>(true);
-  const [animeDetail, setAnimeDetail] = useState<AnimeDetailsDataType | null>(
+  const [ isDub, setIsDub ] = useState<boolean>(false);
+  const [ autoSkip, setAutoSkip ] = useState<boolean>(true);
+  const [ animeDetail, setAnimeDetail ] = useState<AnimeDetailsDataType | null>(
     null
   );
   // const [episodesLoading, setEpisodesLoading] = useState(true)
-  const [sourceLoading, setSourceLoading] = useState(true)
-  const [EpisodeInfo, setEpisodeInfo] = useState<EpisodeSourceType | null>(null)
-  const [subtitles, setSubtitles] = useState<{ lang: string, url: string }[]>([])
-  const [subDub, setSubDub] = useState<{ sub: boolean, dub: boolean }>({ sub: true, dub: true })
+  const [ sourceLoading, setSourceLoading ] = useState(true)
+  // const [ EpisodeInfo, setEpisodeInfo ] = useState<EpisodeSourceType | null>(null)
+  // const [ subtitles, setSubtitles ] = useState<{ lang: string, url: string }[]>([])
+  // const [ subDub, setSubDub ] = useState<{ sub: boolean, dub: boolean }>({ sub: true, dub: true })
 
 
   const params = useParams<{ animeId: string }>();
   const animeId = params.animeId;
   const searchParams = useSearchParams();
   const episodeNumber = searchParams.get("ep");
+
+  const iframeElement = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     // setEpisodesLoading(true)
@@ -49,46 +52,68 @@ const VideoPlayerPage: React.FC = () => {
     };
     fetchData();
 
-  }, [animeId]);
+  }, [ animeId ]);
 
 
-  // console.log(episodeNumber)
+  console.log(iframeElement.current)
 
   useEffect(() => {
     const fetchData = async () => {
-      setSourceLoading(true);
-      if (!animeId || !episodeNumber) {
-        setSourceLoading(false);
-        return;
-      }
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
-        { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } } // Adjust the URL as needed
-      );
-
-      if (!response.ok) {
-        if (!subDub.sub && !subDub.dub) return;
+      const response = await fetch("https://megaplay.buzz/stream/s-2/" + episodeNumber + "/" + (isDub ? "dub" : "sub"));
+      const data = await response.text();
+      if (data.includes("Error Code: <span>404</span>")) {
         if (isDub) {
-          console.log("isdub if run");
           setIsDub(false);
-          setSubDub({ ...subDub, dub: false });
           toast.error("Dub is not available for this episode. Switching to sub.");
-        } else {
-          console.log("isdub else run");
-
-          setIsDub(true);
-          setSubDub({ ...subDub, sub: false });
-          toast.error("Sub is not available for this episode. Switching to dub.");
         }
       } else {
-        const data = await response.json();
-        setEpisodeInfo(data.data);
-        setSubtitles(data.data?.tracks)
+        toast.warning("We recommend using an ad blocker to eliminate annoying redirects.", {
+          action: {
+            label: 'Get Adblocker',
+            onClick: () => window.open("https://ublockorigin.com/", "_blank")
+          }
+        })
+        setSourceLoading(false);
       }
-      setSourceLoading(false);
-    };
+    }
     fetchData();
-  }, [episodeNumber, isDub, animeId, searchParams]);
+  }, [ episodeNumber, isDub ]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setSourceLoading(true);
+  //     if (!animeId || !episodeNumber) {
+  //       setSourceLoading(false);
+  //       return;
+  //     }
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
+  //       { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } } // Adjust the URL as needed
+  //     );
+
+  //     if (!response.ok) {
+  //       if (!subDub.sub && !subDub.dub) return;
+  //       if (isDub) {
+  //         console.log("isdub if run");
+  //         setIsDub(false);
+  //         setSubDub({ ...subDub, dub: false });
+  //         toast.error("Dub is not available for this episode. Switching to sub.");
+  //       } else {
+  //         console.log("isdub else run");
+
+  //         setIsDub(true);
+  //         setSubDub({ ...subDub, sub: false });
+  //         toast.error("Sub is not available for this episode. Switching to dub.");
+  //       }
+  //     } else {
+  //       const data = await response.json();
+  //       setEpisodeInfo(data.data);
+  //       setSubtitles(data.data?.tracks)
+  //     }
+  //     setSourceLoading(false);
+  //   };
+  //   fetchData();
+  // }, [ episodeNumber, isDub, animeId, searchParams ]);
 
   return (
     <div className="min-h-screen p-4 pt-24">
@@ -104,7 +129,7 @@ const VideoPlayerPage: React.FC = () => {
             :
             <PlayerSkeleton />
           } */}
-          {(subDub.dub || subDub.sub) ? <div className="w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center col-span-3 row-span-1">
+          {/* {(subDub.dub || subDub.sub) ? <div className="w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center col-span-3 row-span-1">
             {sourceLoading ? (
               <PlayerSkeleton />
             ) : (
@@ -113,7 +138,13 @@ const VideoPlayerPage: React.FC = () => {
           </div>
             :
             <PlayerError />
+          } */}
+          {<div className="w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center col-span-3 row-span-1">
+            {sourceLoading ? <PlayerSkeleton /> :
+              <iframe ref={iframeElement} src={`https://megaplay.buzz/stream/s-2/${episodeNumber}/${isDub ? "dub" : "sub"}`} width="100%" height="100%" frameBorder="0" allowFullScreen></iframe>}
+          </div>
           }
+
           <EpisodeSelector
             animeId={animeId}
             className="col-span-3 md:col-span-1 row-span-2 md:col-start-3 md:row-start-2 overflow-y-auto"
