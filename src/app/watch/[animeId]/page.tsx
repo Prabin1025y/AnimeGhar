@@ -6,9 +6,11 @@ import EpisodeSelector from "./components/EpisodeSelector";
 import RelatedAnime from "@/app/anime/[animeId]/_components/RelatedAnime";
 import { AnimeDetailsDataType, EpisodeSourceType } from "@/types";
 import { removeDuplicateRelatedAnimes } from "@/utilities";
-import Player from "./components/Player";
+import ReactBitPlayer from "react-bit-player";
+// import Player from "./components/Player";
 import PlayerSkeleton from "./components/PlayerSkeleton";
 import { toast } from "sonner";
+import PlayerError from "./components/PlayerError";
 
 export type EpisodeType = {
   title: string;
@@ -26,6 +28,8 @@ const VideoPlayerPage: React.FC = () => {
   // const [episodesLoading, setEpisodesLoading] = useState(true)
   const [sourceLoading, setSourceLoading] = useState(true)
   const [EpisodeInfo, setEpisodeInfo] = useState<EpisodeSourceType | null>(null)
+  const [subtitles, setSubtitles] = useState<{ lang: string, url: string }[]>([])
+  const [subDub, setSubDub] = useState<{ sub: boolean, dub: boolean }>({ sub: true, dub: true })
 
 
   const params = useParams<{ animeId: string }>();
@@ -37,7 +41,7 @@ const VideoPlayerPage: React.FC = () => {
     // setEpisodesLoading(true)
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`, { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } }
       );
       const result = await response.json();
       setAnimeDetail(result.data);
@@ -59,20 +63,27 @@ const VideoPlayerPage: React.FC = () => {
       }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/episode/sources?animeEpisodeId=${animeId}?ep=${searchParams.get("ep")}&server=hd-2&category=${isDub ? "dub" : "sub"}`,
-        {headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}} // Adjust the URL as needed
+        { headers: { "god-key": process.env.NEXT_PUBLIC_GOD_KEY || "" } } // Adjust the URL as needed
       );
 
       if (!response.ok) {
+        if (!subDub.sub && !subDub.dub) return;
         if (isDub) {
+          console.log("isdub if run");
           setIsDub(false);
+          setSubDub({ ...subDub, dub: false });
           toast.error("Dub is not available for this episode. Switching to sub.");
         } else {
+          console.log("isdub else run");
+
           setIsDub(true);
+          setSubDub({ ...subDub, sub: false });
           toast.error("Sub is not available for this episode. Switching to dub.");
         }
       } else {
         const data = await response.json();
         setEpisodeInfo(data.data);
+        setSubtitles(data.data?.tracks)
       }
       setSourceLoading(false);
     };
@@ -83,7 +94,7 @@ const VideoPlayerPage: React.FC = () => {
     <div className="min-h-screen p-4 pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 auto-rows-auto gap-6">
-          {!sourceLoading && searchParams.get("ep") ?
+          {/* {!sourceLoading && searchParams.get("ep") ?
             <Player
               url={EpisodeInfo?.sources?.[0]?.url || ""}
               tracks={EpisodeInfo?.tracks || []}
@@ -92,9 +103,17 @@ const VideoPlayerPage: React.FC = () => {
             />
             :
             <PlayerSkeleton />
+          } */}
+          {(subDub.dub || subDub.sub) ? <div className="w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center col-span-3 row-span-1">
+            {sourceLoading ? (
+              <PlayerSkeleton />
+            ) : (
+              <ReactBitPlayer src={process.env.NEXT_PUBLIC_PROXY_URL! + EpisodeInfo?.sources?.[0]?.url || ""} subtitles={subtitles} />
+            )}
+          </div>
+            :
+            <PlayerError />
           }
-          {/* <PlayerError/> */}
-
           <EpisodeSelector
             animeId={animeId}
             className="col-span-3 md:col-span-1 row-span-2 md:col-start-3 md:row-start-2 overflow-y-auto"
