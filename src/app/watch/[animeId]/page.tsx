@@ -141,7 +141,7 @@ const VideoPlayerPage: React.FC = () => {
           } */}
           {<div className="w-full max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center col-span-3 row-span-1">
             {sourceLoading ? <PlayerSkeleton /> :
-              <iframe ref={iframeElement} src={`https://megaplay.buzz/stream/s-2/${episodeNumber}/${isDub ? "dub" : "sub"}`} width="100%" height="100%" frameBorder="0" allowFullScreen></iframe>}
+              <iframe ref={iframeElement} sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" src={`https://megaplay.buzz/stream/s-2/${episodeNumber}/${isDub ? "dub" : "sub"}`} width="100%" height="100%" frameBorder="0" allowFullScreen></iframe>}
           </div>
           }
 
