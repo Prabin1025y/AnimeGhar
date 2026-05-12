@@ -126,6 +126,7 @@ export const getHomeQuery = (
         coverImage {
           large
         }
+        format
         bannerImage
         nextAiringEpisode {
           episode

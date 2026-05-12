@@ -3,6 +3,8 @@ import AnimeGrid from "./AnimeListingHomePage/AnimeGrid";
 import AnimeColumns from "./AnimeListingHomePage/AnimeColumns";
 import Top10 from "./AnimeListingHomePage/Top10";
 import { useAppStore } from "@/context/AppContext";
+import AnimeContainer from "./AnimeListingHomePage/LatestEpisodesContainer";
+import UpcomingContainer from "./AnimeListingHomePage/UpcomingContainer";
 
 export default function AnimeLists() {
     const { homeData } = useAppStore();
@@ -39,10 +41,18 @@ export default function AnimeLists() {
                 <AnimeGrid popularAnimes={homeData.topAiring.media} />
 
                 {/* Section 2: Anime Collections - 70% width, below featured */}
-                <AnimeColumns />
+                {/* <AnimeColumns /> */}
+                <AnimeContainer
+                    animes={homeData.latestEpisodes.airingSchedules}
+                    title="Latest Episodes"
+                />
 
                 {/* Section 3: Top 10 Ranked List - 30% width, spans both rows */}
                 <Top10 top10animes={homeData.popularAllTime.media} />
+            </div>
+
+            <div className="max-w-7xl mx-auto">
+              <UpcomingContainer animes={homeData.upcoming.media} title="Upcoming Anime"/>
             </div>
 
             {/* Responsive Grid Areas for Mobile */}

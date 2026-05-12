@@ -11,8 +11,9 @@ interface AnimeCardProps {
     animePoster: string;
     animeName: string;
     animeType: string;
-    animeEpisodes: number;
+    animeEpisodes: string;
     animeDuration?: string;
+    className?: string;
 }
 
 const AnimeCard = ({
@@ -22,12 +23,13 @@ const AnimeCard = ({
     animeType,
     animeEpisodes,
     animeDuration = "",
+    className = "",
 }: AnimeCardProps) => {
     return (
         <HoverCard openDelay={1000}>
             <div
                 // key={anime.id}
-                className="group cursor-pointer transition-all duration-300 hover:scale-105 w-32 sm:w-44 md:w-52  max-w-52"
+                className={`${className} group cursor-pointer transition-all duration-300 hover:scale-105 w-32 sm:w-44 md:w-52  max-w-52`}
             >
                 <div className="bg-card dark:bg-slate-800/50 border rounded-md overflow-hidden shadow-lg hover:shadow-cyan-500/25 transition-all duration-300">
                     <div className="relative">
@@ -51,7 +53,7 @@ const AnimeCard = ({
                             <div className="flex items-center justify-between text-[0.6rem] md:text-xs text-muted-foreground">
                                 <span>{animeType}</span>
                                 <div className="flex gap-[2px]">
-                                    {animeEpisodes > 0 && (
+                                    {Number(animeEpisodes) > 0 && (
                                         <Badge
                                             className={`bg-green-700 text-white px-1 py-1`}
                                         >

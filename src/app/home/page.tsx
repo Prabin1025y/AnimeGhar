@@ -1,5 +1,5 @@
 "use client";
-import AnimeContainer from "@/components/AnimeListingHomePage/AnimeContainer";
+import AnimeContainer from "@/components/AnimeListingHomePage/LatestEpisodesContainer";
 import AnimeLists from "@/components/AnimeLists";
 import AnimeContainerSkeleton from "@/components/Skeleton/AnimeContainerSkeleton";
 import AnimeListsSkeleton from "@/components/Skeleton/AnimeListSkeleton";

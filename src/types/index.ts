@@ -127,6 +127,7 @@ type AiringSchedule = {
         coverImage: {
             large: string;
         };
+        format: string;
         bannerImage: string | null;
         nextAiringEpisode: NextAiringEpisode | null;
     };

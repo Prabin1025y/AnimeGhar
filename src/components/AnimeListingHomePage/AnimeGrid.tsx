@@ -38,7 +38,7 @@ const AnimeGrid = ({
                                         "No Title"
                                     }
                                     animeType={anime.format}
-                                    animeEpisodes={anime.episodes || 0}
+                                    animeEpisodes={anime.episodes?.toString() || '0'}
                                 />
                             </CarouselItem>
                         ))}
