@@ -39,6 +39,7 @@ const HomePage = () => {
                     },
                 );
                 const { data } = await response.json();
+                console.log(data);
                 if (data) setHomeData(data);
                 else throw new Error("No data found from backend!");
             } catch (error) {
@@ -66,15 +67,9 @@ const HomePage = () => {
     return (
         <>
             <Spotlight />
-            <TrendingAnime/>
-            {/*<AnimeLists
-                popularAnimes={homeData.mostPopularAnimes}
-                top10animes={homeData.top10Animes}
-                topAiring={homeData.topAiringAnimes}
-                mostFavourite={homeData.mostFavoriteAnimes}
-                latestCompleted={homeData.latestCompletedAnimes}
-            />
-            <AnimeContainer
+            <TrendingAnime />
+            <AnimeLists />
+            {/*<AnimeContainer
                 animes={homeData.latestEpisodeAnimes}
                 title="Latest Episode"
             />

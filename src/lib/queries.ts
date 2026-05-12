@@ -1,4 +1,7 @@
-export const getHomeQuery = (year: number, season: string): string => `query HomePageAnime {
+export const getHomeQuery = (
+    year: number,
+    season: string,
+): string => `query HomePageAnime {
   # 1. Spotlight Anime (8)
   spotlight: Page(page: 1, perPage: 8) {
     media(
@@ -61,7 +64,30 @@ export const getHomeQuery = (year: number, season: string): string => `query Hom
     }
   }
 
-  # 3. Popular Anime Of All Time
+  # 3. Top Airing Anime
+  topAiring: Page(page: 1, perPage: 10) {
+    media(
+      type: ANIME
+      status: RELEASING
+      sort: SCORE_DESC
+    ) {
+      id
+      title {
+        romaji
+        english
+      }
+      coverImage {
+        large
+      }
+      averageScore
+      popularity
+      favourites
+      episodes
+      format
+    }
+  }
+
+  # 4. Popular Anime Of All Time
   popularAllTime: Page(page: 1, perPage: 10) {
     media(
       type: ANIME
@@ -83,7 +109,7 @@ export const getHomeQuery = (year: number, season: string): string => `query Hom
     }
   }
 
-  # 4. Latest Episodes
+  # 5. Latest Episodes
   latestEpisodes: Page(page: 1, perPage: 10) {
     airingSchedules(
       notYetAired: false
@@ -109,7 +135,7 @@ export const getHomeQuery = (year: number, season: string): string => `query Hom
     }
   }
 
-  # 5. Top Upcoming Anime
+  # 6. Top Upcoming Anime
   upcoming: Page(page: 1, perPage: 10) {
     media(
       type: ANIME
@@ -141,4 +167,32 @@ export const getHomeQuery = (year: number, season: string): string => `query Hom
       }
     }
   }
-}`
+}`;
+
+export const getAnimeTipsQuery = (id: number): string => `query AnimeTipsData {
+  Media(id: ${id}, type: ANIME) {
+    id
+    title {
+      romaji
+      english
+      native
+    }
+    synonyms
+    averageScore
+    episodes
+    format
+    description(asHtml: false)
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    status
+    genres
+  }
+}`;

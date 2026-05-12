@@ -6,23 +6,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import AnimeTips from "../AnimeTips";
 import Link from "next/link";
 
-interface AnimeColumnsProps {
-  animeColumns: {
-    title: string;
-    animes: {
-      id: string;
-      name: string;
-      poster: string;
-      type: string;
-      episodes: {
-        sub: number;
-        dub: number;
-      };
-    }[];
-  }[];
-}
 
-const AnimeColumns = ({ animeColumns }: AnimeColumnsProps) => {
+const AnimeColumns = () => {
   return (
     <div style={{ gridArea: "collections" }} className="hidden md:block space-y-6">
       <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">

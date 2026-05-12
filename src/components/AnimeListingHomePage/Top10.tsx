@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Londrina_Shadow } from "next/font/google";
 import React from "react";
 import { Badge } from "../ui/badge";
-import { HomeDataType } from "@/types";
 import {
   HoverCard,
   HoverCardContent,
@@ -20,7 +19,7 @@ const londrinaShadow = Londrina_Shadow({
 const Top10 = ({
   top10animes,
 }: {
-  top10animes: HomeDataType["top10Animes"];
+  top10animes: AnimeData['popularAllTime']['media'];
 }) => {
   return (
     <div style={{ gridArea: "ranked" }} className="space-y-6">
@@ -31,30 +30,30 @@ const Top10 = ({
         </h2>
       </div>
       <div className="space-y-2">
-        {top10animes["today"].map((anime) => (
+        {top10animes.map((anime, index) => (
           <div
             key={anime.id}
             className="flex items-center max-w-screen px-2 lg:p-0 gap-3 rounded-sm p-1 bg-white hover:dark:bg-slate-800 dark:bg-slate-800/50 hover:bg-cyan-800/10 transition-all duration-300 cursor-pointer group"
           >
             <div
               className={`flex-shrink-0 w-5 md:w-8 h-8 rounded-sm flex items-center justify-center font-bold text-xl md:text-2xl ${londrinaShadow.className
-                } ${anime.rank === 1
+                } ${index + 1 === 1
                   ? "text-yellow-500"
-                  : anime.rank === 2
+                  : index + 1 === 2
                     ? "text-blue-500"
-                    : anime.rank === 3
+                    : index + 1 === 3
                       ? "text-orange-500"
                       : "text-black dark:text-white"
                 }`}
             >
-              {anime.rank}
+              {index + 1}
             </div>
             <HoverCard openDelay={200}>
               <HoverCardTrigger asChild>
                 <Link href={`/anime/${anime.id}`} >
                   <Image
-                    src={anime.poster}
-                    alt={anime.name}
+                    src={anime.coverImage.large}
+                    alt={`${anime.title.english || anime.title.romaji || "anime"} poster`}
                     width={60}
                     height={80}
                     className="rounded-sm object-cover h-[50px] w-[38] md:h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
@@ -62,24 +61,20 @@ const Top10 = ({
                 </Link>
               </HoverCardTrigger>
               <HoverCardContent className="p-0 bg-transparent border-none hidden sm:block">
-                <AnimeTips animeid={anime.id} image={anime.poster} />
+                <AnimeTips animeid={anime.id} image={anime.coverImage.large} />
               </HoverCardContent>
             </HoverCard>
 
             <Link href={`/anime/${anime.id}`} className="flex-1 w-[10px]">
               <h4 className="font-medium text-xs md:text-sm truncate text-slate-900 dark:text-white">
-                {anime.name}
+                {anime.title.english || anime.title.romaji || "No Title"}
               </h4>
               <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                 <div className="flex gap-[2px]">
-                  <Badge className={`bg-green-700 text-white text-[0.65rem] px-[2px] py-0 rounded-l-xs ${anime.episodes.dub ? "rounded-r-none" : "rounded-r-xs"}`}>
+                  <Badge className={`bg-green-700 text-white text-[0.65rem] px-[2px] py-0 rounded-xs `}>
                     <Captions className="w-3 h-3" />
-                    {anime.episodes.sub}
+                    {anime.episodes}
                   </Badge>
-                  {anime.episodes.dub && <Badge className="bg-cyan-700 text-white px-1 text-[0.65rem] py-1 rounded-r-xs rounded-l-none">
-                    <Mic className="w-3 h-3" />
-                    {anime.episodes.dub}
-                  </Badge>}
                 </div>
               </div>
             </Link>
