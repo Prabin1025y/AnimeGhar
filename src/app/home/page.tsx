@@ -66,8 +66,8 @@ const HomePage = () => {
     return (
         <>
             <Spotlight />
-            {/* <TrendingAnime animes={homeData.trendingAnimes} />
-            <AnimeLists
+            <TrendingAnime/>
+            {/*<AnimeLists
                 popularAnimes={homeData.mostPopularAnimes}
                 top10animes={homeData.top10Animes}
                 topAiring={homeData.topAiringAnimes}

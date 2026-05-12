@@ -74,6 +74,7 @@ type TrendingSeasonMedia = {
     large: string;
   };
   averageScore: number;
+  duration: number | null;
   popularity: number;
   episodes: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
