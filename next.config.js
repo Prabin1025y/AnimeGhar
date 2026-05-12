@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['cdn.noitatnemucod.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's4.anilist.co',
+      },
+    ],
   },
 }
 
