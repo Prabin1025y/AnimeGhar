@@ -1,3 +1,4 @@
+import { AnimeData } from "@/types";
 import AnimeCard from "../AnimeCard";
 
 const LatestEpisodesContainer = ({
@@ -26,7 +27,6 @@ const LatestEpisodesContainer = ({
                         animeName={anime.media.title.english || anime.media.title.romaji || "No Title"}
                         animeType={anime.media.format}
                         animeEpisodes={anime.episode.toString()}
-                        animeDuration={"24"}
                         airingTime={anime.airingAt.toString()}
                         type="latest"
                     />

@@ -6,6 +6,7 @@ import {
     CarouselPrevious,
 } from "../ui/carousel";
 import AnimeCard from "../AnimeCard";
+import { AnimeData } from "@/types";
 
 const AnimeGrid = ({
     popularAnimes,
