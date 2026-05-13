@@ -1,19 +1,18 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Star, FilePlay } from "lucide-react";
 import { Popover, PopoverContent, PopoverAnchor } from "./ui/popover";
 import Image from "next/image";
-import { SearchSuggestionType } from "@/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SEARCH_QUERY } from "@/lib/queries";
+import { SEARCH_SUGGESTION_QUERY } from "@/lib/queries";
 
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    const [suggestions, setSuggestions] = useState<SearchSuggestionType[]>([]);
+    const [suggestions, setSuggestions] = useState<AnimeSearchSuggestions>([]);
     const searchRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
@@ -30,17 +29,15 @@ const SearchInput = () => {
                             Accept: "application/json",
                         },
                         body: JSON.stringify({
-                            query: SEARCH_QUERY,
+                            query: SEARCH_SUGGESTION_QUERY,
                             variables: {
                                 search: searchTerm,
-                                page: 1,
-                                perPage: 20,
                             },
                         }),
                     },
                 );
-                const {data} = await response.json();
-                setSuggestions(data.data.suggestions);
+                const { data } = await response.json();
+                setSuggestions(data.Page.media);
             } else {
                 setSuggestions([]);
                 setIsPopoverOpen(false);
@@ -116,24 +113,46 @@ const SearchInput = () => {
                         {suggestions.map((suggestion, index) => (
                             <Link
                                 href={`/anime/${suggestion.id}`}
-                                key={suggestion.id + index}
-                                className="w-full h-16 hover:bg-cyan-100 cursor-pointer rounded-md flex items-center gap-2"
+                                key={`${suggestion.id}-${index}`}
+                                className="w-full h-16 hover:bg-cyan-100/20 cursor-pointer rounded-md flex items-center gap-2"
                             >
                                 <Image
-                                    src={suggestion.poster}
-                                    alt={suggestion.name}
+                                    src={suggestion.coverImage.large}
+                                    alt={`${suggestion.title.english || suggestion.title.romaji || suggestion.title.native} poster`}
                                     width={40}
                                     height={60}
                                     className="bg-gray-500 object-cover"
                                 />
                                 <div>
                                     <p className="font-semibold line-clamp-1">
-                                        {suggestion.name}
+                                        {suggestion.title.english ||
+                                            suggestion.title.romaji ||
+                                            suggestion.title.native ||
+                                            "No Title"}
                                     </p>
-                                    <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400">
-                                        <span>{suggestion.moreInfo[0]}</span>
-                                        <span>{suggestion.moreInfo[1]}</span>
-                                        <span>{suggestion.moreInfo[2]}</span>
+                                    <div className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-400">
+                                        {suggestion.averageScore && (
+                                            <span className="flex gap-1 items-center text-yellow-300">
+                                                <Star
+                                                    fill="yellow"
+                                                    className="text-yellow-300"
+                                                    size={15}
+                                                />
+                                                {suggestion.averageScore / 10}
+                                            </span>
+                                        )}
+                                        {suggestion.format && (
+                                            <span>{suggestion.format}</span>
+                                        )}
+                                        {suggestion.episodes && (
+                                            <span className="flex gap-1 items-center text-cyan-500">
+                                                <FilePlay
+                                                    className="text-cyan-500"
+                                                    size={15}
+                                                />
+                                                {suggestion.episodes || "?"}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </Link>

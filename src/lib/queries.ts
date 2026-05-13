@@ -242,4 +242,122 @@ export const SEARCH_QUERY = `query SearchAnime(
       status
     }
   }
-}`;;
+}`;
+
+export const SEARCH_SUGGESTION_QUERY = `query SearchTopAnime($search: String!) {
+  Page(page: 1, perPage: 8) {
+    media(
+      type: ANIME
+      search: $search
+      sort: POPULARITY_DESC
+    ) {
+      id
+
+      title {
+        romaji
+        english
+        native
+      }
+
+      coverImage {
+        large
+      }
+
+      averageScore
+
+      format
+      episodes
+
+      status
+    }
+  }
+}`
+
+export const ANIME_DETAILS_QUERY = `query AnimeDetails($id: Int!) {
+  Media(id: $id, type: ANIME) {
+    id
+    title {
+      romaji
+      english
+      native
+    }
+    synonyms
+    bannerImage
+    coverImage {
+      extraLarge
+      large
+      medium
+      color
+    }
+    description(asHtml: false)
+    averageScore
+    meanScore
+    popularity
+    favourites
+    episodes
+    duration
+    format
+    status
+    genres
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    season
+    seasonYear
+    studios(isMain: true) {
+      nodes {
+        id
+        name
+      }
+    }
+    relations {
+      edges {
+        relationType
+        node {
+          id
+          title {
+            romaji
+            english
+          }
+          type
+          episodes
+          format
+          status
+          coverImage {
+            large
+          }
+          bannerImage
+          season
+          seasonYear
+        }
+      }
+    }
+    recommendations(page: 1, perPage: 12, sort: RATING_DESC) {
+      nodes {
+        rating
+        mediaRecommendation {
+          id
+          title {
+            romaji
+            english
+          }
+          coverImage {
+            large
+          }
+          bannerImage
+          averageScore
+          format
+          episodes
+          status
+        }
+      }
+    }
+  }
+}`
