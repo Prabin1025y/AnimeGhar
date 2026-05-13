@@ -19,21 +19,6 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
 }) => {
     const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //   setLoading(true)
-    //   const fetchData = async () => {
-    //     const response = await fetch(
-    //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/anime/${animeId}`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}}
-    //     );
-    //     const result = await response.json();
-    //     setAnimeDetail(result.data);
-    //     // console.log(result.data);
-    //     setLoading(false);
-    //   };
-    //   fetchData();
-
-    // }, [animeId]);
-
     if (loading) return <VideoInfoSkeleton className={className} />;
 
     return animeData === null ? (
@@ -147,45 +132,8 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
                             </button>
                         </div>
                     </div>
-                    {/* <div className="flex items-center space-x-3">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    checked={autoSkip}
-                    onChange={(e) => setAutoSkip(e.target.checked)}
-                    className="sr-only"
-                  />
-                  <div
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${autoSkip ? "bg-gradient-to-r from-cyan-400 to-blue-500 border-blue-600" : "border-gray-400"
-                      }`}
-                  >
-                    {autoSkip && <Check className="w-3 h-3 text-primary" />}
-                  </div>
-                </div>
-                <span className="text-primary font-medium flex items-center space-x-1">
-                  <SkipForward className="w-4 h-4" />
-                  <span>Auto Skip Intro</span>
-                </span>
-              </label>
-            </div> */}
                 </div>
             </div>
-            {/* Seasons - only takes necessary width */}
-            {/* <div className="row-start-2 col-start-1 flex flex-wrap col-span-4 gap-3 mt-2">
-                {animeDetail?.seasons.map((season) => (
-                    <Link
-                        key={season.id}
-                        href={`/watch/${season.id}`}
-                    >
-                        <SeasonCard
-                            poster={season.poster}
-                            name={season.title}
-                            isCurrent={season.isCurrent}
-                        />
-                    </Link>
-                ))}
-            </div> */}
         </div>
     );
 };

@@ -23,7 +23,6 @@ export type EpisodeType = {
 
 const VideoPlayerPage: React.FC = () => {
     const [isDub, setIsDub] = useState<boolean>(false);
-    const [autoSkip, setAutoSkip] = useState<boolean>(true);
     const [animeDetail, setAnimeDetail] = useState<AnimeDetails | null>(null);
     const [sourceLoading, setSourceLoading] = useState(true);
     const [lastAiredEpisode, setLastAiredEpisode] = useState(0);

@@ -1,6 +1,4 @@
-import type React from "react";
 import AnimeGrid from "./AnimeListingHomePage/AnimeGrid";
-import AnimeColumns from "./AnimeListingHomePage/AnimeColumns";
 import Top10 from "./AnimeListingHomePage/Top10";
 import { useAppStore } from "@/context/AppContext";
 import AnimeContainer from "./AnimeListingHomePage/LatestEpisodesContainer";
@@ -8,21 +6,6 @@ import UpcomingContainer from "./AnimeListingHomePage/UpcomingContainer";
 
 export default function AnimeLists() {
     const { homeData } = useAppStore();
-
-    // const animeColumns = [
-    //     {
-    //         title: "Top Airing",
-    //         animes: topAiring.slice(0, 5),
-    //     },
-    //     {
-    //         title: "Most Favorite",
-    //         animes: mostFavourite,
-    //     },
-    //     {
-    //         title: "Latest Completed",
-    //         animes: latestCompleted,
-    //     },
-    // ];
 
     return (
         <div className="w-full py-12 px-8 bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 relative">
@@ -41,7 +24,6 @@ export default function AnimeLists() {
                 <AnimeGrid popularAnimes={homeData.topAiring.media} />
 
                 {/* Section 2: Anime Collections - 70% width, below featured */}
-                {/* <AnimeColumns /> */}
                 <AnimeContainer
                     animes={homeData.latestEpisodes.airingSchedules}
                     title="Latest Episodes"

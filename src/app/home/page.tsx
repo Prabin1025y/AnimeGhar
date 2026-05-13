@@ -1,5 +1,4 @@
 "use client";
-import AnimeContainer from "@/components/AnimeListingHomePage/LatestEpisodesContainer";
 import AnimeLists from "@/components/AnimeLists";
 import AnimeContainerSkeleton from "@/components/Skeleton/AnimeContainerSkeleton";
 import AnimeListsSkeleton from "@/components/Skeleton/AnimeListSkeleton";
@@ -10,7 +9,8 @@ import TrendingAnime from "@/components/TrendingAnime";
 import { useAppStore } from "@/context/AppContext";
 import { getHomeQuery } from "@/lib/queries";
 import { getCurrentYearSeason } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const HomePage = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -39,11 +39,11 @@ const HomePage = () => {
                     },
                 );
                 const { data } = await response.json();
-                console.log(data);
                 if (data) setHomeData(data);
                 else throw new Error("No data found from backend!");
             } catch (error) {
-                console.log("Error: " + error);
+                // console.log("Error: " + error);
+                toast.error("Error fetching data");
             } finally {
                 setIsMounted(true);
                 setIsLoading(false);
@@ -53,7 +53,6 @@ const HomePage = () => {
     }, []);
 
     if (!isMounted || isLoading)
-        // if (true)
         return (
             <>
                 <SpotlightSkeleton />
@@ -69,14 +68,6 @@ const HomePage = () => {
             <Spotlight />
             <TrendingAnime />
             <AnimeLists />
-            {/*<AnimeContainer
-                animes={homeData.latestEpisodeAnimes}
-                title="Latest Episode"
-            />
-            <AnimeContainer
-                animes={homeData.topUpcomingAnimes}
-                title="Top Upcoming"
-            /> */}
         </>
     );
 };

@@ -1,3 +1,4 @@
+'use client';
 import {
     Captions,
     ChevronLeft,
@@ -7,18 +8,29 @@ import {
     Play,
 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { useAppStore } from "@/context/AppContext";
 
 const Spotlight = () => {
-    // const [currentSlide, setCurrentSlide] = useState(0)
     const [currentSpotlight, setCurrentSpotlight] = useState(0);
     const { homeData } = useAppStore();
 
     const spotlightAnimes = homeData.spotlight.media || [];
+
+    useEffect(() => {
+    if (spotlightAnimes.length === 0) return;
+
+    const interval = setInterval(() => {
+        setCurrentSpotlight(
+            (prev) => (prev + 1) % spotlightAnimes.length,
+        );
+    }, 5000);
+
+    return () => clearInterval(interval);
+}, [spotlightAnimes.length]);
 
     return (
         <section className="relative h-[80vh] overflow-hidden px-2 sm:px-10">
@@ -147,7 +159,7 @@ const Spotlight = () => {
                                             alt={`${anime.title.english || "anime"} poster`}
                                             width={350}
                                             height={500}
-                                            className="rounded-xl shadow-2xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:shadow-cyan-500/25  "
+                                            className="rounded-xl w-auto h-auto shadow-2xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:shadow-cyan-500/25  "
                                         />
                                         <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                                         <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm -z-10" />
@@ -158,18 +170,6 @@ const Spotlight = () => {
                             {/* Content with Staggered Animation */}
                             <div className="flex-1 space-y-6 max-w-3xl px-6 sm:px-8">
                                 <div className="space-y-4">
-                                    {/* <div
-                                        className={`flex items-center space-x-3 transition-all duration-700 delay-100 ${
-                                            index === currentSpotlight
-                                                ? "opacity-100"
-                                                : "opacity-0"
-                                        }`}
-                                    >
-                                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-3 py-1 animate-pulse">
-                                            #{index + 1}
-                                        </Badge>
-                                    </div> */}
-
                                     <h1
                                         className={`text-5xl font-bold leading-tight transition-all duration-700 delay-200 text-primary ${
                                             index === currentSpotlight
@@ -187,16 +187,22 @@ const Spotlight = () => {
                                                 : "opacity-0"
                                         }`}
                                     >
-                                        {anime.duration && <div className="flex items-center space-x-2">
-                                            <Clock className="w-4 h-4" />
-                                            <span>{anime.duration} min</span>
-                                        </div>}
-                                        {anime.episodes && <div className="flex gap-[2px]">
-                                            <Badge className="bg-green-700 text-white px-1 py-1">
-                                                <Captions />
-                                                {anime.episodes}
-                                            </Badge>
-                                        </div>}
+                                        {anime.duration && (
+                                            <div className="flex items-center space-x-2">
+                                                <Clock className="w-4 h-4" />
+                                                <span>
+                                                    {anime.duration} min
+                                                </span>
+                                            </div>
+                                        )}
+                                        {anime.episodes && (
+                                            <div className="flex gap-[2px]">
+                                                <Badge className="bg-green-700 text-white px-1 py-1">
+                                                    <Captions />
+                                                    {anime.episodes}
+                                                </Badge>
+                                            </div>
+                                        )}
                                         <div className="flex gap-2 items-center">
                                             {anime.genres.map(
                                                 (genre, index) => (

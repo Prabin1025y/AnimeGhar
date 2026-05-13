@@ -40,7 +40,7 @@ const TrendingAnime = () => {
         }
     };
 
-    const trendingAnimes = homeData.trendingSeason.media || []
+    const trendingAnimes = homeData.trendingSeason.media || [];
 
     return (
         <section className="py-12 max-w-7xl mx-auto px-8">
@@ -102,6 +102,9 @@ const TrendingAnime = () => {
                                         src={anime.coverImage.large}
                                         alt={`${anime.title.english || "anime"} poster`}
                                         fill
+                                        sizes="(max-width: 640px) 100vw,
+                                                (max-width: 1024px) 50vw,
+                                                25vw"
                                         className={`object-cover transition-transform duration-300 ${
                                             hoveredAnime === anime.id
                                                 ? "scale-110"
@@ -119,12 +122,16 @@ const TrendingAnime = () => {
                                     >
                                         <div className="absolute bottom-0 left-0 right-0 p-4">
                                             <h3 className="text-white font-semibold text-lg mb-2 line-clamp-1">
-                                                {anime.title.english || "No Title"}
+                                                {anime.title.english ||
+                                                    "No Title"}
                                             </h3>
                                             <div className="flex items-center space-x-2 text-white/80 text-sm mb-3">
                                                 <div className="flex items-center space-x-1">
                                                     <Star className="w-4 h-4 fill-current text-yellow-400" />
-                                                    <span>{anime.averageScore / 10}</span>
+                                                    <span>
+                                                        {anime.averageScore /
+                                                            10}
+                                                    </span>
                                                 </div>
                                                 <span>•</span>
                                                 <span>{`${anime.duration || 24}m`}</span>
@@ -147,7 +154,7 @@ const TrendingAnime = () => {
 
                                 {/* Anime Title */}
                                 <h3 className="mt-2 text-slate-900 dark:text-white font-medium text-sm line-clamp-1">
-                                    {anime.title.english || 'No Title'}
+                                    {anime.title.english || "No Title"}
                                 </h3>
                             </div>
                         ))}

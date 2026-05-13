@@ -67,7 +67,6 @@ const SearchPage = () => {
         return (
             <div className="w-full pt-10">
                 <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-4 gap-5">
-                    {/* <p className='py-4 grid-cols-4 text-2xl text-cyan-500 font-semibold'>Search Result for : {query}</p> */}
                     <div className="col-span-3 grid grid-cols-4 gap-3">
                         <p className="col-span-4 py-4 text-2xl text-cyan-500 font-semibold">
                             Searching...
@@ -80,9 +79,7 @@ const SearchPage = () => {
                         <p className="py-4 text-2xl text-cyan-500 font-semibold">
                             Most Popular Animes
                         </p>
-                        {/* {Array.from({length: 10}).map((_, index) => ( */}
                         <Top10Skeleton />
-                        {/* ))} */}
                     </div>
                 </div>
             </div>
@@ -91,10 +88,6 @@ const SearchPage = () => {
     return (
         <div className="w-full pt-10">
             <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-4 gap-5">
-                {/* <p className='py-4 grid-cols-4 text-2xl text-cyan-500 font-semibold'>Search Result for : {query}</p> */}
-                {/* {searchResult && searchResult.animes.length == 0 ? <p className=' col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>No result found.</p>
-          : <p className='col-span-4 py-4 text-2xl text-cyan-500 font-semibold'>Search Result For: {query.replace("%20", " ")}</p>} */}
-                {/* <div className='col-span-3 grid grid-cols-4 gap-3'> */}
                 <div className="col-span-4 xl:grid grid-cols-5 flex gap-3 flex-wrap justify-center">
                     {searchResult && searchResult.media.length == 0 ? (
                         <p className="text-base grow min-w-full col-span-5 py-4 md:text-2xl text-cyan-500 font-semibold">
@@ -140,12 +133,6 @@ const SearchPage = () => {
                                     </PaginationItem>
                                 )}
 
-                            {/* {searchResult &&
-                                searchResult.pageInfo.currentPage - 2 > 1 && (
-                                    <PaginationItem>
-                                        <PaginationEllipsis />
-                                    </PaginationItem>
-                                )} */}
                             {searchResult &&
                                 searchResult.pageInfo.currentPage > 2 && (
                                     <PaginationItem>
@@ -181,13 +168,6 @@ const SearchPage = () => {
                                     </PaginationItem>
                                 )}
 
-                            {/* {searchResult &&
-                                searchResult.pageInfo.currentPage + 2 <
-                                    searchResult.pageInfo.lastPage && (
-                                    <PaginationItem>
-                                        <PaginationEllipsis />
-                                    </PaginationItem>
-                                )} */}
 
                             {searchResult &&
                                 searchResult.pageInfo.hasNextPage && (

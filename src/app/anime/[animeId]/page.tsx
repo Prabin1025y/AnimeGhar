@@ -4,9 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Star, Play } from "lucide-react";
 import AnimeCard from "@/components/AnimeCard";
 import Description from "./_components/Description";
-import RelatedAnime from "./_components/RelatedAnime";
 import Link from "next/link";
-import SeasonCard from "@/app/watch/[animeId]/components/SeasonCard";
 import { Metadata } from "next";
 import { AnimeDetails } from "@/types/animeDetails";
 import { ANIME_DETAILS_QUERY } from "@/lib/queries";
@@ -227,18 +225,6 @@ export default async function MovieDetailsPage({
                                 )}
                             </div>
                             <div className="row-start-2 col-start-1 flex flex-wrap col-span-4 gap-3 mt-2">
-                                {/* {data?.seasons.map((season) => (
-                                    <Link
-                                        key={season.id}
-                                        href={`/watch/${season.id}`}
-                                    >
-                                        <SeasonCard
-                                            poster={season.poster}
-                                            name={season.title}
-                                            isCurrent={season.isCurrent}
-                                        />
-                                    </Link>
-                                ))} */}
                             </div>
                         </div>
                     </div>
@@ -246,7 +232,6 @@ export default async function MovieDetailsPage({
             </div>
 
             {/* Related Animes */}
-            {/* <RelatedAnime relatedAnimes={data.relatedAnimes} /> */}
             {final_json.map((category, index) => {
                 return (
                     category.data.length > 0 && (
@@ -290,7 +275,7 @@ export default async function MovieDetailsPage({
                 );
             })}
 
-            {/* Recommended Movies */}
+            {/* Recommended Anime */}
             {data.recommendations.nodes.length > 0 && (
                 <section className="max-w-7xl container mx-auto mt-6 mb-4">
                     <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">

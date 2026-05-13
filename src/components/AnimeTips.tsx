@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Card,
     CardContent,
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Captions, Globe, Mic, Play, Star } from "lucide-react";
+import { Calendar, Captions, Play, Star } from "lucide-react";
 import Image from "next/image";
 import { getStatusColor } from "@/utilities";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -1,7 +1,6 @@
-import { Captions, Mic, Trophy } from "lucide-react";
+import { Captions, Trophy } from "lucide-react";
 import Image from "next/image";
 import { Londrina_Shadow } from "next/font/google";
-import React from "react";
 import { Badge } from "../ui/badge";
 import {
   HoverCard,

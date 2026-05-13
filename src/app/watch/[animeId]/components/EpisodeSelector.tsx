@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { EpisodeType } from "../page";
+import {  useSearchParams } from "next/navigation";
+import {  useState } from "react";
 
 interface EpisodeSelectorProps {
     className?: string;

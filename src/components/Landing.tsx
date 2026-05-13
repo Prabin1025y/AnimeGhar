@@ -1,14 +1,9 @@
-"use client"
-
-import { useState} from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Play,  Tv, Download,  ArrowRight, Globe, Smartphone, Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 const features = [
     {
@@ -35,14 +30,6 @@ const features = [
 
 
 export default function Landing() {
-    const [searchTerm, setSearchTerm] = useState("")
-    const router = useRouter();
-
-    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        router.push(`/search/${searchTerm}`)
-    }
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
             {/* Hero Section */}
@@ -93,17 +80,6 @@ export default function Landing() {
                                 ))}
                             </div>
 
-                            {/* Search Bar */}
-                            <div className="mt-12 max-w-2xl mx-auto">
-                                <form onSubmit={handleOnSubmit}>
-                                    <div className='relative flex items-center'>
-                                        <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder='Search...' className='pl-10 w-full peer focus-visible:ring-0 focus-visible:border-cyan-500' />
-                                        <Search className="absolute left-2 h-4 w-4 text-slate-700 dark:text-slate-300 peer-focus:text-cyan-500 dark:peer-focus:text-cyan-400" />
-                                        <Button asChild className={`absolute right-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-l-none  transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}><Link href={`/search/${searchTerm}`}><ArrowRight /></Link></Button>
-
-                                    </div>
-                                </form>
-                            </div>
                         </div>
 
                         {/* Thumbnail/Hero Image */}
