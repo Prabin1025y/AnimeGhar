@@ -64,6 +64,7 @@ const Spotlight = () => {
                             }
                             alt={`${anime.title.english || "anime"} poster`}
                             fill
+                            loading="eager"
                             className="object-cover brightness-75 md:brightness-100 contrast-150 md:contrast-100"
                             priority={index === 0}
                         />

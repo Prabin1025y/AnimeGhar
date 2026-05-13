@@ -114,7 +114,6 @@ const Player: React.FC<PlayerProps> = ({
 
     const handleProgress = (progress: ProgressProps) => {
         setPlayed(progress.played);
-        // console.log("Coming")
 
         // Update current subtitle line based on the current time
         if (selectedLanguage !== "None" && subtitleTracks[selectedLanguage]) {
