@@ -56,7 +56,7 @@ const Top10 = ({
                     alt={`${anime.title.english || anime.title.romaji || "anime"} poster`}
                     width={60}
                     height={80}
-                    className="rounded-sm object-cover h-[50px] w-[38] md:h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                    className="rounded-sm object-cover h-[50px] md:h-[80px] flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
                   />
                 </Link>
               </HoverCardTrigger>

@@ -197,3 +197,49 @@ export const getAnimeTipsQuery = (id: number): string => `query AnimeTipsData {
     genres
   }
 }`;
+
+export const SEARCH_QUERY = `query SearchAnime(
+  $search: String!
+  $page: Int!
+  $perPage: Int!
+) {
+  Page(
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
+
+    media(
+      type: ANIME
+      search: $search
+      sort: POPULARITY_DESC
+    ) {
+      id
+
+      title {
+        romaji
+        english
+        native
+      }
+
+      coverImage {
+        large
+      }
+
+      averageScore
+      popularity
+
+      format
+      episodes
+      duration
+
+      status
+    }
+  }
+}`;;

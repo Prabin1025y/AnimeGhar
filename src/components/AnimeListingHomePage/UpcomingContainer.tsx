@@ -8,6 +8,7 @@ const UpcomingContainer = ({
     animes: AnimeData["upcoming"]["media"];
     title: string;
 }) => {
+    console.log(animes)
     return (
         <div
             className="max-w-7xl mx-auto flex flex-col justify-center py-6 px-3"

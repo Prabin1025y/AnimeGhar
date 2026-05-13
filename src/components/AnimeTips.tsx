@@ -41,7 +41,6 @@ const AnimeTips = ({ animeid, image }: { animeid: number; image: string }) => {
                 );
                 const { data } = await response.json();
                 setCardData(data.Media);
-                console.log(data);
             } catch (error) {
                 console.error("Error fetching anime data:", error);
             } finally {

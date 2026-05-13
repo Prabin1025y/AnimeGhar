@@ -53,7 +53,8 @@ const AnimeCard = ({
                             <div className="flex items-center justify-between text-[0.6rem] md:text-xs text-muted-foreground">
                                 <span>{animeType}</span>
                                 <div className="flex gap-[2px]">
-                                    {Number(animeEpisodes) > 0 && (
+                                    {
+                                    animeEpisodes && (
                                         <Badge
                                             className={`bg-green-700 text-white px-1 py-1`}
                                         >
