@@ -1,328 +1,152 @@
-export interface HomeDataType {
-    genres: string[]
-    latestEpisodeAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        type: string,
-        duration: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
-
-    spotlightAnimes: {
-        id: string,
-        name: string,
-        jname: string,
-        poster: string,
-        description: string,
-        rank: number,
-        otherInfo: string[],
-        episodes: {
-            sub: number,
-            dub: number,
-        },
-    }[]
-
-    top10Animes: {
-        today: {
-            episodes: {
-                sub: number,
-                dub: number,
-            },
-            id: string,
-            name: string,
-            poster: string,
-            rank: number
-        }[],
-        month: {
-            episodes: {
-                sub: number,
-                dub: number,
-            },
-            id: string,
-            name: string,
-            poster: string,
-            rank: number
-        }[],
-        week: {
-            episodes: {
-                sub: number,
-                dub: number,
-            },
-            id: string,
-            name: string,
-            poster: string,
-            rank: number
-        }[]
+export type AnimeData = {
+    spotlight: {
+        media: SpotlightMedia[];
+    };
+    trendingSeason: {
+        media: TrendingSeasonMedia[];
+    };
+    popularAllTime: {
+        media: PopularAllTimeMedia[];
+    };
+    latestEpisodes: {
+        airingSchedules: AiringSchedule[];
+    };
+    topAiring: {
+      media: TopAiring[];
     }
+    upcoming: {
+        media: UpcomingMedia[];
+    };
+};
 
-    topAiringAnimes:
-    {
-        id: string,
-        name: string,
-        poster: string,
-        duration: string,
-        type: string,
-        rating: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
+type Title = {
+    romaji: string;
+    english: string | null;
+    native?: string | null;
+};
 
-    topUpcomingAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        duration: string,
-        type: string,
-        rating: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
+type CoverImage = {
+    extraLarge?: string;
+    large: string;
+};
 
-    trendingAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        jname: string,
-        rank: number,
-        rating: number,
-        duration?: string,
-        episodes?: number,
-        year: number,
-        genres: string[]
-    }[]
+type StudioNode = {
+    name: string;
+};
 
-    mostPopularAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        type: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
+type Studios = {
+    nodes: StudioNode[];
+};
 
-    mostFavoriteAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        type: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
+type NextAiringEpisode = {
+    episode: number;
+    airingAt: number;
+};
 
-    latestCompletedAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        type: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[]
-}
+type StartDate = {
+    year: number | null;
+    month: number | null;
+    day: number | null;
+};
 
-export interface AnimeTipsDataType {
-    id: string,
-    name: string,
-    malscore: string,
-    quality: string,
-    episodes: {
-        sub: number,
-        dub: number
-    },
-    type: string,
-    description: string,
-    jname: string,
-    synonyms?: string,
-    aired: string,
-    status: string,
-    genres: string[]
-}
+type SpotlightMedia = {
+    id: number;
+    title: Title;
+    description: string;
+    bannerImage: string | null;
+    coverImage: CoverImage;
+    episodes: number | null;
+    duration: number | null;
+    genres: string[];
+    averageScore: number;
+    popularity: number;
+    season: string | null;
+    seasonYear: number | null;
+    format: string;
+    studios: Studios;
+};
 
-export interface AnimeDetailsDataType {
-    anime: {
-        info: {
-            id: string,
-            name: string,
-            poster: string,
-            description: string,
-            stats: {
-                rating: string,
-                quality: string,
-                episodes: {
-                    sub: number,
-                    dub: number
-                },
-                type: string,
-                duration: string
-            },
-            promotionalVideos:
-            {
-                title: string | undefined,
-                source: string | undefined,
-                thumbnail: string | undefined
-            }[],
-            charactersVoiceActors:
-            {
-                character: {
-                    id: string,
-                    poster: string,
-                    name: string,
-                    cast: string
-                },
-                voiceActor: {
-                    id: string,
-                    poster: string,
-                    name: string,
-                    cast: string
-                }
-            }[],
-        }
-        moreInfo: {
-            aired: string,
-            genres: string[],
-            status: string,
-            studios: string,
-            duration: string,
-            producers: string[],
-            japanese?: string,
-            premiered?: string,
-            malscore?: string,
-        }
-    },
-    mostPopularAnimes: {
-        episodes: {
-            sub: number,
-            dub: number,
-        },
-        id: string,
-        jname: string,
-        name: string,
-        poster: string,
-        type: string
-    }[],
-    recommendedAnimes: {
-        id: string,
-        name: string,
-        poster: string,
-        duration: string,
-        type: string,
-        rating: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[],
-    relatedAnimes: {
-        id: string,
-        name: string,
-        jname: string,
-        poster: string,
-        type: string,
-        episodes: {
-            sub: number,
-            dub: number,
-        }
-    }[],
-    seasons: {
-        id: string,
-        name: string,
-        title: string,
-        poster: string,
-        isCurrent: boolean
-    }[]
-}
+type TrendingSeasonMedia = {
+    id: number;
+    title: {
+        romaji: string;
+        english: string | null;
+    };
+    bannerImage: string | null;
+    coverImage: {
+        large: string;
+    };
+    averageScore: number;
+    duration: number | null;
+    popularity: number;
+    episodes: number | null;
+    nextAiringEpisode: NextAiringEpisode | null;
+};
 
-export type EpisodeSourceType = {
+type PopularAllTimeMedia = {
+    id: number;
+    title: {
+        romaji: string;
+        english: string | null;
+    };
+    coverImage: {
+        large: string;
+    };
+    averageScore: number;
+    popularity: number;
+    favourites: number;
+    episodes: number | null;
+    format: string;
+};
 
-    headers: {
-        Referer: string
-    },
-    tracks: [
-        {
-            url: string,
-            lang: string
-        }
-    ],
-    intro: {
-        start: number,
-        end: number
-    },
-    outro: {
-        start: number,
-        end: number
-    },
-    sources: [
-        {
-            url: string,
-            isM3U8: boolean,
-            type: string
-        }
-    ],
-    anilistID: 9253,
-    malID: 9253
-}
+type TopAiring = {
+    id: number;
+    title: {
+        romaji: string;
+        english: string | null;
+    };
+    coverImage: {
+        large: string;
+    };
+    averageScore: number;
+    popularity: number;
+    favourites: number;
+    episodes: number | null;
+    format: string;
+};
 
-export type SearchSuggestionType = {
-    id: string,
-    name: string,
-    poster: string,
-    jname: string,
-    moreInfo: string[]
-}
+type AiringSchedule = {
+    airingAt: number;
+    episode: number;
+    media: {
+        id: number;
+        title: {
+            romaji: string;
+            english: string | null;
+        };
+        coverImage: {
+            large: string;
+        };
+        format: string;
+        bannerImage: string | null;
+        nextAiringEpisode: NextAiringEpisode | null;
+    };
+};
 
-export type SearchFiltersType = {
-    genres?: string,
-    type?: string,
-    sort?: string,
-    season?: string,
-    language?: string,
-    status?: string,
-    rated?: string,
-    start_date?: string,
-    score?: string
-}
-
-export type SearchResultType = {
-    animes: {
-        id: string,
-        name: string,
-        jname: string,
-        poster: string,
-        duration: string,
-        type: string,
-        rating: string,
-        episodes: {
-            sub: number,
-            dub: number
-        }
-    }[],
-    mostPopularAnimes: {
-        id: string,
-        name: string,
-        jname: string,
-        poster: string,
-        episodes: {
-            sub: number,
-            dub: number
-        },
-        type: string
-    }[],
-    searchQuery: string,
-    searchFilters: SearchFiltersType,
-    totalPages: number,
-    hasNextPage: boolean,
-    currentPage: number
-}
+type UpcomingMedia = {
+    id: number;
+    title: {
+        romaji: string;
+        english: string | null;
+    };
+    coverImage: {
+        large: string;
+    };
+    bannerImage: string | null;
+    format: string;
+    episodes: number | null;
+    season: string | null;
+    seasonYear: number | null;
+    startDate: StartDate;
+    studios: Studios;
+};

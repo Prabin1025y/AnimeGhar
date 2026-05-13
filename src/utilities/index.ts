@@ -1,4 +1,3 @@
-import { AnimeDetailsDataType } from "@/types"
 
 export const getStatusColor = (status: string) => {
   switch (status) {
@@ -11,15 +10,6 @@ export const getStatusColor = (status: string) => {
     default:
       return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300"
   }
-}
-
-export const removeDuplicateRelatedAnimes = (animes: AnimeDetailsDataType['relatedAnimes']) => {
-  const uniqueRelatedAnimes = Array.from(
-    new Map(
-      animes.map((item: AnimeDetailsDataType['relatedAnimes'][number]) => [item.id, item])
-    ).values()
-  );
-  return uniqueRelatedAnimes;
 }
 
 const parseTimeToSeconds = (hours: number, minutes: number, seconds: number, milliseconds: number) => {

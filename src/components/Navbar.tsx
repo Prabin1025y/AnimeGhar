@@ -24,9 +24,9 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="flex items-center space-x-4 md:space-x-8">
             <SearchInput />
-            <Link href={"/about"} className='text-sm text-slate-700 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 '>
+            {/* <Link href={"/about"} className='text-sm text-slate-700 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 '>
               About
-            </Link>
+            </Link> */}
             <DarkModeSwitch />
           </div>
 

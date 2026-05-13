@@ -1,56 +1,77 @@
-'use client'
-import AnimeContainer from '@/components/AnimeListingHomePage/AnimeContainer'
-import AnimeLists from '@/components/AnimeLists'
-import AnimeContainerSkeleton from '@/components/Skeleton/AnimeContainerSkeleton'
-import AnimeListsSkeleton from '@/components/Skeleton/AnimeListSkeleton'
-import SpotlightSkeleton from '@/components/Skeleton/SpotlightSkeleton'
-import TrendingAnimeSkeleton from '@/components/Skeleton/TrendingSkeleton'
-import Spotlight from '@/components/Spotlight'
-import TrendingAnime from '@/components/TrendingAnime'
-import { HomeDataType } from '@/types'
-import React, { useEffect, useState } from 'react'
+"use client";
+import AnimeLists from "@/components/AnimeLists";
+import AnimeContainerSkeleton from "@/components/Skeleton/AnimeContainerSkeleton";
+import AnimeListsSkeleton from "@/components/Skeleton/AnimeListSkeleton";
+import SpotlightSkeleton from "@/components/Skeleton/SpotlightSkeleton";
+import TrendingAnimeSkeleton from "@/components/Skeleton/TrendingSkeleton";
+import Spotlight from "@/components/Spotlight";
+import TrendingAnime from "@/components/TrendingAnime";
+import { useAppStore } from "@/context/AppContext";
+import { getHomeQuery } from "@/lib/queries";
+import { getCurrentYearSeason } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const HomePage = () => {
-    const [isMounted, setIsMounted] = useState(false)
-    const [homeData, setHomeData] = useState<HomeDataType>({} as HomeDataType)
+    const [isMounted, setIsMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { setHomeData } = useAppStore();
 
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/home`,{headers:{"god-key": process.env.NEXT_PUBLIC_GOD_KEY || ""}});
-                const data = await response.json()
+                setIsLoading(true);
+                const currentYearSeason = getCurrentYearSeason();
+                const query = getHomeQuery(
+                    currentYearSeason.year,
+                    currentYearSeason.season,
+                );
 
-                if (data.data)
-                    setHomeData(data.data);
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_ANILIST_URL}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify({ query }),
+                    },
+                );
+                const { data } = await response.json();
+                if (data) setHomeData(data);
+                else throw new Error("No data found from backend!");
             } catch (error) {
-                console.log("Error: " + error)
-            } finally {
-                setIsMounted(true)
-            }
-        }
-        fetchdata();
-    }, [])
+                if (process.env.NODE_ENV === "development")
+                    console.log("Error: " + error);
 
-    if (!isMounted)
+                toast.error("Error fetching data");
+            } finally {
+                setIsMounted(true);
+                setIsLoading(false);
+            }
+        };
+        fetchdata();
+    }, [setHomeData]);
+
+    if (!isMounted || isLoading)
         return (
             <>
                 <SpotlightSkeleton />
                 <TrendingAnimeSkeleton />
                 <AnimeListsSkeleton />
-                <AnimeContainerSkeleton/>
+                <AnimeContainerSkeleton />
                 <AnimeContainerSkeleton />
             </>
-        )
+        );
 
     return (
         <>
-            <Spotlight spotlightAnimes={homeData.spotlightAnimes} />
-            <TrendingAnime animes={homeData.trendingAnimes} />
-            <AnimeLists popularAnimes={homeData.mostPopularAnimes} top10animes={homeData.top10Animes} topAiring={homeData.topAiringAnimes} mostFavourite={homeData.mostFavoriteAnimes} latestCompleted={homeData.latestCompletedAnimes} />
-            <AnimeContainer animes={homeData.latestEpisodeAnimes} title="Latest Episode" />
-            <AnimeContainer animes={homeData.topUpcomingAnimes} title="Top Upcoming" />
+            <Spotlight />
+            <TrendingAnime />
+            <AnimeLists />
         </>
-    )
-}
+    );
+};
 
-export default HomePage
+export default HomePage;
