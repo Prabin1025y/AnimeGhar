@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Play,  Tv, Download,  ArrowRight, Globe, Smartphone, Search } from "lucide-react"
+import { Play,  Tv, Download,  ArrowRight, Globe, Smartphone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 

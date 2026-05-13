@@ -1,5 +1,4 @@
 import { Building2, Calendar, Star, Users } from "lucide-react";
-import { useState } from "react";
 import Image from "next/image";
 import { AnimeDetails } from "@/types/animeDetails";
 import { formatDate } from "@/lib/utils";
@@ -17,9 +16,6 @@ const VideoInfo: React.FC<VideoInfoProps> = ({
     isDub,
     setIsDub,
 }) => {
-    const [loading, setLoading] = useState(false);
-
-    if (loading) return <VideoInfoSkeleton className={className} />;
 
     return animeData === null ? (
         <VideoInfoSkeleton />

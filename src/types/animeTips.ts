@@ -2,7 +2,7 @@
 //     Media: Media;
 // };
 
-type AnimeTips = {
+export type AnimeTips = {
     id: number;
     title: {
         romaji: string;

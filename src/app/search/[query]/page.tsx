@@ -12,6 +12,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { SEARCH_QUERY } from "@/lib/queries";
+import { SearchResponse } from "@/types/searchResult";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -115,9 +116,6 @@ const SearchPage = () => {
                                 animeEpisodes={
                                     anime.episodes?.toString() || "?"
                                 }
-                                animeDuration={
-                                    anime.duration ? `${anime.duration}m` : "?m"
-                                }
                             />
                         ))}
                 </div>
@@ -167,7 +165,6 @@ const SearchPage = () => {
                                         <PaginationEllipsis />
                                     </PaginationItem>
                                 )}
-
 
                             {searchResult &&
                                 searchResult.pageInfo.hasNextPage && (

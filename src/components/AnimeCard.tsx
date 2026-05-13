@@ -3,7 +3,7 @@ import Image from "next/image";
 import AnimeTips from "./AnimeTips";
 import { Calendar, Clock, FilePlay, Star, Video } from "lucide-react";
 import Link from "next/link";
-import { formatDate, timeAgo } from "@/lib/utils";
+import { timeAgo } from "@/lib/utils";
 
 interface AnimeCardProps {
     animeId: number;
@@ -12,7 +12,6 @@ interface AnimeCardProps {
     animeType: string;
     animeEpisodes?: string | null;
     airingTime?: string;
-    animeDuration?: string;
     averageScore?: number;
     className?: string;
     type?: "most popular" | "upcoming" | "latest" | "general";
@@ -26,7 +25,6 @@ const AnimeCard = ({
     averageScore,
     animeType,
     animeEpisodes,
-    animeDuration = "",
     className = "",
     type = "general",
 }: AnimeCardProps) => {

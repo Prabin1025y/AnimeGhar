@@ -1,5 +1,6 @@
 import { formatDate } from "@/lib/utils";
 import AnimeCard from "../AnimeCard";
+import { AnimeData } from "@/types";
 
 const UpcomingContainer = ({
     animes,
@@ -29,7 +30,6 @@ const UpcomingContainer = ({
                         animeName={anime.title.english || anime.title.romaji || "No Title"}
                         animeType={anime.format}
                         airingTime={formatDate(anime.startDate.day, anime.startDate.month, anime.startDate.year)}
-                        animeDuration={"24"}
                     />
                 ))}
             </div>

@@ -1,4 +1,4 @@
-type AnimeData = {
+export type AnimeData = {
     spotlight: {
         media: SpotlightMedia[];
     };

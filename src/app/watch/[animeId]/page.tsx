@@ -104,7 +104,7 @@ const VideoPlayerPage: React.FC = () => {
         if (!episodeNumber) {
             router.push(pathname + "?" + createQueryString("ep", "1"));
         }
-    }, [animeId]);
+    }, [animeId, createQueryString, episodeNumber, pathname, router]);
 
     // change dub to sub if dub is not available
     useEffect(() => {
@@ -139,7 +139,7 @@ const VideoPlayerPage: React.FC = () => {
             }
         };
         fetchData();
-    }, [episodeNumber, isDub]);
+    }, [episodeNumber, isDub, animeId]);
 
     const sequels = animeDetail?.relations.edges.filter(
         (edge) => edge.relationType == "SEQUEL" && edge.node.type == "ANIME",

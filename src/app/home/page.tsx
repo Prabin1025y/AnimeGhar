@@ -42,7 +42,9 @@ const HomePage = () => {
                 if (data) setHomeData(data);
                 else throw new Error("No data found from backend!");
             } catch (error) {
-                // console.log("Error: " + error);
+                if (process.env.NODE_ENV === "development")
+                    console.log("Error: " + error);
+
                 toast.error("Error fetching data");
             } finally {
                 setIsMounted(true);
@@ -50,7 +52,7 @@ const HomePage = () => {
             }
         };
         fetchdata();
-    }, []);
+    }, [setHomeData]);
 
     if (!isMounted || isLoading)
         return (

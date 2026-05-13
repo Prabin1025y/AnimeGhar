@@ -1,4 +1,4 @@
-type SearchResponse = {
+export type SearchResponse = {
     pageInfo: {
         total: number;
         currentPage: number;
@@ -27,7 +27,7 @@ type Anime = {
     status: "FINISHED";
 };
 
-type AnimeSearchSuggestions = {
+export type AnimeSearchSuggestions = {
     id: number;
 
     title: {

@@ -1,7 +1,6 @@
-import { Captions, Star, Trophy, Video } from "lucide-react";
+import {  Star, Trophy, Video } from "lucide-react";
 import Image from "next/image";
 import { Londrina_Shadow } from "next/font/google";
-import { Badge } from "../ui/badge";
 import {
     HoverCard,
     HoverCardContent,
@@ -9,6 +8,7 @@ import {
 } from "../ui/hover-card";
 import AnimeTips from "../AnimeTips";
 import Link from "next/link";
+import { AnimeData } from "@/types";
 
 const londrinaShadow = Londrina_Shadow({
     weight: "400",

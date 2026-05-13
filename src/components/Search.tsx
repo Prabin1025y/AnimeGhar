@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SEARCH_SUGGESTION_QUERY } from "@/lib/queries";
+import { AnimeSearchSuggestions } from "@/types/searchResult";
 
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState("");

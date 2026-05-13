@@ -1,3 +1,4 @@
+import { AnimeData } from "@/types";
 import { create } from "zustand";
 
 type AppStore = {

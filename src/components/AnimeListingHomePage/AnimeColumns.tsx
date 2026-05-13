@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "../ui/badge";
-import { Captions, Mic } from "lucide-react";
+import { Captions} from "lucide-react";
 import Image from "next/image";
 import {
     HoverCard,
