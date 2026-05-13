@@ -22,12 +22,13 @@ const UpcomingContainer = ({
                 {animes.map((anime, index) => (
                     <AnimeCard
                         className=""
+                        type="upcoming"
                         key={anime.id + index}
                         animeId={anime.id}
                         animePoster={anime.coverImage.large}
                         animeName={anime.title.english || anime.title.romaji || "No Title"}
                         animeType={anime.format}
-                        animeEpisodes={formatDate(anime.startDate.day, anime.startDate.month, anime.startDate.year)}
+                        airingTime={formatDate(anime.startDate.day, anime.startDate.month, anime.startDate.year)}
                         animeDuration={"24"}
                     />
                 ))}

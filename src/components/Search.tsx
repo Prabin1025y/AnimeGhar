@@ -132,10 +132,10 @@ const SearchInput = () => {
                                     </p>
                                     <div className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-400">
                                         {suggestion.averageScore && (
-                                            <span className="flex gap-1 items-center text-yellow-300">
+                                            <span className="flex gap-1 items-center text-yellow-500">
                                                 <Star
                                                     fill="yellow"
-                                                    className="text-yellow-300"
+                                                    className="text-yellow-500"
                                                     size={15}
                                                 />
                                                 {suggestion.averageScore / 10}

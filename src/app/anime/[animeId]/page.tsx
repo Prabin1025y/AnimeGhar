@@ -216,16 +216,25 @@ export default async function MovieDetailsPage({
                                             size="lg"
                                             className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:bg-cyan-700 text-white"
                                         >
-                                            <Link href={`/watch/${data.id}`}>
-                                                <Play className="h-5 w-5 mr-2" />
-                                                Watch Now
-                                            </Link>
+                                            {data.status ===
+                                            "NOT_YET_RELEASED" ? (
+                                                <span className="text-white/70 cursor-not-allowed">
+                                                    <Play className="h-5 w-5 mr-2" />
+                                                    Not Aired
+                                                </span>
+                                            ) : (
+                                                <Link
+                                                    href={`/watch/${data.id}`}
+                                                >
+                                                    <Play className="h-5 w-5 mr-2" />
+                                                    Watch Now
+                                                </Link>
+                                            )}
                                         </Button>
                                     </div>
                                 )}
                             </div>
-                            <div className="row-start-2 col-start-1 flex flex-wrap col-span-4 gap-3 mt-2">
-                            </div>
+                            <div className="row-start-2 col-start-1 flex flex-wrap col-span-4 gap-3 mt-2"></div>
                         </div>
                     </div>
                 </div>
@@ -249,6 +258,7 @@ export default async function MovieDetailsPage({
                                             <AnimeCard
                                                 key={`${anime.node?.id}-${index}`}
                                                 animeId={anime.node?.id}
+                                                averageScore={anime.node.averageScore}
                                                 animePoster={
                                                     anime.node.coverImage
                                                         .large ||
@@ -288,6 +298,7 @@ export default async function MovieDetailsPage({
                                     <AnimeCard
                                         key={`${anime.mediaRecommendation?.id}-${index}`}
                                         animeId={anime.mediaRecommendation?.id}
+                                        averageScore={anime.mediaRecommendation.averageScore}
                                         animePoster={
                                             anime.mediaRecommendation.coverImage
                                                 .large || "placeholder.png"

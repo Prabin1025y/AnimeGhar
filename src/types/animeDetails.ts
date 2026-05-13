@@ -1,127 +1,128 @@
 export interface AnimeDetails {
-  id: number;
+    id: number;
 
-  title: {
-    romaji?: string;
-    english?: string;
-    native?: string;
-  };
+    title: {
+        romaji?: string;
+        english?: string;
+        native?: string;
+    };
 
-  synonyms: string[];
+    synonyms: string[];
 
-  bannerImage?: string;
+    bannerImage?: string;
 
-  coverImage: {
-    extraLarge?: string;
-    large?: string;
-    medium?: string;
-    color?: string;
-  };
+    coverImage: {
+        extraLarge?: string;
+        large?: string;
+        medium?: string;
+        color?: string;
+    };
 
-  description?: string;
+    description?: string;
 
-  averageScore?: number;
-  meanScore?: number;
-  popularity?: number;
-  favourites?: number;
+    averageScore?: number;
+    meanScore?: number;
+    popularity?: number;
+    favourites?: number;
 
-  episodes?: number;
-  duration?: number;
+    episodes?: number;
+    duration?: number;
 
-  format?: string;
-  status?: string;
+    format?: string;
+    status?: string;
 
-  genres: string[];
+    genres: string[];
 
-  startDate: AnimeDate;
-  endDate: AnimeDate;
+    startDate: AnimeDate;
+    endDate: AnimeDate;
 
-  season?: string;
-  seasonYear?: number;
+    season?: string;
+    seasonYear?: number;
 
-  studios: {
-    nodes: Studio[];
-  };
+    studios: {
+        nodes: Studio[];
+    };
 
-  relations: {
-    edges: RelationEdge[];
-  };
+    relations: {
+        edges: RelationEdge[];
+    };
 
-  recommendations: {
-    nodes: RecommendationNode[];
-  };
+    recommendations: {
+        nodes: RecommendationNode[];
+    };
 }
 
 interface AnimeDate {
-  year?: number;
-  month?: number;
-  day?: number;
+    year?: number;
+    month?: number;
+    day?: number;
 }
 
 interface Studio {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 interface RelationEdge {
-  relationType: string;
+    relationType: string;
 
-  node: RelatedAnime;
+    node: RelatedAnime;
 }
 
 interface RelatedAnime {
-  id: number;
+    id: number;
 
-  title: {
-    romaji?: string;
-    english?: string;
-  };
+    title: {
+        romaji?: string;
+        english?: string;
+    };
 
-  type?: string;
+    type?: string;
 
-  format?: string;
+    format?: string;
 
-  episodes?: number;
+    averageScore?: number;
 
-  status?: string;
+    episodes?: number;
 
-  season?: string;
+    status?: string;
 
-  seasonYear?: number;
+    season?: string;
 
-  coverImage: {
-    large?: string;
-  };
+    seasonYear?: number;
 
-  bannerImage?: string;
+    coverImage: {
+        large?: string;
+    };
+
+    bannerImage?: string;
 }
 
 interface RecommendationNode {
-  rating?: number;
+    rating?: number;
 
-  mediaRecommendation?: RecommendedAnime;
+    mediaRecommendation?: RecommendedAnime;
 }
 
-
 interface RecommendedAnime {
-  id: number;
+    id: number;
 
-  title: {
-    romaji?: string;
-    english?: string;
-  };
+    title: {
+        romaji?: string;
+        english?: string;
+    };
 
-  coverImage: {
-    large?: string;
-  };
+    coverImage: {
+        large?: string;
+    };
 
-  bannerImage?: string;
+    bannerImage?: string;
 
-  averageScore?: number;
+    averageScore?: number;
 
-  format?: string;
+    format?: string;
 
-  episodes?: number;
+    episodes?: number;
 
-  status?: string;
+    status?: string;
 }

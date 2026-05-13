@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github, Globe, Code,  Users, Tv } from "lucide-react"
+import { Globe, Code,  Users, Tv } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -110,7 +110,7 @@ const AboutPage = () => {
                                         <div className="flex gap-3 justify-center md:justify-start">
                                             <Button variant="outline" size="sm" asChild className="hover:bg-cyan-50 dark:hover:bg-cyan-900/50">
                                                 <Link href="https://github.com/Prabin1025y" target="_blank" rel="noopener noreferrer">
-                                                    <Github className="w-4 h-4 mr-2" />
+                                                    {/* <Github className="w-4 h-4 mr-2" /> */}
                                                     GitHub
                                                 </Link>
                                             </Button>
@@ -149,7 +149,7 @@ const AboutPage = () => {
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                     <Button asChild size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600">
                                         <Link href="https://github.com/Prabin1025y/AnimeGhar" target="_blank" rel="noopener noreferrer">
-                                            <Github className="w-5 h-5 mr-2" />
+                                            {/* <Github className="w-5 h-5 mr-2" /> */}
                                             Contribute on GitHub
                                         </Link>
                                     </Button>

@@ -36,8 +36,10 @@ const AnimeGrid = ({
                                         anime.title.romaji ||
                                         "No Title"
                                     }
+                                    type="most popular"
+                                    averageScore={anime.averageScore}
                                     animeType={anime.format}
-                                    animeEpisodes={anime.episodes?.toString() || '0'}
+                                    animeEpisodes={anime.episodes?.toString() || null}
                                 />
                             </CarouselItem>
                         ))}

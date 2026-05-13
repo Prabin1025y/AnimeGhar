@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { formatDistanceToNowStrict } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -59,4 +60,24 @@ export function formatDate(
 
     // year missing but others exist (invalid case)
     return "unknown";
+}
+
+export function timeAgo(timestamp: number) {
+    const result = formatDistanceToNowStrict(new Date(timestamp * 1000), {
+        addSuffix: true,
+    });
+
+    return result
+        .replace(" seconds", "s")
+        .replace(" second", "s")
+        .replace(" minutes", "m")
+        .replace(" minute", "m")
+        .replace(" hours", "h")
+        .replace(" hour", "h")
+        .replace(" days", "d")
+        .replace(" day", "d")
+        .replace(" months", "mo")
+        .replace(" month", "mo")
+        .replace(" years", "y")
+        .replace(" year", "y");
 }

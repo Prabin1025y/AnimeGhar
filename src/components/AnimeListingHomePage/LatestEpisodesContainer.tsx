@@ -27,6 +27,8 @@ const LatestEpisodesContainer = ({
                         animeType={anime.media.format}
                         animeEpisodes={anime.episode.toString()}
                         animeDuration={"24"}
+                        airingTime={anime.airingAt.toString()}
+                        type="latest"
                     />
                 ))}
             </div>

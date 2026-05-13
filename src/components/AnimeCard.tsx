@@ -1,34 +1,38 @@
-import React from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import Image from "next/image";
 import AnimeTips from "./AnimeTips";
-import { Badge } from "./ui/badge";
-import { Calendar, Captions, Mic } from "lucide-react";
+import { Calendar, Clock, FilePlay, Star, Video } from "lucide-react";
 import Link from "next/link";
+import { formatDate, timeAgo } from "@/lib/utils";
 
 interface AnimeCardProps {
     animeId: number;
     animePoster: string;
     animeName: string;
     animeType: string;
-    animeEpisodes: string;
+    animeEpisodes?: string | null;
+    airingTime?: string;
     animeDuration?: string;
+    averageScore?: number;
     className?: string;
+    type?: "most popular" | "upcoming" | "latest" | "general";
 }
 
 const AnimeCard = ({
     animeId,
     animePoster,
     animeName,
+    airingTime,
+    averageScore,
     animeType,
     animeEpisodes,
     animeDuration = "",
     className = "",
+    type = "general",
 }: AnimeCardProps) => {
     return (
         <HoverCard openDelay={1000}>
             <div
-                // key={anime.id}
                 className={`${className} group cursor-pointer transition-all duration-300 hover:scale-105 w-32 sm:w-44 md:w-52  max-w-52`}
             >
                 <div className="bg-card dark:bg-slate-800/50 border rounded-md overflow-hidden shadow-lg hover:shadow-cyan-500/25 transition-all duration-300">
@@ -52,17 +56,76 @@ const AnimeCard = ({
                             </h4>
                             <div className="flex items-center justify-between text-[0.6rem] md:text-xs text-muted-foreground">
                                 <span>{animeType}</span>
-                                <div className="flex gap-[2px]">
-                                    {
-                                    animeEpisodes && (
-                                        <Badge
-                                            className={`bg-green-700 text-white px-1 py-1`}
-                                        >
-                                            <Captions className="w-4 h-4" />
-                                            {animeEpisodes}
-                                        </Badge>
-                                    )}
-                                </div>
+                                {(() => {
+                                    if (type === "most popular" || type == "general") {
+                                        return (
+                                            <div className="flex gap-2">
+                                                {averageScore && (
+                                                    <div className="flex items-center text-yellow-500 gap-1">
+                                                        <Star
+                                                            fill="yellow"
+                                                            size={15}
+                                                        />
+                                                        <p>
+                                                            {averageScore
+                                                                ? averageScore /
+                                                                  10
+                                                                : "N/A"}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                {animeEpisodes && (
+                                                    <div className="flex items-center text-cyan-500 gap-1">
+                                                        <Video size={15} />
+                                                        <p>
+                                                            {animeEpisodes
+                                                                ? animeEpisodes
+                                                                : "N/A"}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    } else if (type === "latest") {
+                                        return (
+                                            <div className="flex gap-2">
+                                                {animeEpisodes && (
+                                                    <div className="flex items-center text-yellow-500 gap-1">
+                                                        <FilePlay size={15} />
+                                                        <p>{animeEpisodes}</p>
+                                                    </div>
+                                                )}
+                                                {airingTime && (
+                                                    <div className="flex items-center text-cyan-500 gap-1">
+                                                        <Clock size={15} />
+                                                        <p>
+                                                            {timeAgo(
+                                                                Number(
+                                                                    airingTime,
+                                                                ),
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    } else if (type === "upcoming") {
+                                        return (
+                                            <div className="flex gap-2">
+                                                {airingTime &&
+                                                    airingTime !==
+                                                        "unknown" && (
+                                                        <div className="flex items-center text-cyan-500 gap-1">
+                                                            <Calendar
+                                                                size={15}
+                                                            />
+                                                            <p>{airingTime}</p>
+                                                        </div>
+                                                    )}
+                                            </div>
+                                        );
+                                    }
+                                })()}
                             </div>
                         </div>
                     </Link>

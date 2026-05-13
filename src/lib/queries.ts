@@ -327,6 +327,7 @@ export const ANIME_DETAILS_QUERY = `query AnimeDetails($id: Int!) {
             english
           }
           type
+          averageScore
           episodes
           format
           status

@@ -184,7 +184,7 @@ const VideoPlayerPage: React.FC = () => {
                         )}
                     </div>
 
-                    {animeDetail?.episodes && (
+                    {lastAiredEpisode && (
                         <EpisodeSelector
                             episodes={lastAiredEpisode}
                             className=" overflow-y-auto"
@@ -213,6 +213,7 @@ const VideoPlayerPage: React.FC = () => {
                                                 <AnimeCard
                                                     key={`${anime.node?.id}-${index}`}
                                                     animeId={anime.node?.id}
+                                                    averageScore={anime.node.averageScore}
                                                     animePoster={
                                                         anime.node.coverImage
                                                             .large ||
@@ -269,6 +270,7 @@ const VideoPlayerPage: React.FC = () => {
                                                         .title.romaji ||
                                                     "No Title"
                                                 }
+                                                averageScore={anime.mediaRecommendation.averageScore}
                                                 animeType={
                                                     anime.mediaRecommendation
                                                         .format || "N/A"
