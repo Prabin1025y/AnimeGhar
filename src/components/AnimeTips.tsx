@@ -17,9 +17,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { getAnimeTipsQuery } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
+import { type AnimeTips as AnimeTipsType } from "@/types/animeTips";
 
 const AnimeTips = ({ animeid, image }: { animeid: number; image: string }) => {
-    const [cardData, setCardData] = useState<AnimeTips>({} as AnimeTips);
+    const [cardData, setCardData] = useState<AnimeTipsType>({} as AnimeTipsType);
     const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
