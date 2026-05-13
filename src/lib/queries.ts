@@ -361,3 +361,13 @@ export const ANIME_DETAILS_QUERY = `query AnimeDetails($id: Int!) {
     }
   }
 }`
+
+export const RELEASING_EPISODES_QUERY = `query AnimeAiredInfo($id: Int!) {
+  Media(id: $id, type: ANIME) {
+    nextAiringEpisode {
+      episode
+      airingAt
+      timeUntilAiring
+    }
+  }
+}`
