@@ -86,7 +86,6 @@ const VideoPlayerPage: React.FC = () => {
                     );
 
                     const { data: new_data } = await new_response.json();
-                    console.log(new_data);
                     setLastAiredEpisode(
                         Number(new_data.Media.nextAiringEpisode.episode) - 1,
                     );
