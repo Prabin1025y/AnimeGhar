@@ -120,7 +120,7 @@ const AnimeTips = ({ animeid, image }: { animeid: number; image: string }) => {
                     <div className="relative flex-shrink-0">
                         <Image
                             src={image || "/placeholder.svg"}
-                            alt={`${cardData.title.english || cardData.title.romaji} poster`}
+                            alt={`${cardData?.title?.english || cardData?.title?.romaji} poster`}
                             width={80}
                             height={120}
                             className="rounded-lg object-cover border-2 border-cyan-200 dark:border-cyan-700"
@@ -128,10 +128,10 @@ const AnimeTips = ({ animeid, image }: { animeid: number; image: string }) => {
                     </div>
                     <div className="flex-1 min-w-0">
                         <CardTitle className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2">
-                            {cardData.title.english || cardData.title.romaji}
+                            {cardData?.title?.english || cardData?.title?.romaji}
                         </CardTitle>
                         <CardDescription className="text-sm text-cyan-600 dark:text-cyan-400 mb-2 flex items-center gap-1">
-                            {cardData.title.native}
+                            {cardData?.title?.native}
                         </CardDescription>
                         <div className="flex items-center gap-2 mb-2">
                             <div className="flex items-center gap-1">

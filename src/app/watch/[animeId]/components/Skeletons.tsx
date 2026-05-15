@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { Loader2 } from "lucide-react";
 
 export const VideoInfoSkeleton: React.FC<{ className?: string }> = ({
     className = "",
@@ -115,3 +116,26 @@ export default function AnimeCardsGridSkeleton({
         </section>
     );
 }
+
+export const PlayerSkeleton: React.FC = () => {
+    return (
+        <div className="w-full col-span-3 row-span-1 max-w-7xl aspect-video bg-black rounded-lg flex items-center justify-center">
+            <Loader2 className="w-16 h-16 text-gray-500 animate-spin" />
+        </div>
+    );
+};
+export const UnavailablePlayer = ({ name }: { name?: string | null }) => {
+    return (
+        <div className="w-full col-span-3 row-span-1 max-w-7xl aspect-video bg-black rounded-lg flex flex-col items-center justify-center text-center px-6">
+            <h2 className="text-2xl font-semibold text-white mb-3">
+                Episode Not Available
+            </h2>
+
+            <p className="text-gray-400 max-w-md">
+                Sorry, episodes for this anime {name ? `"${name}"` : ""} is
+                currently not available. Meanwhile, check out other anime on our
+                platform.
+            </p>
+        </div>
+    );
+};

@@ -9,12 +9,12 @@ import {
 import VideoInfo from "./components/VideoInfo";
 import EpisodeSelector from "./components/EpisodeSelector";
 import { toast } from "sonner";
-import PlayerSkeleton from "./components/PlayerSkeleton";
 import { ANIME_DETAILS_QUERY, RELEASING_EPISODES_QUERY } from "@/lib/queries";
 import { AnimeDetails } from "@/types/animeDetails";
 import AnimeCard from "@/components/AnimeCard";
 import AnimeCardsGridSkeleton, {
     EpisodeSelectorSkeleton,
+    PlayerSkeleton,
     VideoInfoSkeleton,
 } from "./components/Skeletons";
 
