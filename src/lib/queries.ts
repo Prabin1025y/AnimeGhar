@@ -309,6 +309,15 @@ export const ANIME_DETAILS_QUERY = `query AnimeDetails($id: Int!) {
       month
       day
     }
+
+    airingSchedule(notYetAired: true, perPage: 1) {
+      nodes {
+        airingAt
+        timeUntilAiring
+        episode
+      }
+    }
+
     season
     seasonYear
     studios(isMain: true) {

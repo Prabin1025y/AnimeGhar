@@ -13,6 +13,10 @@ import PlayerSkeleton from "./components/PlayerSkeleton";
 import { ANIME_DETAILS_QUERY, RELEASING_EPISODES_QUERY } from "@/lib/queries";
 import { AnimeDetails } from "@/types/animeDetails";
 import AnimeCard from "@/components/AnimeCard";
+import AnimeCardsGridSkeleton, {
+    EpisodeSelectorSkeleton,
+    VideoInfoSkeleton,
+} from "./components/Skeletons";
 
 export type EpisodeType = {
     title: string;
@@ -25,6 +29,7 @@ const VideoPlayerPage: React.FC = () => {
     const [isDub, setIsDub] = useState<boolean>(false);
     const [animeDetail, setAnimeDetail] = useState<AnimeDetails | null>(null);
     const [sourceLoading, setSourceLoading] = useState(true);
+    const [othersLoading, setOthersLoading] = useState(true);
     const [lastAiredEpisode, setLastAiredEpisode] = useState(0);
 
     const params = useParams<{ animeId: string }>();
@@ -49,6 +54,7 @@ const VideoPlayerPage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setOthersLoading(true);
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_ANILIST_URL}`,
                     {
@@ -97,6 +103,8 @@ const VideoPlayerPage: React.FC = () => {
             } catch (error) {
                 console.log(error);
                 toast.error("Error occured!!");
+            } finally {
+                setOthersLoading(false);
             }
         };
         fetchData();
@@ -183,107 +191,154 @@ const VideoPlayerPage: React.FC = () => {
                         )}
                     </div>
 
-                    {lastAiredEpisode && (
-                        <EpisodeSelector
-                            episodes={lastAiredEpisode}
-                            className=" overflow-y-auto"
-                        />
-                    )}
-                    {animeDetail && (
-                        <VideoInfo
-                            animeData={animeDetail}
-                            isDub={isDub}
-                            setIsDub={setIsDub}
-                        />
-                    )}
-                    {final_json.map((category, index) => {
-                        return category?.data?.length ? (
-                            <section
-                                key={index}
-                                className="max-w-7xl container mx-auto mt-6 mb-4"
-                            >
-                                <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                                    {category.name}
-                                </h2>
-                                <div className="gw-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
-                                    {category.data.map(
-                                        (anime, index) =>
-                                            anime.node?.id && (
-                                                <AnimeCard
-                                                    key={`${anime.node?.id}-${index}`}
-                                                    animeId={anime.node?.id}
-                                                    averageScore={anime.node.averageScore}
-                                                    animePoster={
-                                                        anime.node.coverImage
-                                                            .large ||
-                                                        "placeholder.png"
-                                                    }
-                                                    animeName={
-                                                        anime.node.title
-                                                            .english ||
-                                                        anime.node.title
-                                                            .romaji ||
-                                                        "No Title"
-                                                    }
-                                                    animeType={
-                                                        anime.node.format ||
-                                                        "N/A"
-                                                    }
-                                                    animeEpisodes={
-                                                        anime.node.episodes?.toString() ||
-                                                        "N/A"
-                                                    }
-                                                />
-                                            ),
-                                    )}
+                    {othersLoading ? (
+                        <>
+                            <EpisodeSelectorSkeleton />
+                            <VideoInfoSkeleton />
+                            <AnimeCardsGridSkeleton noOfElements={5} />
+                            <AnimeCardsGridSkeleton noOfElements={5} />
+                            <AnimeCardsGridSkeleton noOfElements={5} />
+                        </>
+                    ) : (
+                        <>
+                            {lastAiredEpisode && (
+                                <EpisodeSelector
+                                    episodes={lastAiredEpisode}
+                                    className=" overflow-y-auto"
+                                />
+                            )}
+                            {animeDetail?.airingSchedule.nodes.length ? (
+                                <div className="bg-blue-500/40 border border-blue-600 rounded-md flex items-center justify-center py-2 -my-4">
+                                    Next Episode{" "}
+                                    {
+                                        animeDetail.airingSchedule.nodes?.[0]
+                                            .episode
+                                    }{" "}
+                                    airing on :{" "}
+                                    {new Date(
+                                        Number(
+                                            animeDetail.airingSchedule
+                                                .nodes?.[0].airingAt,
+                                        ) * 1000,
+                                    ).toDateString()}
                                 </div>
-                            </section>
-                        ) : null;
-                    })}
+                            ) : null}
+                            {animeDetail && (
+                                <VideoInfo
+                                    animeData={animeDetail}
+                                    isDub={isDub}
+                                    setIsDub={setIsDub}
+                                />
+                            )}
+                            {final_json.map((category, index) => {
+                                return category?.data?.length ? (
+                                    <section
+                                        key={index}
+                                        className="max-w-7xl container mx-auto mt-6 mb-4"
+                                    >
+                                        <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                                            {category.name}
+                                        </h2>
+                                        <div className="gw-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
+                                            {category.data.map(
+                                                (anime, index) =>
+                                                    anime.node?.id && (
+                                                        <AnimeCard
+                                                            key={`${anime.node?.id}-${index}`}
+                                                            animeId={
+                                                                anime.node?.id
+                                                            }
+                                                            averageScore={
+                                                                anime.node
+                                                                    .averageScore
+                                                            }
+                                                            animePoster={
+                                                                anime.node
+                                                                    .coverImage
+                                                                    .large ||
+                                                                "placeholder.png"
+                                                            }
+                                                            animeName={
+                                                                anime.node.title
+                                                                    .english ||
+                                                                anime.node.title
+                                                                    .romaji ||
+                                                                "No Title"
+                                                            }
+                                                            animeType={
+                                                                anime.node
+                                                                    .format ||
+                                                                "N/A"
+                                                            }
+                                                            animeEpisodes={
+                                                                anime.node.episodes?.toString() ||
+                                                                "N/A"
+                                                            }
+                                                        />
+                                                    ),
+                                            )}
+                                        </div>
+                                    </section>
+                                ) : null;
+                            })}
 
-                    {/* Recommended Movies */}
-                    {animeDetail?.recommendations?.nodes?.length ? (
-                        <section className="max-w-7xl container mx-auto mt-6 mb-4">
-                            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                                Recommendations
-                            </h2>
-                            <div className="gw-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
-                                {animeDetail?.recommendations?.nodes?.map(
-                                    (anime, index) =>
-                                        anime.mediaRecommendation?.id && (
-                                            <AnimeCard
-                                                key={`${anime.mediaRecommendation?.id}-${index}`}
-                                                animeId={
-                                                    anime.mediaRecommendation
-                                                        ?.id
-                                                }
-                                                animePoster={
-                                                    anime.mediaRecommendation
-                                                        .coverImage.large ||
-                                                    "placeholder.png"
-                                                }
-                                                animeName={
-                                                    anime.mediaRecommendation
-                                                        .title.english ||
-                                                    anime.mediaRecommendation
-                                                        .title.romaji ||
-                                                    "No Title"
-                                                }
-                                                averageScore={anime.mediaRecommendation.averageScore}
-                                                animeType={
-                                                    anime.mediaRecommendation
-                                                        .format || "N/A"
-                                                }
-                                                animeEpisodes={
-                                                    anime.mediaRecommendation.episodes?.toString() ||
-                                                    "N/A"
-                                                }
-                                            />
-                                        ),
-                                )}
-                            </div>
-                        </section>
-                    ) : null}
+                            {/* Recommended Movies */}
+                            {animeDetail?.recommendations?.nodes?.length ? (
+                                <section className="max-w-7xl container mx-auto mt-6 mb-4">
+                                    <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                                        Recommendations
+                                    </h2>
+                                    <div className="gw-auto flex flex-wrap gap-3 mx-auto justify-center xl:justify-start">
+                                        {animeDetail?.recommendations?.nodes?.map(
+                                            (anime, index) =>
+                                                anime.mediaRecommendation
+                                                    ?.id && (
+                                                    <AnimeCard
+                                                        key={`${anime.mediaRecommendation?.id}-${index}`}
+                                                        animeId={
+                                                            anime
+                                                                .mediaRecommendation
+                                                                ?.id
+                                                        }
+                                                        animePoster={
+                                                            anime
+                                                                .mediaRecommendation
+                                                                .coverImage
+                                                                .large ||
+                                                            "placeholder.png"
+                                                        }
+                                                        animeName={
+                                                            anime
+                                                                .mediaRecommendation
+                                                                .title
+                                                                .english ||
+                                                            anime
+                                                                .mediaRecommendation
+                                                                .title.romaji ||
+                                                            "No Title"
+                                                        }
+                                                        averageScore={
+                                                            anime
+                                                                .mediaRecommendation
+                                                                .averageScore
+                                                        }
+                                                        animeType={
+                                                            anime
+                                                                .mediaRecommendation
+                                                                .format || "N/A"
+                                                        }
+                                                        animeEpisodes={
+                                                            anime.mediaRecommendation.episodes?.toString() ||
+                                                            "N/A"
+                                                        }
+                                                    />
+                                                ),
+                                        )}
+                                    </div>
+                                </section>
+                            ) : null}
+                        </>
+                    )}
                 </div>
             </div>
         </div>

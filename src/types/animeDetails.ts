@@ -36,6 +36,10 @@ export interface AnimeDetails {
     startDate: AnimeDate;
     endDate: AnimeDate;
 
+    airingSchedule: {
+        nodes: AiringNode[];
+    };
+
     season?: string;
     seasonYear?: number;
 
@@ -125,4 +129,10 @@ interface RecommendedAnime {
     episodes?: number;
 
     status?: string;
+}
+
+interface AiringNode {
+    airingAt: number;
+    timeUntilAiring: number;
+    episode: number;
 }
