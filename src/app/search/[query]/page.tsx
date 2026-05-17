@@ -105,6 +105,7 @@ const SearchPage = () => {
                             <AnimeCard
                                 key={`${anime.id}-${index}`}
                                 animeId={anime.id}
+                                type="general"
                                 animeName={
                                     anime.title.english ||
                                     anime.title.romaji ||
