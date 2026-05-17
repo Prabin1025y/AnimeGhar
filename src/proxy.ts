@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { ratelimit } from "./lib/ratelimit";
 
 // This function can be marked `async` if using `await` inside
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
     const forwarded = request.headers.get("x-forwarded-for");
     const realIp = request.headers.get("x-real-ip");
 
