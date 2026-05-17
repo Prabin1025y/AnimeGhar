@@ -34,6 +34,7 @@ const SearchPage = () => {
         }
         const fetchData = async () => {
             try {
+                console.log(query)
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_ANILIST_URL}`,
                     {
@@ -45,7 +46,7 @@ const SearchPage = () => {
                         body: JSON.stringify({
                             query: SEARCH_QUERY,
                             variables: {
-                                search: query,
+                                search: decodeURIComponent(query),
                                 page: page,
                                 perPage: 20,
                             },
@@ -106,6 +107,7 @@ const SearchPage = () => {
                                 key={`${anime.id}-${index}`}
                                 animeId={anime.id}
                                 type="general"
+                                averageScore={anime.averageScore}
                                 animeName={
                                     anime.title.english ||
                                     anime.title.romaji ||
