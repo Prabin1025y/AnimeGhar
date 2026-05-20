@@ -143,6 +143,7 @@ const TrendingAnime = () => {
                                             >
                                                 <Link
                                                     href={`/watch/${anime.id}`}
+                                                    prefetch={false}
                                                 >
                                                     <Play className="w-4 h-4 mr-2" />
                                                     Play Now

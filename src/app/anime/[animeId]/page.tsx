@@ -225,6 +225,7 @@ export default async function MovieDetailsPage({
                                             ) : (
                                                 <Link
                                                     href={`/watch/${data.id}`}
+                                                    prefetch={false}
                                                 >
                                                     <Play className="h-5 w-5 mr-2" />
                                                     Watch Now

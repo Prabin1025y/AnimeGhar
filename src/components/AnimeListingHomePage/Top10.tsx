@@ -54,7 +54,7 @@ const Top10 = ({
                         </div>
                         <HoverCard openDelay={200}>
                             <HoverCardTrigger asChild>
-                                <Link href={`/anime/${anime.id}`}>
+                                <Link href={`/anime/${anime.id}`} prefetch={false}>
                                     <Image
                                         src={anime.coverImage.large}
                                         alt={`${anime.title.english || anime.title.romaji || "anime"} poster`}
@@ -74,6 +74,7 @@ const Top10 = ({
 
                         <Link
                             href={`/anime/${anime.id}`}
+                            prefetch={false}
                             className="flex-1 w-[10px]"
                         >
                             <h4 className="font-medium text-xs md:text-sm truncate text-slate-900 dark:text-white">

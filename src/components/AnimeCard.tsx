@@ -36,7 +36,7 @@ const AnimeCard = ({
                 <div className="bg-card dark:bg-slate-800/50 border rounded-md overflow-hidden shadow-lg hover:shadow-cyan-500/25 transition-all duration-300">
                     <div className="relative">
                         <HoverCardTrigger asChild>
-                            <Link href={`/anime/${animeId}`}>
+                            <Link href={`/anime/${animeId}`} prefetch={false}>
                                 <Image
                                     src={animePoster}
                                     alt={animeName}
@@ -47,7 +47,7 @@ const AnimeCard = ({
                             </Link>
                         </HoverCardTrigger>
                     </div>
-                    <Link href={`/anime/${animeId}`}>
+                    <Link href={`/anime/${animeId}`} prefetch={false}>
                         <div className="p-2 md:p-4">
                             <h4 className="font-semibold text-xs md:text-sm truncate mb-2 text-slate-900 dark:text-white">
                                 {animeName}

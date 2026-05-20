@@ -249,7 +249,7 @@ const Spotlight = () => {
                                         size="lg"
                                         className="cursor-pointer bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
                                     >
-                                        <Link href={`/watch/${anime.id}`}>
+                                        <Link href={`/watch/${anime.id}`} prefetch={false}>
                                             <Play className="w-5 h-5 mr-2" />
                                             Watch Now
                                         </Link>
@@ -260,7 +260,7 @@ const Spotlight = () => {
                                         variant="outline"
                                         className="hidden sm:flex cursor-pointer px-8 py-3 text-lg transition-all duration-300 hover:scale-105 border-cyan-500/30 text-cyan-600 hover:bg-cyan-500/10 dark:border-cyan-400/30 dark:text-cyan-400 dark:hover:bg-cyan-400/10"
                                     >
-                                        <Link href={`/anime/${anime.id}`}>
+                                        <Link href={`/anime/${anime.id}`} prefetch={false}>
                                             <Info className="w-5 h-5 mr-2" />
                                             More Info
                                         </Link>
