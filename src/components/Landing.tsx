@@ -57,7 +57,7 @@ export default function Landing() {
                                     size="lg"
                                     className="bg-gradient-to-r rounded-full w-full cursor-pointer from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-3 text-lg group"
                                 >
-                                    <Link href="/home">
+                                    <Link href="/home" prefetch={false}>
                                         <Play className="mr-2 w-5 h-5" />
                                         Start Watching Now
                                         <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

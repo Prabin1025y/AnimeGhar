@@ -119,7 +119,7 @@ export default function Footer() {
         <Separator className="my-8 bg-gray-800" />
 
         <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400">
-          <p>AnimeGhar &copy; 2025 <Link href={"https://prabinacharya1.com.np"} className="hover:underline cursor-pointer">Prabin Acharya.</Link></p>
+          <p>AnimeGhar &copy; 2025 <Link href={"https://prabinacharya1.com.np"} prefetch={false} className="hover:underline cursor-pointer">Prabin Acharya.</Link></p>
           {/* <div className="flex space-x-6 mt-4 sm:mt-0">
             <a href="#" className="hover:text-white transition-colors">
               Privacy

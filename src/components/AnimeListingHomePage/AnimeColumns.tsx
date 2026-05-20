@@ -40,7 +40,7 @@ const AnimeColumns = () => {
                             >
                                 <HoverCard openDelay={200}>
                                     <HoverCardTrigger asChild>
-                                        <Link href={`/anime/${episode.media.id}`}>
+                                        <Link href={`/anime/${episode.media.id}`} prefetch={false}>
                                             <Image
                                                 src={episode.media.coverImage.large}
                                                 alt={`${episode.media.title.english || 'anime'} poster`}
@@ -60,6 +60,7 @@ const AnimeColumns = () => {
 
                                 <Link
                                     href={`/anime/${episode.media.id}`}
+                                    prefetch={false}
                                     className="flex-1 min-w-0"
                                 >
                                     <h4 className="font-medium text-sm truncate text-slate-900 dark:text-white">

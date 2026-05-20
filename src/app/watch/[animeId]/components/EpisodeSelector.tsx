@@ -77,6 +77,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                 ).map((episode) => (
                     <Link
                         key={episode}
+                        prefetch={false}
                         href={`?ep=${episode + 1}`}
                         className={`min-w-[60px] h-10 px-3 backdrop-blur-sm border transition-all duration-200 rounded-md flex items-center justify-center text-sm flex-shrink-0 ${Number(searchParams.get("ep")) === episode + 1 ? "border-emerald-700/50 text-emerald-400 bg-emerald-500/20" : "bg-gray-600/20 dark:bg-gray-800/20 border-gray-600/30 dark:border-gray-700/30 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20 hover:border-cyan-300/50 dark:hover:border-cyan-700/50 text-gray-900 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400"}`}
                     >

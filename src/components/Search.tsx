@@ -99,7 +99,10 @@ const SearchInput = () => {
                             asChild
                             className={`absolute right-0 h-full hover:bg-cyan-600 rounded-l-none bg-cyan-500 transition-opacity ${searchTerm.trim() !== "" ? "opacity-100" : "opacity-0"}`}
                         >
-                            <Link href={`/search/${searchTerm}`}>
+                            <Link
+                                href={`/search/${searchTerm}`}
+                                prefetch={false}
+                            >
                                 <ArrowRight />
                             </Link>
                         </Button>
@@ -113,6 +116,7 @@ const SearchInput = () => {
                     <div className="grid gap-2">
                         {suggestions.map((suggestion, index) => (
                             <Link
+                                prefetch={false}
                                 href={`/anime/${suggestion.id}`}
                                 key={`${suggestion.id}-${index}`}
                                 className="w-full h-16 hover:bg-cyan-100/20 cursor-pointer rounded-md flex items-center gap-2"

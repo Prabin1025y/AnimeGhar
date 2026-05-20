@@ -213,7 +213,7 @@ const AnimeTips = ({ animeid, image }: { animeid: number; image: string }) => {
                         asChild
                         className="w-full bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white font-medium transition-colors duration-200 flex items-center gap-2"
                     >
-                        <Link href={`/watch/${animeid}`}>
+                        <Link href={`/watch/${animeid}`} prefetch={false}>
                             <Play className="w-4 h-4" />
                             Watch Now
                         </Link>
