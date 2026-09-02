@@ -181,7 +181,6 @@ const VideoPlayerPage: React.FC = () => {
                         ) : (
                             <iframe
                                 ref={iframeElement}
-                                sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                                 src={`https://megaplay.buzz/stream/ani/${animeId}/${episodeNumber}/${isDub ? "dub" : "sub"}`}
                                 width="100%"
                                 height="100%"
